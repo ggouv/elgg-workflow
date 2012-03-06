@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Elgg Workflow</name>
+	<author>Emmanuel Salomon @ManUtopiK</author>
+	<version>0.1b</version>
+	<blurb>Collaboration tool for yourself and groups projects.</blurb>
+	<description>Elgg Workflow is a collaboration tool that organizes yours and groups projects into boards. It tells you what's being worked on, who's working on what, and where something is in a process.</description>
+	<website>https://github.com/ManUtopiK/elgg-workflow</website>
+	<copyright></copyright>
+	<license>GNU Affero General Public License, version 3 or later</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+	<activate_on_install>true</activate_on_install>
+</plugin_manifest>
