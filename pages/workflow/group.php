@@ -32,16 +32,23 @@ $lists = elgg_get_entities(array(
 	'container_guid' => $group->guid,
 ));
 
-$num_lists = count($lists);
+$sorted_lists = array();
+foreach ($lists as $list) {
+	$sorted_lists[$list->order] = $list;
+}
+ksort($sorted_lists);
 
 if ( $group->isMember($user) ) {
 	$can_edit_class = 'elgg-state-draggable';
 }
 
+$num_lists = count($lists);
+
 $content = "<div class='workflow-lists'>";
 for ($list_index = 1; $list_index <= $num_lists; $list_index++) {
-	$content .= "<div id='workflow-list-$list_index' class='workflow-list $can_edit_class'>";
-	$content .= elgg_view_entity($lists[$list_index-1], array('full_view' => 'group'));
+	$listguid = $sorted_lists[$list_index-1]->guid;
+	$content .= "<div id='workflow-list-$listguid' class='workflow-list $can_edit_class'>";
+	$content .= elgg_view_entity($sorted_lists[$list_index-1], array('full_view' => 'group'));
 	$content .= '</div>';
 }
 $content .= "</div>";

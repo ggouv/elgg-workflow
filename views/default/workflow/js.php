@@ -10,14 +10,14 @@
  *
  */
 
-elgg.provide('workflow');
+elgg.provide('workflow.list');
 
 /**
  * Workflow initialization
  *
  * @return void
  */
-workflow.init = function() {
+workflow.list.init = function() {
 
 	// workflow layout?
 	if ($(".workflow-lists").length == 0) {
@@ -32,7 +32,7 @@ workflow.init = function() {
 		placeholder:          'workflow-list-placeholder',
 		opacity:              0.8,
 		revert:               500,
-		//stop:                 elgg.ui.widgets.move
+		stop:                 workflow.list.move
 	});
 
 //	$('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);
@@ -79,36 +79,36 @@ workflow.init = function() {
 //	event.preventDefault();
 //};
 
-///**
-// * Persist the widget's new position
-// *
-// * @param {Object} event
-// * @param {Object} ui
-// *
-// * @return void
-// */
-//elgg.ui.widgets.move = function(event, ui) {
+/**
+ * Persist the list's new position
+ *
+ * @param {Object} event
+ * @param {Object} ui
+ *
+ * @return void
+ */
+workflow.list.move = function(event, ui) {
 
-//	// elgg-widget-<guid>
-//	var guidString = ui.item.attr('id');
-//	guidString = guidString.substr(guidString.indexOf('elgg-widget-') + "elgg-widget-".length);
-
-//	// elgg-widget-col-<column>
+	// workflow-list-<guid>
+	var guidString = ui.item.attr('id');
+	guidString = guidString.substr(guidString.indexOf('workflow-list-') + "workflow-list-".length);
+console.log(guidString);
+console.log(ui.item.index());
+	// elgg-widget-col-<column>
 //	var col = ui.item.parent().attr('id');
 //	col = col.substr(col.indexOf('elgg-widget-col-') + "elgg-widget-col-".length);
 
-//	elgg.action('widgets/move', {
-//		data: {
-//			widget_guid: guidString,
-//			column: col,
-//			position: ui.item.index()
-//		}
-//	});
+	elgg.action('workflow/list/move', {
+		data: {
+			list_guid: guidString,
+			position: ui.item.index()
+		}
+	});
 
-//	// @hack fixes jquery-ui/opera bug where draggable elements jump
-//	ui.item.css('top', 0);
-//	ui.item.css('left', 0);
-//};
+	// @hack fixes jquery-ui/opera bug where draggable elements jump
+	ui.item.css('top', 0);
+	ui.item.css('left', 0);
+};
 
 ///**
 // * Removes a widget from the layout
@@ -212,4 +212,4 @@ workflow.init = function() {
 //	})
 //};
 
-elgg.register_hook_handler('init', 'system', workflow.init);
+elgg.register_hook_handler('init', 'system', workflow.list.init);

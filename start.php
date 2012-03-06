@@ -37,10 +37,10 @@ function workflow_init() {
 	//elgg_extend_view('groups/tool_latest', 'workflow/group_module');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'workflow_owner_block_menu');
 
+	// actions for list
+	$action_base = "$root/actions/workflow/list";
+	elgg_register_action('workflow/list/move', "$action_base/move.php");
 /*
-	// actions
-	$action_base = "$root/actions/brainstorm";
-	elgg_register_action('brainstorm/saveidea', "$action_base/saveidea.php");
 	elgg_register_action('brainstorm/editidea', "$action_base/editidea.php");
 	elgg_register_action("brainstorm/rateidea", "$action_base/rateidea.php");
 	elgg_register_action('brainstorm/delete', "$action_base/deleteidea.php");
