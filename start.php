@@ -40,6 +40,7 @@ function workflow_init() {
 	// actions for list
 	$action_base = "$root/actions/workflow/list";
 	elgg_register_action('workflow/list/move', "$action_base/move.php");
+	elgg_register_action('workflow/list/add', "$action_base/add.php");
 /*
 	elgg_register_action('brainstorm/editidea', "$action_base/editidea.php");
 	elgg_register_action("brainstorm/rateidea", "$action_base/rateidea.php");

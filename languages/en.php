@@ -114,7 +114,9 @@ $english = array(
 	 * Status and error messages
 	 */
 
-	'workflow:list:move:failure' => "Error with server connexion. Move doesn't saved.",
+	'workflow:list:move:failure' => "Error with server connexion. Move list doesn't saved.",
+	'workflow:list:add:failure' => "Error with server connexion. Add list doesn't saved.",
+	'workflow:list:add:cannotadd' => "You cannot add a list for this group.",
 /*
 	'tasks:noaccess' => 'No access to task',
 	'tasks:cantedit' => 'You cannot edit this task',

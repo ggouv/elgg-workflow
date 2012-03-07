@@ -1,3 +1,7 @@
+#add-list {
+	display: none;
+	width: 200px;
+}
 .workflow-lists-container {
 	overflow-x: scroll;
 }

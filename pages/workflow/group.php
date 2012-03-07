@@ -23,6 +23,7 @@ group_gatekeeper();
 elgg_push_breadcrumb($group->name);
 
 elgg_register_title_button('workflow', 'add_list');
+echo '<div id="add-list" class="elgg-module-popup">' . elgg_view_form('workflow/add_list_popup') . '</div>';
 
 $title = elgg_echo('workflow:owner', array($group->name));
 

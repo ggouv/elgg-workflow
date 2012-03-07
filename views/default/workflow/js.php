@@ -23,6 +23,9 @@ workflow.init = function() {
 			return;
 		}
 
+		// hack for button add list
+		$('li.elgg-menu-item-add-list a.elgg-button-action').attr("href", "#add-list").attr("rel", "popup"); 
+
 		if (!$.isFunction(scrollbarWidth)) { // in case of function already exist
 			function scrollbarWidth() {
 				if (!$._scrollbarWidth) {
@@ -88,9 +91,8 @@ workflow.list.init = function() {
 		stop:                 workflow.list.move
 	});
 
-//	$('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);
-
-//	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
+	$('.elgg-form-workflow-add-list-popup .elgg-button-submit').live('click', workflow.list.add);
+//	$('li.elgg-menu-item-add-list a.elgg-button-action').live('click', workflow.list.remove);
 //	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 //	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
@@ -98,40 +100,29 @@ workflow.list.init = function() {
 };
 elgg.register_hook_handler('init', 'system', workflow.list.init);
 
-///**
-// * Adds a new widget
-// *
-// * Makes Ajax call to persist new widget and inserts the widget html
-// *
-// * @param {Object} event
-// * @return void
-// */
-//elgg.ui.widgets.add = function(event) {
-//	// elgg-widget-type-<type>
-//	var type = $(this).attr('id');
-//	type = type.substr(type.indexOf('elgg-widget-type-') + "elgg-widget-type-".length);
-
-//	// if multiple instances not allow, disable this widget type add button
-//	var multiple = $(this).attr('class').indexOf('elgg-widget-multiple') != -1;
-//	if (multiple == false) {
-//		$(this).addClass('elgg-state-unavailable');
-//		$(this).removeClass('elgg-state-available');
-//		$(this).unbind('click', elgg.ui.widgets.add);
-//	}
-
-//	elgg.action('widgets/add', {
-//		data: {
-//			handler: type,
-//			owner_guid: elgg.get_page_owner_guid(),
-//			context: $("input[name='widget_context']").val(),
-//			default_widgets: $("input[name='default_widgets']").val() || 0
-//		},
-//		success: function(json) {
-//			$('#elgg-widget-col-1').prepend(json.output);
-//		}
-//	});
-//	event.preventDefault();
-//};
+/**
+ * Adds a new list
+ *
+ * Makes Ajax call to persist new list and inserts the list html
+ *
+ * @param {Object} event
+ * @return void
+ */
+workflow.list.add = function(event) {
+	list_title = $('.elgg-form-workflow-add-list-popup .elgg-input-text').val();
+	elgg.action('workflow/list/add', {
+		data: {
+			owner_guid: elgg.get_page_owner_guid(),
+			list_title: list_title,
+		},
+		success: function(json) {
+			//$('#elgg-widget-col-1').prepend(json.output);
+		}
+	});
+	$('#add-list').hide();
+	event.preventDefault();
+	return false;
+};
 
 /**
  * Persist the list's new position
@@ -260,5 +251,18 @@ workflow.list.move = function(event, ui) {
 //		}
 //	})
 //};
+
+/**
+ * Reposition popups
+ */
+elgg.ui.addListPopup = function(hook, type, params, options) {
+	if (params.target.attr('id') == 'add-list') {
+		options.my = 'right top';
+		options.at = 'right bottom';
+		return options;
+	}
+	return null;
+};
+elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
 
 // End of js for elgg-workflow plugin
