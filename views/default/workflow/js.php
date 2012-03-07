@@ -10,13 +10,66 @@
  *
  */
 
-elgg.provide('workflow.list');
-
 /**
  * Workflow initialization
  *
  * @return void
  */
+elgg.provide('workflow');
+
+workflow.init = function() {
+	$(document).ready(function() {
+		if ( $('.workflow-lists').length == 0) {
+			return;
+		}
+
+		if (!$.isFunction(scrollbarWidth)) { // in case of function already exist
+			function scrollbarWidth() {
+				if (!$._scrollbarWidth) {
+					var $body = $('body');
+					var w = $body.css('overflow', 'hidden').width();
+					$body.css('overflow','scroll');
+					w -= $body.width();
+					if (!w) w=$body.width()-$body[0].clientWidth; // IE in standards mode
+					$body.css('overflow','');
+					$._scrollbarWidth = w+1;
+				}
+				return $._scrollbarWidth;
+			}
+		}
+		WorkflowSetListsWidth()
+
+	});
+
+	// for extensible template
+	$(window).bind("resize", function() {
+		if ( $('.workflow-lists').length ) {
+			WorkflowSetListsWidth()
+		}
+	});
+
+	function WorkflowSetListsWidth() {
+		var WorkflowWidth = $('.workflow-lists').width();
+		var CountLists = $('.workflow-list').length;
+		var ListWidth = 0; var i = 0;
+		while ( ListWidth < workflow_min_width_list ) {
+			ListWidth = (WorkflowWidth) / ( CountLists - i );
+			i++;
+		}
+		$('.workflow-list, .workflow-list-placeholder').width(ListWidth - 5);
+		$('.workflow-lists').width(ListWidth * CountLists);
+	}
+}
+elgg.register_hook_handler('init', 'system', workflow.init);
+
+
+/**
+ * Workflow list initialization
+ *
+ * @return void
+ */
+elgg.provide('workflow.list');
+
 workflow.list.init = function() {
 
 	// workflow layout?
@@ -43,6 +96,7 @@ workflow.list.init = function() {
 
 //	elgg.ui.widgets.setMinHeight(".elgg-widgets");
 };
+elgg.register_hook_handler('init', 'system', workflow.list.init);
 
 ///**
 // * Adds a new widget
@@ -92,11 +146,6 @@ workflow.list.move = function(event, ui) {
 	// workflow-list-<guid>
 	var guidString = ui.item.attr('id');
 	guidString = guidString.substr(guidString.indexOf('workflow-list-') + "workflow-list-".length);
-console.log(guidString);
-console.log(ui.item.index());
-	// elgg-widget-col-<column>
-//	var col = ui.item.parent().attr('id');
-//	col = col.substr(col.indexOf('elgg-widget-col-') + "elgg-widget-col-".length);
 
 	elgg.action('workflow/list/move', {
 		data: {
@@ -212,4 +261,4 @@ console.log(ui.item.index());
 //	})
 //};
 
-elgg.register_hook_handler('init', 'system', workflow.list.init);
+// End of js for elgg-workflow plugin

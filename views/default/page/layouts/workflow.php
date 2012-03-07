@@ -32,6 +32,13 @@ $header = elgg_view('page/layouts/content/header', $vars);
 }
 $filter = elgg_view('page/layouts/content/filter', $vars);*/
 
+// Pass plugin options to jQuery
+echo "
+	<script type='text/javascript'>
+   var workflow_min_width_list = '" . elgg_get_plugin_setting('min_width_list', 'elgg-workflow') . "';
+   </script>
+	";
+
 // the all important content
 $content = elgg_extract('content', $vars, '');
 

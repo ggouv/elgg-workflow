@@ -113,6 +113,8 @@ $english = array(
 	/**
 	 * Status and error messages
 	 */
+
+	'workflow:list:move:failure' => "Error with server connexion. Move doesn't saved.",
 /*
 	'tasks:noaccess' => 'No access to task',
 	'tasks:cantedit' => 'You cannot edit this task',
@@ -195,6 +197,11 @@ $english = array(
 	'tasks:newchild' => "Create a task in this list",
 	'tasks:backtoparent' => "Back to '%s'",
 */
+
+	/**
+	 * Settings
+	 */
+	'workflow:settings:min_list_column' => "Minimum width of columns",
 );
 
 add_translation("en", $english);

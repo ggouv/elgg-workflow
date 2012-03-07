@@ -44,14 +44,14 @@ if ( $group->isMember($user) ) {
 
 $num_lists = count($lists);
 
-$content = "<div class='workflow-lists'>";
+$content = "<div class='workflow-lists-container'><div class='workflow-lists'>";
 for ($list_index = 1; $list_index <= $num_lists; $list_index++) {
 	$listguid = $sorted_lists[$list_index-1]->guid;
-	$content .= "<div id='workflow-list-$listguid' class='workflow-list $can_edit_class'>";
+	$content .= "<div id='workflow-list-$listguid' class='workflow-list $can_edit_class mrs'>";
 	$content .= elgg_view_entity($sorted_lists[$list_index-1], array('full_view' => 'group'));
 	$content .= '</div>';
 }
-$content .= "</div>";
+$content .= "</div></div>";
 
 if (!$lists) {
 	$content = '<p>' . elgg_echo('workflow:list:none') . '</p>';
