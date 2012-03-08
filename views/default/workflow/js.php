@@ -40,29 +40,17 @@ workflow.init = function() {
 				return $._scrollbarWidth;
 			}
 		}
-		WorkflowSetListsWidth()
+		workflow.list.resize();
 
 	});
 
 	// for extensible template
 	$(window).bind("resize", function() {
 		if ( $('.workflow-lists-container').length ) {
-			WorkflowSetListsWidth()
+			workflow.list.resize();
 		}
 	});
 
-	function WorkflowSetListsWidth() {
-		var WorkflowWidth = $('.workflow-lists').width();
-		var CountLists = $('.workflow-list').length;
-		var ListWidth = 0; var i = 0;
-		while ( ListWidth < workflow_min_width_list ) {
-			ListWidth = (WorkflowWidth) / ( CountLists - i );
-			i++;
-		}
-		$('.workflow-list, .workflow-list-placeholder').width(ListWidth);
-		$('.workflow-lists').width( (ListWidth + 5 + 4) * CountLists - 5); // margin + border minus last margin doesn't displayed
-
-	}
 }
 elgg.register_hook_handler('init', 'system', workflow.init);
 
@@ -144,7 +132,9 @@ workflow.list.add = function(event) {
 			list_title: list_title,
 		},
 		success: function(json) {
-			//$('#elgg-widget-col-1').prepend(json.output);
+			$('.workflow-lists').append(json.output);
+			workflow.list.resize();
+			$('.workflow-lists-container').animate({ scrollLeft: $('.workflow-lists-container').width()});
 		}
 	});
 	$('#add-list').hide();
@@ -164,8 +154,9 @@ workflow.list.remove = function(event) {
 	var $list = $(this).closest('.workflow-list');
 
 	$list.remove();
-	var WorkflowWidth = $('.workflow-lists').width();
-	$('.workflow-lists').width(WorkflowWidth - $('.workflow-list').width() - 5 - 4);
+	workflow.list.resize();
+	//var WorkflowWidth = $('.workflow-lists').width();
+	//$('.workflow-lists').width(WorkflowWidth - $('.workflow-list').width() - 5 - 4);
 
 	// delete the widget through ajax
 	elgg.action($(this).attr('href'));
@@ -256,5 +247,23 @@ elgg.ui.addListPopup = function(hook, type, params, options) {
 	return null;
 };
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
+
+/**
+ * Resize lists
+ */
+workflow.list.resize = function() {
+	var WorkflowWidth = $('.workflow-lists-container').width();
+	var CountLists = $('.workflow-list').length;
+	var ListWidth = 0; var i = 0;
+	if ( (parseInt(workflow_min_width_list) + 5 + 4) * CountLists > (WorkflowWidth - 5) ) {
+		ListWidth = parseInt(workflow_min_width_list);
+		$('.workflow-lists').width( (ListWidth + 5 + 4) * CountLists - 5); // margin + border minus last margin doesn't displayed
+	} else {
+		ListWidth = (WorkflowWidth - (9*CountLists) + 5 ) / CountLists;
+		$('.workflow-lists').width(WorkflowWidth);
+	}
+	$('.workflow-list, .workflow-list-placeholder').width(ListWidth);
+
+}
 
 // End of js for elgg-workflow plugin

@@ -29,7 +29,7 @@ if ($container->canEdit()) {
 	$list->subtype = "workflow_list";
 	$list->container_guid = $container_guid;
 	$list->title = $list_title;
-	$list->order = $nbr_lists + 1;
+	$list->order = $nbr_lists;
 
 	if ($list->save()) {
 		system_message(elgg_echo('workflow:list:add:success'));
