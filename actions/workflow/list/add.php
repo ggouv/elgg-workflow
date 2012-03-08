@@ -18,14 +18,22 @@ $container = get_entity($container_guid);
 
 if ($container->canEdit()) {
 
+	$nbr_lists = elgg_get_entities(array(
+		'type' => 'object',
+		'subtypes' => 'workflow_list',
+		'container_guid' => $group->guid,
+		'count' => true,
+	)); 
+
 	$list = new ElggObject;
-	$list->subtype = "workflow-list";
+	$list->subtype = "workflow_list";
 	$list->container_guid = $container_guid;
 	$list->title = $list_title;
+	$list->order = $nbr_lists + 1;
 
 	if ($list->save()) {
 		system_message(elgg_echo('workflow:list:add:success'));
-		add_to_river('river/object/workflow-list/create','create', $user_guid, $list->getGUID());
+		add_to_river('river/object/workflow_list/create','create', $user_guid, $list->getGUID());
 
 		echo elgg_view_entity($list, array('view_type' => 'group'));
 	} else {

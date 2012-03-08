@@ -19,7 +19,7 @@ elgg.provide('workflow');
 
 workflow.init = function() {
 	$(document).ready(function() {
-		if ( $('.workflow-lists').length == 0) {
+		if ( $('.workflow-lists-container').length == 0) {
 			return;
 		}
 
@@ -46,7 +46,7 @@ workflow.init = function() {
 
 	// for extensible template
 	$(window).bind("resize", function() {
-		if ( $('.workflow-lists').length ) {
+		if ( $('.workflow-lists-container').length ) {
 			WorkflowSetListsWidth()
 		}
 	});
@@ -59,7 +59,7 @@ workflow.init = function() {
 			ListWidth = (WorkflowWidth) / ( CountLists - i );
 			i++;
 		}
-		$('.workflow-list, .workflow-list-placeholder').width(ListWidth - 5);
+		$('.workflow-list, .workflow-list-placeholder').width(ListWidth - 8);
 		$('.workflow-lists').width(ListWidth * CountLists);
 	}
 }
@@ -76,14 +76,14 @@ elgg.provide('workflow.list');
 workflow.list.init = function() {
 
 	// workflow layout?
-	if ($(".workflow-lists").length == 0) {
+	if ($(".workflow-lists-container").length == 0) {
 		return;
 	}
 
 	$(".workflow-lists").sortable({
 		items:                'div.workflow-list.elgg-state-draggable',
 		connectWith:          '.workflow-lists',
-		handle:               '.tasklist-handle',
+		handle:               '.workflow-list-handle',
 		forcePlaceholderSize: true,
 		placeholder:          'workflow-list-placeholder',
 		opacity:              0.8,

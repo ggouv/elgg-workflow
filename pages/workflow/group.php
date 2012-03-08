@@ -29,7 +29,7 @@ $title = elgg_echo('workflow:owner', array($group->name));
 
 $lists = elgg_get_entities(array(
 	'type' => 'object',
-	'subtypes' => 'tasklist',
+	'subtypes' => 'workflow_list',
 	'container_guid' => $group->guid,
 ));
 
@@ -48,14 +48,12 @@ $num_lists = count($lists);
 $content = "<div class='workflow-lists-container'><div class='workflow-lists'>";
 for ($list_index = 1; $list_index <= $num_lists; $list_index++) {
 	$listguid = $sorted_lists[$list_index-1]->guid;
-	$content .= "<div id='workflow-list-$listguid' class='workflow-list $can_edit_class mrs'>";
-	$content .= elgg_view_entity($sorted_lists[$list_index-1], array('full_view' => 'group'));
-	$content .= '</div>';
+	$content .= elgg_view_entity($sorted_lists[$list_index-1], array('view_type' => 'group'));
 }
 $content .= "</div></div>";
 
 if (!$lists) {
-	$content = '<p>' . elgg_echo('workflow:list:none') . '</p>';
+	$content = '<div class="workflow-lists-container"><p>' . elgg_echo('workflow:list:none') . '</p></div>';
 }
 /*
 $filter_context = '';

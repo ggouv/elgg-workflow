@@ -21,7 +21,7 @@ if ($moved_list && $owner->canEdit()) {
 
 	$lists = elgg_get_entities(array(
 		'type' => 'object',
-		'subtypes' => 'tasklist',
+		'subtypes' => 'workflow_list',
 		'container_guid' => $moved_list->container_guid,
 	));
 

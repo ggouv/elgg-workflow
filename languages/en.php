@@ -64,7 +64,7 @@ $english = array(
 	/**
 	* River
 	**/
-	'river:create:object:workflow-list' => '%s added a new list %s',
+	'river:create:object:workflow_list' => '%s added a new list %s',
 /*
 	'river:create:object:task' => '%s created a task %s',
 	'river:create:object:tasklist' => '%s created a task list %s',
@@ -118,6 +118,7 @@ $english = array(
 	'workflow:list:move:failure' => "Error with server connexion. Move list doesn't saved.",
 	'workflow:list:add:failure' => "Error with server connexion. Add list doesn't saved.",
 	'workflow:list:add:cannotadd' => "You cannot add a list for this group.",
+	'workflow:list:add:success' => "List successfully added.",
 /*
 	'tasks:noaccess' => 'No access to task',
 	'tasks:cantedit' => 'You cannot edit this task',

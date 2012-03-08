@@ -41,6 +41,12 @@ function workflow_init() {
 	$action_base = "$root/actions/workflow/list";
 	elgg_register_action('workflow/list/move', "$action_base/move.php");
 	elgg_register_action('workflow/list/add', "$action_base/add.php");
+
+	// Register entity type
+	elgg_register_entity_type('object', 'workflow_list');
+
+	// Register entity menu
+	elgg_register_plugin_hook_handler('register', 'menu:workflow_list', 'workflow_list_entity_menu_setup');
 /*
 	elgg_register_action('brainstorm/editidea', "$action_base/editidea.php");
 	elgg_register_action("brainstorm/rateidea", "$action_base/rateidea.php");
@@ -50,7 +56,6 @@ function workflow_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'brainstorm_owner_block_menu');
 	
 
-	
 	// Register widget
 	elgg_register_widget_type('brainstorm', elgg_echo('brainstorm:widget:title'), elgg_echo('brainstorm:widget:description'));
 
@@ -59,11 +64,6 @@ function workflow_init() {
 
 	// Listen to notification events and supply a more useful message
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'brainstorm_notify_message');
-
-
-
-	// Register entity type for search
-	elgg_register_entity_type('object', 'idea');
 
 	// Groups
 	add_group_tool_option('brainstorm', elgg_echo('brainstorm:enablebrainstorm'), false);
@@ -174,6 +174,56 @@ function workflow_owner_block_menu($hook, $type, $return, $params) {
 	return $return;
 }
 
+/**
+ * Add links/info to entity menu particular to workflow_list plugin
+ */
+function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+
+	$entity = $params['entity'];
+	$handler = elgg_extract('handler', $params, false);
+	if ($handler != 'workflow') {
+		return $return;
+	}
+
+	$workflow_list = $params['entity'];
+	$show_edit = elgg_extract('show_edit', $params, true);
+
+	//$container_guid = $tasklist->container_guid;
+	//$user = elgg_get_logged_in_user_entity();
+	//$can_edit = is_group_member($container_guid, $user->guid);
+	//if ($can_edit) {
+	if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $workflow_list->getOwnerGuid()) {
+		$delete = array(
+			'name' => 'delete',
+			'text' => elgg_view_icon('delete-alt'),
+			'title' => elgg_echo('workflow_list:delete', array($tasklist->title)),
+			'href' => "action/workflow_list/delete?workflow_list_guid=$workflow_list->guid",
+			'is_action' => true,
+			'class' => 'workflow-list-delete-button',
+			'id' => "workflow-list-delete-button-$workflow_list->guid",
+			'priority' => 900
+		);
+		$return[] = ElggMenuItem::factory($delete);
+
+		if ($show_edit) {
+			$edit = array(
+				'name' => 'settings',
+				'text' => elgg_view_icon('settings-alt'),
+				'title' => elgg_echo('workflow_list:edit'),
+				'href' => "#workflow-list-edit-$workflow_list->guid",
+				'class' => "workflow-list-edit-button",
+				'rel' => 'toggle',
+				'priority' => 800,
+			);
+			$return[] = ElggMenuItem::factory($edit);
+		}
+	}
+
+	return $return;
+}
 
 /**
  * Returns the body of a notification message
