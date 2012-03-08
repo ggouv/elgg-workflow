@@ -64,6 +64,7 @@ $english = array(
 	/**
 	* River
 	**/
+	'river:create:object:workflow-list' => '%s added a new list %s',
 /*
 	'river:create:object:task' => '%s created a task %s',
 	'river:create:object:tasklist' => '%s created a task list %s',

@@ -112,7 +112,8 @@ workflow.list.add = function(event) {
 	list_title = $('.elgg-form-workflow-add-list-popup .elgg-input-text').val();
 	elgg.action('workflow/list/add', {
 		data: {
-			owner_guid: elgg.get_page_owner_guid(),
+			user_guid: elgg.get_logged_in_user_guid(),
+			container_guid: elgg.get_page_owner_guid(),
 			list_title: list_title,
 		},
 		success: function(json) {
