@@ -41,6 +41,7 @@ function workflow_init() {
 	$action_base = "$root/actions/workflow/list";
 	elgg_register_action('workflow/list/move', "$action_base/move.php");
 	elgg_register_action('workflow/list/add', "$action_base/add.php");
+	elgg_register_action('workflow/list/delete', "$action_base/delete.php");
 
 	// Register entity type
 	elgg_register_entity_type('object', 'workflow_list');
@@ -200,7 +201,7 @@ function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete-alt'),
 			'title' => elgg_echo('workflow_list:delete', array($tasklist->title)),
-			'href' => "action/workflow_list/delete?workflow_list_guid=$workflow_list->guid",
+			'href' => "action/workflow/list/delete?list_guid=$workflow_list->guid",
 			'is_action' => true,
 			'class' => 'workflow-list-delete-button',
 			'id' => "workflow-list-delete-button-$workflow_list->guid",

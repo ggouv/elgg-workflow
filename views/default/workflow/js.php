@@ -59,8 +59,9 @@ workflow.init = function() {
 			ListWidth = (WorkflowWidth) / ( CountLists - i );
 			i++;
 		}
-		$('.workflow-list, .workflow-list-placeholder').width(ListWidth - 8);
-		$('.workflow-lists').width(ListWidth * CountLists);
+		$('.workflow-list, .workflow-list-placeholder').width(ListWidth);
+		$('.workflow-lists').width( (ListWidth + 5 + 4) * CountLists - 5); // margin + border minus last margin doesn't displayed
+
 	}
 }
 elgg.register_hook_handler('init', 'system', workflow.init);
@@ -92,38 +93,13 @@ workflow.list.init = function() {
 	});
 
 	$('.elgg-form-workflow-add-list-popup .elgg-button-submit').live('click', workflow.list.add);
-//	$('li.elgg-menu-item-add-list a.elgg-button-action').live('click', workflow.list.remove);
+	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', workflow.list.remove);
 //	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 //	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
 //	elgg.ui.widgets.setMinHeight(".elgg-widgets");
 };
 elgg.register_hook_handler('init', 'system', workflow.list.init);
-
-/**
- * Adds a new list
- *
- * Makes Ajax call to persist new list and inserts the list html
- *
- * @param {Object} event
- * @return void
- */
-workflow.list.add = function(event) {
-	list_title = $('.elgg-form-workflow-add-list-popup .elgg-input-text').val();
-	elgg.action('workflow/list/add', {
-		data: {
-			user_guid: elgg.get_logged_in_user_guid(),
-			container_guid: elgg.get_page_owner_guid(),
-			list_title: list_title,
-		},
-		success: function(json) {
-			//$('#elgg-widget-col-1').prepend(json.output);
-		}
-	});
-	$('#add-list').hide();
-	event.preventDefault();
-	return false;
-};
 
 /**
  * Persist the list's new position
@@ -151,37 +127,52 @@ workflow.list.move = function(event, ui) {
 	ui.item.css('left', 0);
 };
 
-///**
-// * Removes a widget from the layout
-// *
-// * Event callback the uses Ajax to delete the widget and removes its HTML
-// *
-// * @param {Object} event
-// * @return void
-// */
-//elgg.ui.widgets.remove = function(event) {
-//	var $widget = $(this).closest('.elgg-module-widget');
+/**
+ * Adds a new list
+ *
+ * Makes Ajax call to persist new list and inserts the list html
+ *
+ * @param {Object} event
+ * @return void
+ */
+workflow.list.add = function(event) {
+	list_title = $('.elgg-form-workflow-add-list-popup .elgg-input-text').val();
+	elgg.action('workflow/list/add', {
+		data: {
+			user_guid: elgg.get_logged_in_user_guid(),
+			container_guid: elgg.get_page_owner_guid(),
+			list_title: list_title,
+		},
+		success: function(json) {
+			//$('#elgg-widget-col-1').prepend(json.output);
+		}
+	});
+	$('#add-list').hide();
+	event.preventDefault();
+	return false;
+};
 
-//	// if widget type is single instance type, enable the add buton
-//	var type = $widget.attr('class');
-//	// elgg-widget-instance-<type>
-//	type = type.substr(type.indexOf('elgg-widget-instance-') + "elgg-widget-instance-".length);
-//	$button = $('#elgg-widget-type-' + type);
-//	var multiple = $button.attr('class').indexOf('elgg-widget-multiple') != -1;
-//	if (multiple == false) {
-//		$button.addClass('elgg-state-available');
-//		$button.removeClass('elgg-state-unavailable');
-//		$button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
-//		$button.click(elgg.ui.widgets.add);
-//	}
+/**
+ * Removes a list from the layout
+ *
+ * Event callback the uses Ajax to delete the list and removes its HTML
+ *
+ * @param {Object} event
+ * @return void
+ */
+workflow.list.remove = function(event) {
+	var $list = $(this).closest('.workflow-list');
 
-//	$widget.remove();
+	$list.remove();
+	var WorkflowWidth = $('.workflow-lists').width();
+	$('.workflow-lists').width(WorkflowWidth - $('.workflow-list').width() - 5 - 4);
 
-//	// delete the widget through ajax
-//	elgg.action($(this).attr('href'));
+	// delete the widget through ajax
+	elgg.action($(this).attr('href'));
 
-//	event.preventDefault();
-//};
+	event.preventDefault();
+	//return false;
+};
 
 ///**
 // * Toggle the collapse state of the widget

@@ -119,6 +119,8 @@ $english = array(
 	'workflow:list:add:failure' => "Error with server connexion. Add list doesn't saved.",
 	'workflow:list:add:cannotadd' => "You cannot add a list for this group.",
 	'workflow:list:add:success' => "List successfully added.",
+	'workflow:list:delete:failure' => "Delete list doesn't saved.",
+	'workflow:list:delete:success' => "List deleted.",
 /*
 	'tasks:noaccess' => 'No access to task',
 	'tasks:cantedit' => 'You cannot edit this task',

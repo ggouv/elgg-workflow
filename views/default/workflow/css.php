@@ -3,7 +3,7 @@
 	width: 200px;
 }
 .workflow-lists-container {
-	overflow-x: scroll;
+	overflow-x: auto;
 }
 .workflow-list {
 	float: left;
