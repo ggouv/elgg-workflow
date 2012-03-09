@@ -21,7 +21,7 @@ if ($container->canEdit()) {
 	$nbr_lists = elgg_get_entities(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_list',
-		'container_guid' => $group->guid,
+		'container_guid' => $container_guid,
 		'count' => true,
 	)); 
 

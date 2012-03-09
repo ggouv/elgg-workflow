@@ -69,3 +69,27 @@
 	width: 100%;
 }
 
+
+.workflow-list > .elgg-foot {
+	background-color: #EEEEEE;
+	overflow: hidden;
+	width: 100%;
+}
+.elgg-form-workflow-list-add-card .elgg-input-text {
+	border: 1px solid transparent;
+	background-color: transparent;
+	cursor: pointer;
+}
+.elgg-form-workflow-list-add-card .elgg-input-text:focus {
+	cursor: text;
+}
+.elgg-form-workflow-list-add-card .elgg-icon-delete {
+	margin-top: 2px;
+	cursor: pointer;
+	display: none;
+	float: left;
+}
+.elgg-form-workflow-list-add-card .elgg-button-submit {
+	display: none;
+	float: left;
+}

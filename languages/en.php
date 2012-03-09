@@ -24,6 +24,7 @@ $english = array(
 	'groups:enableworkflow' => "Enable group workflow",
 
 	'workflow:list:none' => "No list created yet",
+
 /*
 	'tasks' => "Tasks",
 	'tasks:owner' => "%s's tasks",
@@ -65,6 +66,7 @@ $english = array(
 	* River
 	**/
 	'river:create:object:workflow_list' => '%s added a new list %s',
+	'river:create:object:workflow_card' => '%s added a new card %s',
 /*
 	'river:create:object:task' => '%s created a task %s',
 	'river:create:object:tasklist' => '%s created a task list %s',
@@ -76,6 +78,8 @@ $english = array(
 	/**
 	 * Form fields
 	 */
+	'workflow:list:add_list' => "Add list",
+	'workflow:list:add_card' => "Add card",
 /*
 	'tasks:title' => 'Name',
 	'tasks:description' => 'Description',
@@ -121,6 +125,10 @@ $english = array(
 	'workflow:list:add:success' => "List successfully added.",
 	'workflow:list:delete:failure' => "Delete list doesn't saved.",
 	'workflow:list:delete:success' => "List deleted.",
+
+	'workflow:card:add:failure' => "Error with server connexion. Add card doesn't saved.",
+	'workflow:card:add:cannotadd' => "You cannot add a card for this group.",
+	'workflow:card:add:success' => "Card successfully added.",
 /*
 	'tasks:noaccess' => 'No access to task',
 	'tasks:cantedit' => 'You cannot edit this task',

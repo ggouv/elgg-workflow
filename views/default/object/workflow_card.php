@@ -6,25 +6,39 @@
  *	@license GNU Affero General Public License, version 3 or late
  *	@link https://github.com/ManUtopiK/elgg-workflow
  *
- *	Elgg-workflow view for workflow_list object
+ *	Elgg-workflow view for workflow_card object
  *
  */
 
-$workflow_list = elgg_extract('entity', $vars, FALSE);
+$workflow_card = elgg_extract('entity', $vars, FALSE);
 
-if (!$workflow_list) {
+if (!$workflow_card) {
 	return TRUE;
 }
 
 $view_type = elgg_extract('view_type', $vars, FALSE);
-$container = $workflow_list->getContainerEntity();
+$container = $workflow_card->getContainerEntity();
 $user = elgg_get_logged_in_user_entity();
 
 if ($view_type == 'group') {
 
-	$workflow_list_id = "workflow-list-$workflow_list->guid";
-	$workflow_list_class = " workflow-list mrs";
+	$workflow_card_id = "workflow-card-$workflow_card->guid";
+	$workflow_card_class = " workflow-card mrs";
 
+	$excerpt = elgg_get_excerpt($workflow_card->description);
+
+	$params = array(
+		'entity' => $workflow_card,
+		'metadata' => $metadata,
+		'title' => $workflow_card->title,
+		'tags' => $tags,
+		'content' => $excerpt,
+	);
+	$params = $params + $vars;
+	echo elgg_view('object/elements/summary', $params);
+
+
+/*
 	$edit_area = '';
 	$can_edit = is_group_member($container->guid, $user->guid);
 	if ($can_edit) {
@@ -44,28 +58,6 @@ if ($view_type == 'group') {
 		$workflow_list_class .= " elgg-state-fixed";
 	}
 
-	// get cards of this list
-	$cards = elgg_get_entities(array(
-		'type' => 'object',
-		'subtypes' => 'workflow_card',
-		'container_guid' => $workflow_list->guid,
-	));
-
-	$sorted_cards = array();
-	foreach ($cards as $card) {
-		$sorted_cards[$card->order] = $card;
-	}
-	ksort($sorted_cards);
-
-	$num_cards = count($cards);
-
-	$content = "<div class='workflow-cards'>";
-	for ($card_index = 1; $card_index <= $num_cards; $card_index++) {
-		$cardguid = $sorted_cards[$card_index-1]->guid;
-		$content .= elgg_view_entity($sorted_cards[$card_index-1], array('view_type' => 'group'));
-	}
-	$content .= "</div>";
-
 	$title = elgg_view_icon('list') . $workflow_list->title;
 
 $workflow_list_header = <<<HEADER
@@ -73,6 +65,11 @@ $workflow_list_header = <<<HEADER
 	$controls
 	</div>
 HEADER;
+
+	$content = elgg_list_entities(array(
+		'container_guid' => $workflow_list->guid,
+		'full_view' => false,
+	));
 
 $workflow_list_body = <<<BODY
 	$edit_area
@@ -88,6 +85,9 @@ BODY;
 		'header' => $workflow_list_header,
 		'footer' => $workflow_list_footer,
 	));
+
+
+*/
 }
 /*
 $icon = elgg_view('icon/default', array('entity' => $tasklist, 'size' => 'small'));

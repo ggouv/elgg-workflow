@@ -42,9 +42,14 @@ function workflow_init() {
 	elgg_register_action('workflow/list/move', "$action_base/move.php");
 	elgg_register_action('workflow/list/add', "$action_base/add.php");
 	elgg_register_action('workflow/list/delete', "$action_base/delete.php");
+	// actions for card
+	$action_base = "$root/actions/workflow/card";
+	//elgg_register_action('workflow/card/move', "$action_base/move.php");
+	elgg_register_action('workflow/card/add', "$action_base/add.php");
 
 	// Register entity type
 	elgg_register_entity_type('object', 'workflow_list');
+	elgg_register_entity_type('object', 'workflow_card');
 
 	// Register entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:workflow_list', 'workflow_list_entity_menu_setup');

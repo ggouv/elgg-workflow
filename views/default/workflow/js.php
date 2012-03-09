@@ -22,25 +22,10 @@ workflow.init = function() {
 		if ( $('.workflow-lists-container').length == 0) {
 			return;
 		}
+		workflow.list.resize();
 
 		// hack for button add list
 		$('li.elgg-menu-item-add-list a.elgg-button-action').attr("href", "#add-list").attr("rel", "popup"); 
-
-		if (!$.isFunction(scrollbarWidth)) { // in case of function already exist
-			function scrollbarWidth() {
-				if (!$._scrollbarWidth) {
-					var $body = $('body');
-					var w = $body.css('overflow', 'hidden').width();
-					$body.css('overflow','scroll');
-					w -= $body.width();
-					if (!w) w=$body.width()-$body[0].clientWidth; // IE in standards mode
-					$body.css('overflow','');
-					$._scrollbarWidth = w+1;
-				}
-				return $._scrollbarWidth;
-			}
-		}
-		workflow.list.resize();
 
 	});
 
@@ -82,10 +67,23 @@ workflow.list.init = function() {
 
 	$('.elgg-form-workflow-add-list-popup .elgg-button-submit').live('click', workflow.list.add);
 	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', workflow.list.remove);
+	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusin(function(){
+		$(this).val('');
+		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'block');
+	});
+	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusout(function(){
+		if ( $(this).val() == '' ) {
+			$(this).val(elgg.echo("workflow:list:add_card"));
+			$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
+		}
+	});
+	$('.elgg-form-workflow-list-add-card .elgg-icon-delete').live('click', function(){
+		$(this).val(elgg.echo("workflow:list:add_card"));
+		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
+	});
 //	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 //	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
-//	elgg.ui.widgets.setMinHeight(".elgg-widgets");
 };
 elgg.register_hook_handler('init', 'system', workflow.list.init);
 
@@ -155,14 +153,87 @@ workflow.list.remove = function(event) {
 
 	$list.remove();
 	workflow.list.resize();
-	//var WorkflowWidth = $('.workflow-lists').width();
-	//$('.workflow-lists').width(WorkflowWidth - $('.workflow-list').width() - 5 - 4);
 
 	// delete the widget through ajax
 	elgg.action($(this).attr('href'));
 
 	event.preventDefault();
 	//return false;
+};
+
+/**
+ * Workflow card initialization
+ *
+ * @return void
+ */
+elgg.provide('workflow.card');
+
+workflow.card.init = function() {
+
+	// workflow layout?
+	if ($(".workflow-lists-container").length == 0) {
+		return;
+	}
+/*
+	$(".workflow-lists").sortable({
+		items:                'div.workflow-list.elgg-state-draggable',
+		connectWith:          '.workflow-lists',
+		handle:               '.workflow-list-handle',
+		forcePlaceholderSize: true,
+		placeholder:          'workflow-list-placeholder',
+		opacity:              0.8,
+		revert:               500,
+		stop:                 workflow.list.move
+	});
+*/
+	$('.elgg-form-workflow-list-add-card .elgg-button-submit').live('click', workflow.card.add);
+/*
+	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', workflow.list.remove);
+	$('.elgg-form-workflow-list-add-card .elgg-input-text').live('click', function(){
+		$(this).val('');
+		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').show();
+	});
+	$('.elgg-form-workflow-list-add-card .elgg-icon-delete').live('click', function(){
+		$(this).val(elgg.echo("workflow:list:add_card"));
+		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').hide();
+	});
+//	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
+//	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
+*/
+};
+elgg.register_hook_handler('init', 'system', workflow.card.init);
+
+/**
+ * Adds a new card
+ *
+ * Makes Ajax call to persist new card and inserts the card html
+ *
+ * @param {Object} event
+ * @return void
+ */
+workflow.card.add = function(event) {
+	workflow_list = $(this).parent().find('[name=workflow_list]').val();
+	card_title = $(this).parent().find('.elgg-input-text').val();
+
+	if (card_title) {
+		elgg.action('workflow/card/add', {
+			data: {
+				user_guid: elgg.get_logged_in_user_guid(),
+				container_guid: workflow_list,
+				card_title: card_title,
+			},
+			success: function(json) {
+				$('#workflow-list-content-' + workflow_list + ' .workflow-cards').append(json.output);
+				//$('.workflow-lists-container').animate({ scrollLeft: $('.workflow-lists-container').width()});
+
+			}
+		});
+	}
+
+	$(this).parent().find('.elgg-input-text').val(elgg.echo("workflow:list:add_card"));
+	$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').hide();
+	event.preventDefault();
+	return false;
 };
 
 ///**
@@ -250,6 +321,22 @@ elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
 
 /**
  * Resize lists
+
+		if (!$.isFunction(scrollbarWidth)) { // in case of function already exist
+			function scrollbarWidth() {
+				if (!$._scrollbarWidth) {
+					var $body = $('body');
+					var w = $body.css('overflow', 'hidden').width();
+					$body.css('overflow','scroll');
+					w -= $body.width();
+					if (!w) w=$body.width()-$body[0].clientWidth; // IE in standards mode
+					$body.css('overflow','');
+					$._scrollbarWidth = w+1;
+				}
+				return $._scrollbarWidth;
+			}
+		}
+
  */
 workflow.list.resize = function() {
 	var WorkflowWidth = $('.workflow-lists-container').width();

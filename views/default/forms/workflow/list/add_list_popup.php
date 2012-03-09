@@ -13,7 +13,7 @@
 
 <div class='mbs'>
 	<label><?php echo elgg_echo('title'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => elgg_echo("list"))); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => elgg_echo("workflow:list:add_list"))); ?>
 </div>
 
 <?php echo elgg_view('input/submit', array('value' => elgg_echo("save"))); ?>

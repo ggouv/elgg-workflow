@@ -9,5 +9,5 @@ $workflow_list = elgg_extract('workflow_list', $vars);
 ?>
 
 <div class="workflow-list-edit" id="workflow-list-edit-<?php echo $workflow_list->guid; ?>">
-	<?php //@todo  echo elgg_view_form('tasks/tasklist/save', array(), $vars); ?>
+	<?php //@todo  echo elgg_view_form('workflow/workflow-list/save', array(), $vars); ?>
 </div>
