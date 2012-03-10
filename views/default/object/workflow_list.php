@@ -64,6 +64,7 @@ if ($view_type == 'group') {
 		$cardguid = $sorted_cards[$card_index-1]->guid;
 		$content .= elgg_view_entity($sorted_cards[$card_index-1], array('view_type' => 'group'));
 	}
+	$content .= '<div class="workflow-card-none elgg-module workflow-card elgg-state-draggable"><div class="elgg-body"></div></div>'; // hack for empty list and sortable jquery.ui
 	$content .= "</div>";
 
 	$title = elgg_view_icon('list') . $workflow_list->title;

@@ -19,29 +19,15 @@ if (!$workflow_card) {
 $view_type = elgg_extract('view_type', $vars, FALSE);
 $container = $workflow_card->getContainerEntity();
 $user = elgg_get_logged_in_user_entity();
-
+global $fb; $fb->info($workflow_card);
 if ($view_type == 'group') {
 
 	$workflow_card_id = "workflow-card-$workflow_card->guid";
-	$workflow_card_class = " workflow-card mrs";
+	$workflow_card_class = "workflow-card mrs";
 
-	$excerpt = elgg_get_excerpt($workflow_card->description);
-
-	$params = array(
-		'entity' => $workflow_card,
-		'metadata' => $metadata,
-		'title' => $workflow_card->title,
-		'tags' => $tags,
-		'content' => $excerpt,
-	);
-	$params = $params + $vars;
-	echo elgg_view('object/elements/summary', $params);
-
-
-/*
 	$edit_area = '';
-	$can_edit = is_group_member($container->guid, $user->guid);
-	if ($can_edit) {
+	$can_edit = is_group_member($container->container_guid, $user->guid);
+	if ($can_edit) {/*
 		$controls = elgg_view('object/workflow_list/elements/controls', array(
 			'workflow_list' => $workflow_list,
 			'show_edit' => $edit_area != '',
@@ -51,43 +37,41 @@ if ($view_type == 'group') {
 		));
 		$workflow_list_footer = elgg_view('object/workflow_list/elements/footer', array(
 			'workflow_list' => $workflow_list,
-		));
+		));*/
 
-		$workflow_list_class .= " elgg-state-draggable";
+		$workflow_card_class .= " elgg-state-draggable";
 	} else {
-		$workflow_list_class .= " elgg-state-fixed";
+		$workflow_card_class .= " elgg-state-fixed";
 	}
 
-	$title = elgg_view_icon('list') . $workflow_list->title;
+	$title = $workflow_card->title;
 
-$workflow_list_header = <<<HEADER
-	<div class="workflow-list-handle clearfix"><h3>$title</h3>
+$workflow_card_header = <<<HEADER
+	<div class="workflow-card-handle clearfix"><h3>$title</h3>
 	$controls
 	</div>
 HEADER;
-
+/*
 	$content = elgg_list_entities(array(
 		'container_guid' => $workflow_list->guid,
 		'full_view' => false,
 	));
-
-$workflow_list_body = <<<BODY
+*/
+$workflow_card_body = <<<BODY
 	$edit_area
-	<div class="workflow-list-content" id="workflow-list-content-$workflow_list->guid">
+	<div class="workflow-card-content" id="workflow-card-content-$workflow_card->guid">
 		$content
 	</div>
 BODY;
 
 	echo elgg_view('page/components/module', array(
-		'class' => $workflow_list_class,
-		'id' => $workflow_list_id,
-		'body' => $workflow_list_body,
-		'header' => $workflow_list_header,
-		'footer' => $workflow_list_footer,
+		'class' => $workflow_card_class,
+		'id' => $workflow_card_id,
+		'body' => $workflow_card_body,
+		'header' => $workflow_card_header,
+		'footer' => $workflow_card_footer,
 	));
 
-
-*/
 }
 /*
 $icon = elgg_view('icon/default', array('entity' => $tasklist, 'size' => 'small'));

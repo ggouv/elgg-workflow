@@ -54,7 +54,7 @@ workflow.list.init = function() {
 		return;
 	}
 
-	$(".workflow-lists").sortable({
+	$(".workflow-lists-container").sortable({
 		items:                'div.workflow-list.elgg-state-draggable',
 		connectWith:          '.workflow-lists',
 		handle:               '.workflow-list-handle',
@@ -65,11 +65,19 @@ workflow.list.init = function() {
 		stop:                 workflow.list.move
 	});
 
-	$('.elgg-form-workflow-add-list-popup .elgg-button-submit').live('click', workflow.list.add);
-	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', workflow.list.remove);
+	// add list popup
+	$('.elgg-form-workflow-list-add-list-popup .elgg-button-submit').live('click', workflow.list.add);
 	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusin(function(){
 		$(this).val('');
-		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'block');
+	});
+	// delete list button 
+	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', workflow.list.remove);
+	// add card from list footer
+	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusin(function(){
+		if ( $(this).val() == elgg.echo("workflow:list:add_card") ) {
+			$(this).val('');
+			$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'block');
+		}
 	});
 	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusout(function(){
 		if ( $(this).val() == '' ) {
@@ -96,7 +104,6 @@ elgg.register_hook_handler('init', 'system', workflow.list.init);
  * @return void
  */
 workflow.list.move = function(event, ui) {
-
 	// workflow-list-<guid>
 	var guidString = ui.item.attr('id');
 	guidString = guidString.substr(guidString.indexOf('workflow-list-') + "workflow-list-".length);
@@ -122,7 +129,7 @@ workflow.list.move = function(event, ui) {
  * @return void
  */
 workflow.list.add = function(event) {
-	list_title = $('.elgg-form-workflow-add-list-popup .elgg-input-text').val();
+	list_title = $('.elgg-form-workflow-list-add-list-popup .elgg-input-text').val();
 	elgg.action('workflow/list/add', {
 		data: {
 			user_guid: elgg.get_logged_in_user_guid(),
@@ -169,23 +176,22 @@ workflow.list.remove = function(event) {
 elgg.provide('workflow.card');
 
 workflow.card.init = function() {
-
 	// workflow layout?
 	if ($(".workflow-lists-container").length == 0) {
 		return;
 	}
-/*
+
 	$(".workflow-lists").sortable({
-		items:                'div.workflow-list.elgg-state-draggable',
-		connectWith:          '.workflow-lists',
-		handle:               '.workflow-list-handle',
+		items:                'div.workflow-card.elgg-state-draggable',
+		connectWith:          '.workflow-cards',
+		handle:               '.workflow-card-handle',
 		forcePlaceholderSize: true,
-		placeholder:          'workflow-list-placeholder',
-		opacity:              0.8,
+		placeholder:          'workflow-card-placeholder',
 		revert:               500,
-		stop:                 workflow.list.move
+		dropOnEmpty: true,
+		stop:                 workflow.card.move
 	});
-*/
+
 	$('.elgg-form-workflow-list-add-card .elgg-button-submit').live('click', workflow.card.add);
 /*
 	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', workflow.list.remove);
@@ -202,6 +208,42 @@ workflow.card.init = function() {
 */
 };
 elgg.register_hook_handler('init', 'system', workflow.card.init);
+
+/**
+ * Persist the card's new position
+ *
+ * @param {Object} event
+ * @param {Object} ui
+ *
+ * @return void
+ */
+workflow.card.move = function(event, ui) {
+	// workflow-card-<guid>
+	var card_guidString = ui.item.attr('id');
+	card_guidString = card_guidString.substr(card_guidString.indexOf('workflow-card-') + "workflow-card-".length);
+	// workflow-list-<guid>
+	var list_guidString = ui.item.parents('.workflow-list').attr('id');
+	list_guidString = list_guidString.substr(list_guidString.indexOf('workflow-list-') + "workflow-list-".length);
+
+	// hack for empty list and sortable jquery.ui (dropOnEmpty doesn't work cause multiple div)
+	pos = 0;
+	ui.item.parents('.workflow-list').find('.workflow-card').each(function() {
+		if ( $(this).attr('id') == 'workflow-card-'+card_guidString ) return false;
+		if (!$(this).hasClass('workflow-card-none')) pos++;
+	});
+
+	elgg.action('workflow/card/move', {
+		data: {
+			card_guid: card_guidString,
+			list_guid: list_guidString,
+			position: pos
+		}
+	});
+
+	// @hack fixes jquery-ui/opera bug where draggable elements jump
+	ui.item.css('top', 0);
+	ui.item.css('left', 0);
+};
 
 /**
  * Adds a new card

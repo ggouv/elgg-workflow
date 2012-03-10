@@ -12,7 +12,7 @@
 
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $container_guid = get_input('container_guid', elgg_get_page_owner_guid());
-$list_title = get_input('list_title', 'List');
+$list_title = get_input('list_title', 'a list');
 
 $container = get_entity($container_guid);
 

@@ -1,9 +1,13 @@
+/* CSS for list in group view */
 #add-list {
 	display: none;
 	width: 200px;
 }
 .workflow-lists-container {
 	overflow-x: auto;
+}
+.workflow-list.elgg-module {
+	overflow: visible;
 }
 .workflow-list {
 	float: left;
@@ -64,12 +68,10 @@
 	width: 96%;
 }
 .workflow-list > .elgg-body {
-	background-color: white;
+	background-color: #EEEEEE;
 	overflow: hidden;
 	width: 100%;
 }
-
-
 .workflow-list > .elgg-foot {
 	background-color: #EEEEEE;
 	overflow: hidden;
@@ -92,4 +94,50 @@
 .elgg-form-workflow-list-add-card .elgg-button-submit {
 	display: none;
 	float: left;
+}
+
+/* CSS for card in group view */
+.workflow-cards {
+	min-height: 26px;
+}
+.workflow-card {
+	float: left;
+	background-color: white;
+	border: 1px solid #DEDEDE;
+	padding: 2px;
+	position: relative;
+	margin: 2px;
+	z-index: 1;
+	-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+}
+.workflow-card-none {
+	border: 1px solid transparent;
+	padding: 0px;
+	position: absolute;
+	height: 22px;
+	background-color: transparent;
+	z-index: 0;
+}
+.workflow-card.elgg-state-draggable .workflow-card-handle {
+	cursor: move;
+}
+.workflow-card h3 {
+	font-size: 1em;
+}
+.workflow-card-placeholder {
+	float: left;
+	border: 2px dashed #dedede;
+	margin: 2px;
+}
+.workflow-card.ui-sortable-helper {
+	-moz-transform: rotate(1deg);
+		-webkit-transform: rotate(1deg);
+		-o-transform: rotate(1deg);
+		-ms-transform: rotate(1deg);
+		transform: rotate(1deg);
+	-webkit-box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+		-moz-box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+		box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2); 
 }

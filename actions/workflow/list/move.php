@@ -17,7 +17,7 @@ $owner_guid = get_input('owner_guid', elgg_get_logged_in_user_guid());
 $moved_list = get_entity($list_guid);
 $owner = get_entity($owner_guid);
 
-if ($moved_list && $owner->canEdit()) {
+if ($moved_list && $moved_list->canEdit($owner_guid)) {
 
 	$lists = elgg_get_entities(array(
 		'type' => 'object',
