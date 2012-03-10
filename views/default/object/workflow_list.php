@@ -23,7 +23,7 @@ $user = elgg_get_logged_in_user_entity();
 if ($view_type == 'group') {
 
 	$workflow_list_id = "workflow-list-$workflow_list->guid";
-	$workflow_list_class = " workflow-list mrs";
+	$workflow_list_class = " workflow-list mls";
 
 	$edit_area = '';
 	$can_edit = is_group_member($container->guid, $user->guid);

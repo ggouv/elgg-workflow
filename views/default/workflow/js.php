@@ -67,8 +67,11 @@ workflow.list.init = function() {
 
 	// add list popup
 	$('.elgg-form-workflow-list-add-list-popup .elgg-button-submit').live('click', workflow.list.add);
-	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusin(function(){
-		$(this).val('');
+	$('.elgg-form-workflow-list-add-list-popup .elgg-input-text').focusin(function(){
+		if ( $(this).val() == elgg.echo("workflow:add_list") ) $(this).val('');
+	});
+	$('.elgg-form-workflow-list-add-list-popup .elgg-input-text').focusout(function(){
+		if ( $(this).val() == '' ) $(this).val(elgg.echo("workflow:add_list"));
 	});
 	// delete list button 
 	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', workflow.list.remove);

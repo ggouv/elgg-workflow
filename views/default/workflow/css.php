@@ -18,16 +18,16 @@
 .workflow-list:hover {
 	background-color: #CCCCCC;
 }
-.workflow-list:last-child {
-	margin-right: 0px;
+.workflow-list:first-child {
+	margin-left: 0px;
 }
 .workflow-list-placeholder {
 	float: left;
 	border: 2px dashed #dedede;
-	margin-right: 5px;
+	margin-left: 5px;
 }
-.workflow-list-placeholder:last-child {
-	margin-right: 0px;
+.workflow-list-placeholder:nth-child(2) {
+	margin-left: 0px;
 }
 .workflow-list > .elgg-head {
 	background-color: #EEEEEE;
@@ -98,7 +98,7 @@
 
 /* CSS for card in group view */
 .workflow-cards {
-	min-height: 26px;
+	min-height: 28px;
 }
 .workflow-card {
 	float: left;
@@ -111,6 +111,9 @@
 	-webkit-border-radius: 4px;
 		-moz-border-radius: 4px;
 		border-radius: 4px;
+}
+.workflow-card:hover {
+	border: 1px solid #CCCCCC;
 }
 .workflow-card-none {
 	border: 1px solid transparent;
