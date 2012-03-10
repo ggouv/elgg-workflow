@@ -76,22 +76,7 @@ workflow.list.init = function() {
 	// delete list button 
 	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', workflow.list.remove);
 	// add card from list footer
-	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusin(function(){
-		if ( $(this).val() == elgg.echo("workflow:list:add_card") ) {
-			$(this).val('');
-			$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'block');
-		}
-	});
-	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusout(function(){
-		if ( $(this).val() == '' ) {
-			$(this).val(elgg.echo("workflow:list:add_card"));
-			$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
-		}
-	});
-	$('.elgg-form-workflow-list-add-card .elgg-icon-delete').live('click', function(){
-		$(this).val(elgg.echo("workflow:list:add_card"));
-		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
-	});
+	workflow.list.addCard();
 //	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 //	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
@@ -140,7 +125,12 @@ workflow.list.add = function(event) {
 			list_title: list_title,
 		},
 		success: function(json) {
+			if ( $('.workflow-lists').length == 0 ) {
+				$('.workflow-lists-container p').remove();
+				$('.workflow-lists-container').append('<div class="workflow-lists ui-sortable"></div>');
+			}
 			$('.workflow-lists').append(json.output);
+			workflow.list.addCard();
 			workflow.list.resize();
 			$('.workflow-lists-container').animate({ scrollLeft: $('.workflow-lists-container').width()});
 		}
@@ -172,6 +162,57 @@ workflow.list.remove = function(event) {
 };
 
 /**
+ * Reposition popup add list
+ */
+elgg.ui.addListPopup = function(hook, type, params, options) {
+	if (params.target.attr('id') == 'add-list') {
+		options.my = 'right top';
+		options.at = 'right bottom';
+		return options;
+	}
+	return null;
+};
+elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
+
+/**
+ * Resize lists
+ */
+workflow.list.resize = function() {
+	var WorkflowWidth = $('.workflow-lists-container').width();
+	var CountLists = $('.workflow-list').length;
+	var ListWidth = 0; var i = 0;
+	if ( (parseInt(workflow_min_width_list) + 5 + 4) * CountLists > (WorkflowWidth - 5) ) {
+		ListWidth = parseInt(workflow_min_width_list);
+		$('.workflow-lists').width( (ListWidth + 5 + 4) * CountLists - 5); // margin + border minus last margin doesn't displayed
+	} else {
+		ListWidth = (WorkflowWidth - (9*CountLists) + 5 ) / CountLists;
+		$('.workflow-lists').width(WorkflowWidth);
+	}
+	$('.workflow-list, .workflow-list-placeholder').width(ListWidth);
+}
+/**
+ * Attach event on text area to add card on list
+ */
+workflow.list.addCard = function() {
+	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusin(function(){
+		if ( $(this).val() == elgg.echo("workflow:list:add_card") ) {
+			$(this).val('');
+			$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'block');
+		}
+	});
+	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusout(function(){
+		if ( $(this).val() == '' ) {
+			$(this).val(elgg.echo("workflow:list:add_card"));
+			$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
+		}
+	});
+	$('.elgg-form-workflow-list-add-card .elgg-icon-delete').live('click', function(){
+		$(this).val(elgg.echo("workflow:list:add_card"));
+		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
+	});
+}
+
+/**
  * Workflow card initialization
  *
  * @return void
@@ -196,19 +237,6 @@ workflow.card.init = function() {
 	});
 
 	$('.elgg-form-workflow-list-add-card .elgg-button-submit').live('click', workflow.card.add);
-/*
-	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', workflow.list.remove);
-	$('.elgg-form-workflow-list-add-card .elgg-input-text').live('click', function(){
-		$(this).val('');
-		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').show();
-	});
-	$('.elgg-form-workflow-list-add-card .elgg-icon-delete').live('click', function(){
-		$(this).val(elgg.echo("workflow:list:add_card"));
-		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').hide();
-	});
-//	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
-//	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
-*/
 };
 elgg.register_hook_handler('init', 'system', workflow.card.init);
 
@@ -350,52 +378,5 @@ workflow.card.add = function(event) {
 //		}
 //	})
 //};
-
-/**
- * Reposition popups
- */
-elgg.ui.addListPopup = function(hook, type, params, options) {
-	if (params.target.attr('id') == 'add-list') {
-		options.my = 'right top';
-		options.at = 'right bottom';
-		return options;
-	}
-	return null;
-};
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
-
-/**
- * Resize lists
-
-		if (!$.isFunction(scrollbarWidth)) { // in case of function already exist
-			function scrollbarWidth() {
-				if (!$._scrollbarWidth) {
-					var $body = $('body');
-					var w = $body.css('overflow', 'hidden').width();
-					$body.css('overflow','scroll');
-					w -= $body.width();
-					if (!w) w=$body.width()-$body[0].clientWidth; // IE in standards mode
-					$body.css('overflow','');
-					$._scrollbarWidth = w+1;
-				}
-				return $._scrollbarWidth;
-			}
-		}
-
- */
-workflow.list.resize = function() {
-	var WorkflowWidth = $('.workflow-lists-container').width();
-	var CountLists = $('.workflow-list').length;
-	var ListWidth = 0; var i = 0;
-	if ( (parseInt(workflow_min_width_list) + 5 + 4) * CountLists > (WorkflowWidth - 5) ) {
-		ListWidth = parseInt(workflow_min_width_list);
-		$('.workflow-lists').width( (ListWidth + 5 + 4) * CountLists - 5); // margin + border minus last margin doesn't displayed
-	} else {
-		ListWidth = (WorkflowWidth - (9*CountLists) + 5 ) / CountLists;
-		$('.workflow-lists').width(WorkflowWidth);
-	}
-	$('.workflow-list, .workflow-list-placeholder').width(ListWidth);
-
-}
 
 // End of js for elgg-workflow plugin

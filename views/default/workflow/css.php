@@ -126,6 +126,9 @@
 .workflow-card.elgg-state-draggable .workflow-card-handle {
 	cursor: move;
 }
+.workflow-card:hover {
+	border: 1px solid transparent;
+}
 .workflow-card h3 {
 	font-size: 1em;
 }
