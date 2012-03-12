@@ -44,9 +44,10 @@
 .workflow-list.elgg-state-draggable .workflow-list-handle {
 	cursor: move;
 }
-.workflow-list .elgg-icon-list {
-	margin: 0 6px 4px;
+.workflow-list .elgg-icon-workflow-list {
+	margin: 0 0 4px 4px;
 	vertical-align: middle;
+	background-position: -5px -540px;
 }
 .elgg-menu-workflow-list > li {
 	display: inline-block;
@@ -132,7 +133,10 @@
 	cursor: move;
 }
 .workflow-card h3 {
-	font-size: 1em;
+	font-size: 1.1em;
+}
+.workflow-card h3 a {
+	color: #0054A7;
 }
 .workflow-card-placeholder {
 	float: left;
@@ -148,4 +152,58 @@
 	-webkit-box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
 		-moz-box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
 		box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2); 
+}
+.workflow-card-info div {
+	color: #AAA;
+	float: left;
+	padding: 0 3px;
+	font-size: 0.9em;
+	height: 18px;
+	margin: 2px 2px 0 0;
+	background-color: #EEEEEE;
+	-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+}
+.workflow-card-info span {
+	vertical-align: middle;
+	background-size: 90% auto;
+	height: 12px;
+	width: 12px;
+	margin: 0 2px 0 0;
+}
+.workflow-card-info .elgg-icon-workflow-info {
+	background-position: 0 -316px;
+	margin: 3px 0 0;
+}
+.workflow-card-info .elgg-icon-workflow-speech-bubble {
+	background-position: 0 -754px;
+}
+.workflow-card-info .workflow-card-comment {
+	color: #4690D6;
+}
+.workflow-card-info .workflow-card-duedate-overdue {
+	background-color: tomato;
+	color: #666;
+}
+.workflow-card-info .elgg-icon-workflow-calendar {
+	background-size: 100% auto;
+	background-position: 0 -68px;
+	margin-top: -2px;
+}
+.workflow-card-info .elgg-icon-workflow-checklist {
+	background-position: 0 -365px;
+}
+.workflow-card-info .workflow-card-checklist-complete {
+	background-color: Palegreen;
+}
+.workflow-card-assignedto {
+	clear: both;
+	float: right;
+	margin-top: 2px;
+}
+#workflow-card-popup {
+	display: none;
+	height: 100px;
+	width: 100px;
 }

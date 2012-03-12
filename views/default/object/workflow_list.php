@@ -67,7 +67,7 @@ if ($view_type == 'group') {
 	$content .= '<div class="workflow-card-none elgg-module workflow-card elgg-state-draggable"><div class="elgg-body"></div></div>'; // hack for empty list and sortable jquery.ui
 	$content .= "</div>";
 
-	$title = elgg_view_icon('list') . $workflow_list->title;
+	$title = elgg_view_icon('workflow-list') . $workflow_list->title;
 
 $workflow_list_header = <<<HEADER
 	<div class="workflow-list-handle clearfix"><h3>$title</h3>

@@ -32,6 +32,9 @@ $header = elgg_view('page/layouts/content/header', $vars);
 }
 $filter = elgg_view('page/layouts/content/filter', $vars);*/
 
+// add the card popup
+$header .= "<div id='workflow-card-popup' class='elgg-module-popup'></div>";
+
 // Pass plugin options to jQuery
 echo "
 	<script type='text/javascript'>

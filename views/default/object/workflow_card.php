@@ -19,7 +19,7 @@ if (!$workflow_card) {
 $view_type = elgg_extract('view_type', $vars, FALSE);
 $container = $workflow_card->getContainerEntity();
 $user = elgg_get_logged_in_user_entity();
-global $fb; $fb->info($workflow_card);
+
 if ($view_type == 'group') {
 
 	$workflow_card_id = "workflow-card-$workflow_card->guid";
@@ -44,25 +44,17 @@ if ($view_type == 'group') {
 		$workflow_card_class .= " elgg-state-fixed";
 	}
 
-	$title = $workflow_card->title;
+	$title = "<a rel='popup' href='#workflow-card-popup'>" . $workflow_card->title . "</a>";
 
 $workflow_card_header = <<<HEADER
 	<div class="workflow-card-handle clearfix"><h3>$title</h3>
 	$controls
 	</div>
 HEADER;
-/*
-	$content = elgg_list_entities(array(
-		'container_guid' => $workflow_list->guid,
-		'full_view' => false,
+
+$workflow_card_body = elgg_view('object/workflow_card/elements/body', array(
+		'workflow_card' => $workflow_card,
 	));
-*/
-$workflow_card_body = <<<BODY
-	$edit_area
-	<div class="workflow-card-content" id="workflow-card-content-$workflow_card->guid">
-		$content
-	</div>
-BODY;
 
 	echo elgg_view('page/components/module', array(
 		'class' => $workflow_card_class,
