@@ -129,6 +129,7 @@ workflow.list.add = function(event) {
 				$('.workflow-lists-container p').remove();
 				$('.workflow-lists-container').append('<div class="workflow-lists ui-sortable"></div>');
 			}
+			$('.elgg-form-workflow-list-add-list-popup .elgg-input-text').val(elgg.echo("workflow:add_list"));
 			$('.workflow-lists').append(json.output);
 			workflow.list.addCard();
 			workflow.list.resize();

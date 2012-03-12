@@ -14,6 +14,7 @@
 	background-color: #DEDEDE;
 	padding: 2px;
 	position: relative;
+	max-width: <?php echo elgg_get_plugin_setting('max_width_list', 'elgg-workflow'); ?>;
 }
 .workflow-list:hover {
 	background-color: #CCCCCC;
@@ -25,6 +26,7 @@
 	float: left;
 	border: 2px dashed #dedede;
 	margin-left: 5px;
+	max-width: <?php echo elgg_get_plugin_setting('max_width_list', 'elgg-workflow'); ?>;
 }
 .workflow-list-placeholder:nth-child(2) {
 	margin-left: 0px;
@@ -123,11 +125,11 @@
 	background-color: transparent;
 	z-index: 0;
 }
+.workflow-card-none:hover {
+	border: 1px solid transparent;
+}
 .workflow-card.elgg-state-draggable .workflow-card-handle {
 	cursor: move;
-}
-.workflow-card:hover {
-	border: 1px solid transparent;
 }
 .workflow-card h3 {
 	font-size: 1em;

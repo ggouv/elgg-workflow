@@ -215,7 +215,8 @@ $english = array(
 	/**
 	 * Settings
 	 */
-	'workflow:settings:min_list_column' => "Minimum width of columns",
+	'workflow:settings:min_list_column' => "Minimum list's width",
+	'workflow:settings:max_list_column' => "Maximum list's width",
 );
 
 add_translation("en", $english);
