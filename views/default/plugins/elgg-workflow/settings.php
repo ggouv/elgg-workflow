@@ -33,11 +33,12 @@ $max_width_list_view = elgg_view('input/text', array(
 	'value' => $vars['entity']->max_width_list,
 	'class' => 'elgg-input-thin',
 ));
+$defaut_max_width_list_string = "<br /><span style='font-size:0.85em;color:#999;'>" . elgg_echo('workflow:settings:defaut_max_list_column') . "</span>";
 
 // display html
 
 echo <<<__HTML
 <br />
 <div><label>$min_width_list_string</label><br />$min_width_list_view</div>
-<div><label>$max_width_list_string</label><br />$max_width_list_view</div>
+<div><label>$max_width_list_string</label><br />$max_width_list_view $defaut_max_width_list_string</div>
 __HTML;

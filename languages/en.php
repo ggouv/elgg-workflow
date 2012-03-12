@@ -217,6 +217,7 @@ $english = array(
 	 */
 	'workflow:settings:min_list_column' => "Minimum list's width",
 	'workflow:settings:max_list_column' => "Maximum list's width",
+	'workflow:settings:defaut_max_list_column' => "Defaut vaule of maximum list's width is 242.667<br />Set empty to no limit.",
 );
 
 add_translation("en", $english);
