@@ -24,6 +24,7 @@ $english = array(
 	'groups:enableworkflow' => "Enable group workflow",
 
 	'workflow:list:none' => "No list created yet",
+	'workflow_list:delete:confirm' => "Are you sure to delete this list and all of his cards?",
 
 /*
 	'tasks' => "Tasks",

@@ -150,14 +150,15 @@ workflow.list.add = function(event) {
  * @return void
  */
 workflow.list.remove = function(event) {
-	var $list = $(this).closest('.workflow-list');
+	if (confirm(elgg.echo('workflow_list:delete:confirm'))) {
+		var $list = $(this).closest('.workflow-list');
 
-	$list.remove();
-	workflow.list.resize();
+		$list.remove();
+		workflow.list.resize();
 
-	// delete the widget through ajax
-	elgg.action($(this).attr('href'));
-
+		// delete the widget through ajax
+		elgg.action($(this).attr('href'));
+	}
 	event.preventDefault();
 	//return false;
 };
