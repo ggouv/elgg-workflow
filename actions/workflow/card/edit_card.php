@@ -1,0 +1,47 @@
+<?php
+/**
+ *	Elgg-workflow plugin
+ *	@package elgg-workflow
+ *	@author Emmanuel Salomon @ManUtopiK
+ *	@license GNU Affero General Public License, version 3 or late
+ *	@link https://github.com/ManUtopiK/elgg-workflow
+ *
+ *	Elgg-workflow card edit card action
+ *
+ */
+
+$title = elgg_extract('title', $vars, get_input('title'));
+$desc = elgg_extract('description', $vars, get_input('description'));
+$duedate = elgg_extract('duedate', $vars, get_input('duedate'));
+$tags = elgg_extract('tags', $vars, get_input('tags'));
+$access_id = elgg_extract('access_id', $vars, get_input('access_id', ACCESS_DEFAULT));
+$card_guid = elgg_extract('guid', $vars, get_input('entity_guid'));
+$user = elgg_get_logged_in_user_guid();
+
+// start a new sticky form session in case of failure
+elgg_make_sticky_form('card');
+
+if (!$card_guid) {
+	register_error(elgg_echo('workflow:card:edit:error'));
+	forward(REFERER);
+}
+
+$card = get_entity($card_guid);
+
+if ($card->canEdit()) {
+	$card->title = $title;
+	$card->description = $desc;
+	$card->duedate = $duedate;
+	$card->tags = $tags;
+
+	if ($card->save()) {
+		elgg_clear_sticky_form('card');
+		system_message(elgg_echo('workflow:card:edit:success'));
+		echo elgg_view_entity($card, array('view_type' => 'group'));
+	} else {
+		register_error(elgg_echo('workflow:card:edit:failure'));
+	}
+
+} else {
+	register_error(elgg_echo('workflow:card:edit:error'));
+}

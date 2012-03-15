@@ -46,6 +46,7 @@ function workflow_init() {
 	$action_base = "$root/actions/workflow/card";
 	elgg_register_action('workflow/card/move', "$action_base/move.php");
 	elgg_register_action('workflow/card/add', "$action_base/add.php");
+	elgg_register_action('workflow/card/edit_card', "$action_base/edit_card.php");
 
 	// Register entity type
 	elgg_register_entity_type('object', 'workflow_list');
@@ -117,6 +118,9 @@ function workflow_page_handler($page) {
 			break;
 		case 'group':
 			include "$base_dir/group.php";
+			break;
+		case 'edit_card_popup':
+			include "$base_dir/edit_card_popup.php";
 			break;
 
 

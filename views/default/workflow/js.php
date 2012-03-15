@@ -160,7 +160,6 @@ workflow.list.remove = function(event) {
 		elgg.action($(this).attr('href'));
 	}
 	event.preventDefault();
-	//return false;
 };
 
 /**
@@ -239,6 +238,7 @@ workflow.card.init = function() {
 	});
 
 	$('.elgg-form-workflow-list-add-card .elgg-button-submit').live('click', workflow.card.add);
+	//$('.workflow-edit-card').live('click', workflow.card.edit);
 };
 elgg.register_hook_handler('init', 'system', workflow.card.init);
 
@@ -309,6 +309,74 @@ workflow.card.add = function(event) {
 	$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').hide();
 	event.preventDefault();
 	return false;
+};
+
+/**
+ * Reposition popup edit card and get data of the card
+ */
+elgg.ui.CardPopup = function(hook, type, params, options) {
+	if (params.target.attr('id') == 'workflow-card-popup') {
+		// Cancel popupOpen if already open
+		if (params.target.is(':visible')) {
+			return null;
+		}
+
+		$('#workflow-card-popup').html('');
+
+		options.of = $('.elgg-page-body');
+		options.my = 'center top';
+		options.at = 'center top';
+		options.offset = '0 20';
+		options.collision = 'fit fit';
+
+		// workflow-card-<guid>
+		var card_guid = params.source.closest('.workflow-card').attr('id');
+		card_guid = card_guid.substr(card_guid.indexOf('workflow-card-') + "workflow-card-".length);
+		// call the data
+		elgg.post('workflow/edit_card_popup', {
+ 			data: {
+				card_guid: card_guid,
+			},
+			success: function(output) {
+				$('#workflow-card-popup').html(output);
+
+				elgg.ui.initDatePicker();
+				// @todo load tinymce    elgg.tinymce.init();
+				// delete list button 
+				$('#workflow-card-popup .elgg-button-submit').live('click', workflow.card.popupForms);
+			}
+		});
+
+		return options;
+	}
+	return null;
+};
+elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.CardPopup);
+
+/**
+ * Save data of card or new comment
+ *
+ * Event callback the uses Ajax to save data or comment
+ *
+ * @param {Object} event
+ * @return void
+ */
+workflow.card.popupForms = function(event) {
+	form = $(this).closest('form');
+	var card_guid = form[0].entity_guid.value;
+	var data = form.serialize();
+
+	elgg.action(form.attr('action'), {
+		data: data,
+		success: function(json) {
+			$('#workflow-card-popup').fadeOut().html('');
+			if (card_guid && json.output) {
+				$('#workflow-card-'+card_guid).replaceWith(json.output);
+			}
+		}
+	});
+
+	event.preventDefault();
 };
 
 ///**

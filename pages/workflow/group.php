@@ -23,7 +23,6 @@ group_gatekeeper();
 elgg_push_breadcrumb($group->name);
 
 elgg_register_title_button('workflow', 'add_list');
-echo '<div id="add-list" class="elgg-module-popup">' . elgg_view_form('workflow/list/add_list_popup') . '</div>';
 
 $title = elgg_echo('workflow:owner', array($group->name));
 
@@ -41,7 +40,11 @@ ksort($sorted_lists);
 
 $num_lists = count($lists);
 
-$content = "<div class='workflow-lists-container'><div class='workflow-lists'>";
+// add the card popup and add-list popup
+$content = '<div id="add-list" class="elgg-module elgg-module-popup hidden">' . elgg_view_form('workflow/list/add_list_popup') . '</div>';
+$content .= "<div id='workflow-card-popup' class='elgg-module elgg-module-popup hidden mbl'></div>";
+
+$content .= "<div class='workflow-lists-container'><div class='workflow-lists'>";
 for ($list_index = 1; $list_index <= $num_lists; $list_index++) {
 	$listguid = $sorted_lists[$list_index-1]->guid;
 	$content .= elgg_view_entity($sorted_lists[$list_index-1], array('view_type' => 'group'));

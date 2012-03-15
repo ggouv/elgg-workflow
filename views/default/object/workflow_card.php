@@ -44,7 +44,7 @@ if ($view_type == 'group') {
 		$workflow_card_class .= " elgg-state-fixed";
 	}
 
-	$title = "<a rel='popup' href='#workflow-card-popup'>" . $workflow_card->title . "</a>";
+	$title = "<a class='workflow-edit-card' rel='popup' href='#workflow-card-popup'>" . $workflow_card->title . "</a>";
 
 $workflow_card_header = <<<HEADER
 	<div class="workflow-card-handle clearfix"><h3>$title</h3>

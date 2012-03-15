@@ -1,6 +1,6 @@
 /* CSS for list in group view */
 #add-list {
-	display: none;
+	position: absolute;
 	width: 200px;
 }
 .workflow-lists-container {
@@ -167,17 +167,17 @@
 }
 .workflow-card-info span {
 	vertical-align: middle;
-	background-size: 90% auto;
+	background-size: 100% auto;
 	height: 12px;
 	width: 12px;
-	margin: 0 2px 0 0;
+	margin: 0 1px 0 0;
 }
 .workflow-card-info .elgg-icon-workflow-info {
-	background-position: 0 -316px;
-	margin: 3px 0 0;
+	background-position: 0 -352px;
 }
 .workflow-card-info .elgg-icon-workflow-speech-bubble {
-	background-position: 0 -754px;
+	background-position: 0 -838px;
+	margin: 0 3px 0 0;
 }
 .workflow-card-info .workflow-card-comment {
 	color: #4690D6;
@@ -189,10 +189,11 @@
 .workflow-card-info .elgg-icon-workflow-calendar {
 	background-size: 100% auto;
 	background-position: 0 -68px;
-	margin-top: -2px;
+	margin: -2px 3px 0 0;
 }
 .workflow-card-info .elgg-icon-workflow-checklist {
-	background-position: 0 -365px;
+	background-position: 0 -406px;
+	margin: -2px 3px 0 0;
 }
 .workflow-card-info .workflow-card-checklist-complete {
 	background-color: Palegreen;
@@ -203,7 +204,15 @@
 	margin-top: 2px;
 }
 #workflow-card-popup {
-	display: none;
-	height: 100px;
-	width: 100px;
+	position: absolute;
+	width: 810px;
+}
+#workflow-card-popup .elgg-comments {
+	float: right;
+	width: 400px;
+	margin-top: 0;
+}
+#workflow-card-popup .elgg-form-workflow-card-edit-card {
+	float: left;
+	width: 400px;
 }
