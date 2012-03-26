@@ -11,18 +11,18 @@
  */
 
 /**
- * Workflow initialization
+ * Elgg-workflow initialization
  *
  * @return void
  */
-elgg.provide('workflow');
+elgg.provide('elgg.workflow');
 
-workflow.init = function() {
+elgg.workflow.init = function() {
 	$(document).ready(function() {
 		if ( $('.workflow-lists-container').length == 0) {
 			return;
 		}
-		workflow.list.resize();
+		elgg.workflow.list.resize();
 
 		// hack for button add list
 		$('li.elgg-menu-item-add-list a.elgg-button-action').attr("href", "#add-list").attr("rel", "popup"); 
@@ -32,12 +32,12 @@ workflow.init = function() {
 	// for extensible template
 	$(window).bind("resize", function() {
 		if ( $('.workflow-lists-container').length ) {
-			workflow.list.resize();
+			elgg.workflow.list.resize();
 		}
 	});
 
 }
-elgg.register_hook_handler('init', 'system', workflow.init);
+elgg.register_hook_handler('init', 'system', elgg.workflow.init);
 
 
 /**
@@ -45,9 +45,9 @@ elgg.register_hook_handler('init', 'system', workflow.init);
  *
  * @return void
  */
-elgg.provide('workflow.list');
+elgg.provide('elgg.workflow.list');
 
-workflow.list.init = function() {
+elgg.workflow.list.init = function() {
 
 	// workflow layout?
 	if ($(".workflow-lists-container").length == 0) {
@@ -62,11 +62,11 @@ workflow.list.init = function() {
 		placeholder:          'workflow-list-placeholder',
 		opacity:              0.8,
 		revert:               500,
-		stop:                 workflow.list.move
+		stop:                 elgg.workflow.list.move
 	});
 
 	// add list popup
-	$('.elgg-form-workflow-list-add-list-popup .elgg-button-submit').live('click', workflow.list.add);
+	$('.elgg-form-workflow-list-add-list-popup .elgg-button-submit').live('click', elgg.workflow.list.add);
 	$('.elgg-form-workflow-list-add-list-popup .elgg-input-text').focusin(function(){
 		if ( $(this).val() == elgg.echo("workflow:add_list") ) $(this).val('');
 	});
@@ -74,14 +74,14 @@ workflow.list.init = function() {
 		if ( $(this).val() == '' ) $(this).val(elgg.echo("workflow:add_list"));
 	});
 	// delete list button 
-	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', workflow.list.remove);
+	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', elgg.workflow.list.remove);
 	// add card from list footer
-	workflow.list.addCard();
+	elgg.workflow.list.addCard();
 //	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 //	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
 };
-elgg.register_hook_handler('init', 'system', workflow.list.init);
+elgg.register_hook_handler('init', 'system', elgg.workflow.list.init);
 
 /**
  * Persist the list's new position
@@ -91,7 +91,7 @@ elgg.register_hook_handler('init', 'system', workflow.list.init);
  *
  * @return void
  */
-workflow.list.move = function(event, ui) {
+elgg.workflow.list.move = function(event, ui) {
 	// workflow-list-<guid>
 	var guidString = ui.item.attr('id');
 	guidString = guidString.substr(guidString.indexOf('workflow-list-') + "workflow-list-".length);
@@ -116,7 +116,7 @@ workflow.list.move = function(event, ui) {
  * @param {Object} event
  * @return void
  */
-workflow.list.add = function(event) {
+elgg.workflow.list.add = function(event) {
 	list_title = $('.elgg-form-workflow-list-add-list-popup .elgg-input-text').val();
 	elgg.action('workflow/list/add', {
 		data: {
@@ -131,8 +131,8 @@ workflow.list.add = function(event) {
 			}
 			$('.elgg-form-workflow-list-add-list-popup .elgg-input-text').val(elgg.echo("workflow:add_list"));
 			$('.workflow-lists').append(json.output);
-			workflow.list.addCard();
-			workflow.list.resize();
+			elgg.workflow.list.addCard();
+			elgg.workflow.list.resize();
 			$('.workflow-lists-container').animate({ scrollLeft: $('.workflow-lists-container').width()});
 		}
 	});
@@ -149,12 +149,12 @@ workflow.list.add = function(event) {
  * @param {Object} event
  * @return void
  */
-workflow.list.remove = function(event) {
+elgg.workflow.list.remove = function(event) {
 	if (confirm(elgg.echo('workflow_list:delete:confirm'))) {
 		var $list = $(this).closest('.workflow-list');
 
 		$list.remove();
-		workflow.list.resize();
+		elgg.workflow.list.resize();
 
 		// delete the widget through ajax
 		elgg.action($(this).attr('href'));
@@ -178,7 +178,7 @@ elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
 /**
  * Resize lists
  */
-workflow.list.resize = function() {
+elgg.workflow.list.resize = function() {
 	var WorkflowWidth = $('.workflow-lists-container').width();
 	var CountLists = $('.workflow-list').length;
 	var ListWidth = 0; var i = 0;
@@ -194,7 +194,7 @@ workflow.list.resize = function() {
 /**
  * Attach event on text area to add card on list
  */
-workflow.list.addCard = function() {
+elgg.workflow.list.addCard = function() {
 	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusin(function(){
 		if ( $(this).val() == elgg.echo("workflow:list:add_card") ) {
 			$(this).val('');
@@ -218,9 +218,9 @@ workflow.list.addCard = function() {
  *
  * @return void
  */
-elgg.provide('workflow.card');
+elgg.provide('elgg.workflow.card');
 
-workflow.card.init = function() {
+elgg.workflow.card.init = function() {
 	// workflow layout?
 	if ($(".workflow-lists-container").length == 0) {
 		return;
@@ -234,13 +234,13 @@ workflow.card.init = function() {
 		placeholder:          'workflow-card-placeholder',
 		revert:               500,
 		dropOnEmpty: true,
-		stop:                 workflow.card.move
+		stop:                 elgg.workflow.card.move
 	});
 
-	$('.elgg-form-workflow-list-add-card .elgg-button-submit').live('click', workflow.card.add);
-	//$('.workflow-edit-card').live('click', workflow.card.edit);
+	$('.elgg-form-workflow-list-add-card .elgg-button-submit').live('click', elgg.workflow.card.add);
+	//$('.workflow-edit-card').live('click', elgg.workflow.card.edit);
 };
-elgg.register_hook_handler('init', 'system', workflow.card.init);
+elgg.register_hook_handler('init', 'system', elgg.workflow.card.init);
 
 /**
  * Persist the card's new position
@@ -250,7 +250,7 @@ elgg.register_hook_handler('init', 'system', workflow.card.init);
  *
  * @return void
  */
-workflow.card.move = function(event, ui) {
+elgg.workflow.card.move = function(event, ui) {
 	// workflow-card-<guid>
 	var card_guidString = ui.item.attr('id');
 	card_guidString = card_guidString.substr(card_guidString.indexOf('workflow-card-') + "workflow-card-".length);
@@ -286,7 +286,7 @@ workflow.card.move = function(event, ui) {
  * @param {Object} event
  * @return void
  */
-workflow.card.add = function(event) {
+elgg.workflow.card.add = function(event) {
 	workflow_list = $(this).parent().find('[name=workflow_list]').val();
 	card_title = $(this).parent().find('.elgg-input-text').val();
 
@@ -339,9 +339,9 @@ elgg.ui.CardPopup = function(hook, type, params, options) {
 			},
 			success: function(output) {
 				$('#workflow-card-popup').html(output);
-
 				elgg.ui.initDatePicker();
-				// @todo load tinymce    elgg.tinymce.init();
+				elgg.userpicker.init();
+				//elgg.tinymce.init();
 				// delete list button 
 				$('#workflow-card-popup .elgg-button-submit').live('click', workflow.card.popupForms);
 			}
@@ -361,7 +361,7 @@ elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.CardPopup);
  * @param {Object} event
  * @return void
  */
-workflow.card.popupForms = function(event) {
+elgg.workflow.card.popupForms = function(event) {
 	form = $(this).closest('form');
 	var card_guid = form[0].entity_guid.value;
 	var data = form.serialize();
@@ -369,6 +369,7 @@ workflow.card.popupForms = function(event) {
 	elgg.action(form.attr('action'), {
 		data: data,
 		success: function(json) {
+console.log(json);
 			$('#workflow-card-popup').fadeOut().html('');
 			if (card_guid && json.output) {
 				$('#workflow-card-'+card_guid).replaceWith(json.output);
