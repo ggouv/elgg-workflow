@@ -18,6 +18,10 @@ $english = array(
 
 	'workflow' => "Workflow",
 	'workflow:owner' => "%s's workflow",
+
+ 	'item:object:workflow_list' => "Workflow lists",
+ 	'item:object:workflow_card' => "Workflow cards",
+
 	'workflow:add_list' => "Add list",
 
 	'workflow:group' => "Group workflow",
@@ -66,8 +70,9 @@ $english = array(
 	/**
 	* River
 	**/
-	'river:create:object:workflow_list' => '%s added a new list %s',
-	'river:create:object:workflow_card' => '%s added a new card %s',
+	'river:create:object:workflow_list' => "%s added a new list %s",
+	'river:create:object:workflow_card' => "%s added a new card %s",
+	'river:comment:object:workflow_card' => "%s commented card %s",
 /*
 	'river:create:object:task' => '%s created a task %s',
 	'river:create:object:tasklist' => '%s created a task list %s',
@@ -81,6 +86,9 @@ $english = array(
 	 */
 	'workflow:list:add_list' => "Add list",
 	'workflow:list:add_card' => "Add card",
+
+	'workflow:duedate' => "Due date",
+	'workflow:assignedto' => "Assigned to",
 /*
 	'tasks:title' => 'Name',
 	'tasks:description' => 'Description',

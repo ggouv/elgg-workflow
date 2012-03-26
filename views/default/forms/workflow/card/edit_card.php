@@ -14,10 +14,21 @@
 $title = elgg_extract('title', $vars, '');
 $desc = elgg_extract('description', $vars, '');
 $duedate = elgg_extract('duedate', $vars, '');
+$assignedto = elgg_extract('assignedto', $vars, '');
 $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
 $card_guid = elgg_extract('guid', $vars, null);
 $user = elgg_get_logged_in_user_guid();
+
+$card = get_entity($card_guid);
+global $fb;
+$list = get_entity($card->container_guid);
+$group_guid = $list->container_guid;
+$group_members = get_group_members($group_guid);
+foreach ($group_members as $members) {
+	$group_members_guid[] = $members->guid;
+}
+$fb->info($group_members_guid);
 
 ?>
 
@@ -30,8 +41,12 @@ $user = elgg_get_logged_in_user_guid();
 	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc)); ?>
 </div>
 <div>
-	<label><?php echo elgg_echo('date'); ?></label>
+	<label><?php echo elgg_echo('workflow:duedate'); ?></label>
 	<?php echo elgg_view('input/date', array('name' => 'duedate', 'value' => $duedate)); ?>
+</div>
+<div>
+	<label><?php echo elgg_echo('workflow:assignedto'); ?></label>
+	<?php echo elgg_view('input/userpicker', array('name' => 'assignedto', 'value' => $group_members_guid)); ?>
 </div>
 <div>
 	<label><?php echo elgg_echo('tags'); ?></label>
