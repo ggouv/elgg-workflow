@@ -238,7 +238,17 @@ elgg.workflow.card.init = function() {
 	});
 
 	$('.elgg-form-workflow-list-add-card .elgg-button-submit').live('click', elgg.workflow.card.add);
-	//$('.workflow-edit-card').live('click', elgg.workflow.card.edit);
+	// Edit card popup
+	$('.workflow-edit-card').fancybox({
+		'autoDimensions': false,
+		'width': 830,
+		'onComplete': function(){
+			$('#fancybox-content .elgg-button-submit').live('click', elgg.workflow.card.popupForms);
+			elgg.ui.initDatePicker();
+			elgg.tinymce.init();
+			elgg.userpicker.init();
+		},
+	});
 };
 elgg.register_hook_handler('init', 'system', elgg.workflow.card.init);
 
@@ -312,48 +322,6 @@ elgg.workflow.card.add = function(event) {
 };
 
 /**
- * Reposition popup edit card and get data of the card
- */
-elgg.ui.CardPopup = function(hook, type, params, options) {
-	if (params.target.attr('id') == 'workflow-card-popup') {
-		// Cancel popupOpen if already open
-		if (params.target.is(':visible')) {
-			return null;
-		}
-
-		$('#workflow-card-popup').html('');
-
-		options.of = $('.elgg-page-body');
-		options.my = 'center top';
-		options.at = 'center top';
-		options.offset = '0 20';
-		options.collision = 'fit fit';
-
-		// workflow-card-<guid>
-		var card_guid = params.source.closest('.workflow-card').attr('id');
-		card_guid = card_guid.substr(card_guid.indexOf('workflow-card-') + "workflow-card-".length);
-		// call the data
-		elgg.post('workflow/edit_card_popup', {
- 			data: {
-				card_guid: card_guid,
-			},
-			success: function(output) {
-				$('#workflow-card-popup').html(output);
-				elgg.ui.initDatePicker();
-				elgg.userpicker.init();
-				//elgg.tinymce.init();
-				// delete list button 
-				$('#workflow-card-popup .elgg-button-submit').live('click', workflow.card.popupForms);
-			}
-		});
-
-		return options;
-	}
-	return null;
-};
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.CardPopup);
-
-/**
  * Save data of card or new comment
  *
  * Event callback the uses Ajax to save data or comment
@@ -369,8 +337,7 @@ elgg.workflow.card.popupForms = function(event) {
 	elgg.action(form.attr('action'), {
 		data: data,
 		success: function(json) {
-console.log(json);
-			$('#workflow-card-popup').fadeOut().html('');
+			$.fancybox.close();
 			if (card_guid && json.output) {
 				$('#workflow-card-'+card_guid).replaceWith(json.output);
 			}

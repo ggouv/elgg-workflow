@@ -203,16 +203,14 @@
 	float: right;
 	margin-top: 2px;
 }
-#workflow-card-popup {
-	position: absolute;
-	width: 810px;
-}
-#workflow-card-popup .elgg-comments {
+#fancybox-content .elgg-comments {
 	float: right;
-	width: 400px;
-	margin-top: 0;
+	width: 380px;
+	margin: 0 10px 0 0;
+	background-color: #EEE;
+	padding: 10px;
 }
-#workflow-card-popup .elgg-form-workflow-card-edit-card {
+#fancybox-content .elgg-form-workflow-card-edit-card {
 	float: left;
 	width: 400px;
 }

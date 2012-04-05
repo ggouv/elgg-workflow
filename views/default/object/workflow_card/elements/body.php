@@ -16,8 +16,6 @@ if ($comments_count != 0) {
 	$comment = "<div class='workflow-card-comment'>" . elgg_view_icon('workflow-speech-bubble') . $comments_count . "</div>";
 }
 
-
-global $fb; 
 $duedate = $workflow_card->duedate;
 if ($duedate) {
 	$duedate = explode('-', $duedate);
