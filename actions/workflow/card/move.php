@@ -16,15 +16,15 @@ $owner_guid = get_input('owner_guid', elgg_get_logged_in_user_guid());
 
 $moved_card = get_entity($card_guid);
 $owner = get_entity($owner_guid);
-global $fb;
 
 if ($moved_card && $moved_card->canEdit($owner_guid)) {
 
 	// get cards from orginal list
-	$cards = elgg_get_entities(array(
+	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_card',
-		'container_guid' => $moved_card->container_guid,
+		'metadata_name' => 'parent_guid',
+		'metadata_value' => $moved_card->parent_guid,
 	));
 
 	// sort the list and remove the list that's being moved from the array
@@ -37,7 +37,7 @@ if ($moved_card && $moved_card->canEdit($owner_guid)) {
 	ksort($sorted_cards);
 
 	// check if the card ordered in the same list
-	if ( $moved_card->container_guid == $list_guid ) {
+	if ( $moved_card->parent_guid == $list_guid ) {
 
 		// split the array in two and recombine with the moved card in middle
 		$before = array_slice($sorted_cards, 0, $position);
@@ -65,10 +65,11 @@ if ($moved_card && $moved_card->canEdit($owner_guid)) {
 
 	// order destination list
 		// get cards from destination list
-		$cards = elgg_get_entities(array(
+		$cards = elgg_get_entities_from_metadata(array(
 			'type' => 'object',
 			'subtypes' => 'workflow_card',
-			'container_guid' => $list_guid,
+			'metadata_name' => 'parent_guid',
+			'metadata_value' => $list_guid,
 		));
 
 		// sort the list and remove the list that's being moved from the array
@@ -92,8 +93,8 @@ if ($moved_card && $moved_card->canEdit($owner_guid)) {
 			$order += 1;
 		}
 
-	// define container_guid's card to destination list
-		$moved_card->container_guid = $list_guid;
+	// define parent_guid's card to destination list
+		$moved_card->parent_guid = $list_guid;
 		$moved_card->save();
 
 	}

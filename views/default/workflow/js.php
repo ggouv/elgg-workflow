@@ -238,6 +238,7 @@ elgg.workflow.card.init = function() {
 	});
 
 	$('.elgg-form-workflow-list-add-card .elgg-button-submit').live('click', elgg.workflow.card.add);
+
 	// Edit card popup
 	$('.workflow-edit-card').fancybox({
 		'autoDimensions': false,
@@ -304,7 +305,8 @@ elgg.workflow.card.add = function(event) {
 		elgg.action('workflow/card/add', {
 			data: {
 				user_guid: elgg.get_logged_in_user_guid(),
-				container_guid: workflow_list,
+				container_guid: elgg.get_page_owner_guid(),
+				parent_guid: workflow_list,
 				card_title: card_title,
 			},
 			success: function(json) {

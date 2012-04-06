@@ -22,7 +22,7 @@ $user = elgg_get_logged_in_user_guid();
 
 $card = get_entity($card_guid);
 global $fb;
-$list = get_entity($card->container_guid);
+$list = get_entity($card->parent_guid);
 $group_guid = $list->container_guid;
 $group_members = get_group_members($group_guid);
 foreach ($group_members as $members) {

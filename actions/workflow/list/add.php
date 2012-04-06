@@ -29,6 +29,7 @@ if ($container->canEdit()) {
 	$list->subtype = "workflow_list";
 	$list->container_guid = $container_guid;
 	$list->title = $list_title;
+	$list->access_id = 2;
 	$list->order = $nbr_lists;
 
 	if ($list->save()) {

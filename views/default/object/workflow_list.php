@@ -45,12 +45,13 @@ if ($view_type == 'group') {
 	}
 
 	// get cards of this list
-	$cards = elgg_get_entities(array(
+	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_card',
-		'container_guid' => $workflow_list->guid,
-	));
-
+		'metadata_name' => 'parent_guid',
+		'metadata_value' => $workflow_list->guid,
+	));			
+			
 	$sorted_cards = array();
 	foreach ($cards as $card) {
 		$sorted_cards[$card->order] = $card;

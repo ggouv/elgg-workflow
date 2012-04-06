@@ -11,10 +11,11 @@
  */
 
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
-$container_guid = get_input('container_guid', null);
+$container_guid = get_input('container_guid', elgg_get_page_owner_guid());
+$parent_guid = get_input('parent_guid', null);
 $card_title = get_input('card_title', 'Card');
 
-if (!$container_guid) {
+if (!$container_guid || !$parent_guid) {
 	register_error(elgg_echo('workflow:card:add:cannotadd'));
 	forward(REFERER);
 }
@@ -23,17 +24,20 @@ $container = get_entity($container_guid);
 
 if ($container->canEdit()) {
 
-	$nbr_cards = elgg_get_entities(array(
+	$nbr_cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_card',
-		'container_guid' => $container_guid,
+		'metadata_name' => 'parent_guid',
+		'metadata_value' => $parent_guid,
 		'count' => true,
-	)); 
+	));
 
 	$card = new ElggObject;
 	$card->subtype = "workflow_card";
 	$card->container_guid = $container_guid;
+	$card->parent_guid = $parent_guid;
 	$card->title = $card_title;
+	$card->access_id = 2;
 	$card->order = $nbr_cards;
 
 	if ($card->save()) {

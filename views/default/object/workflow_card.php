@@ -26,7 +26,7 @@ if ($view_type == 'group') {
 	$workflow_card_class = "workflow-card mrs";
 
 	$edit_area = '';
-	$can_edit = is_group_member($container->container_guid, $user->guid);
+	$can_edit = is_group_member($container->guid, $user->guid);
 	if ($can_edit) {/*
 		$controls = elgg_view('object/workflow_list/elements/controls', array(
 			'workflow_list' => $workflow_list,

@@ -11,36 +11,36 @@
  */
 
 $deleted_card_guid = get_input('card_guid');
-$container_guid = get_input('container_guid', elgg_get_page_owner_guid());
+$parent_guid = get_input('parent_guid', null);
 
-$deleted_list = get_entity($deleted_list_guid);
-$container = get_entity($container_guid);
+$deleted_card = get_entity($deleted_card_guid);
 
-if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list->getOwnerGuid()) {
-	delete_entity($deleted_list_guid);
+if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_card->getOwnerGuid()) {
+	delete_entity($deleted_card_guid);
 
-	$lists = elgg_get_entities(array(
+	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
-		'subtypes' => 'workflow_list',
-		'container_guid' => $moved_list->container_guid,
+		'subtypes' => 'workflow_card',
+		'metadata_name' => 'parent_guid',
+		'metadata_value' => $parent_guid,
 	));
 
-	$sorted_lists = array();
-	foreach ($lists as $list) {
-		$sorted_lists[$list->order] = $list;
+	$sorted_cards = array();
+	foreach ($cards as $card) {
+		$sorted_cards[$card->order] = $card;
 	}
-	ksort($sorted_lists);
+	ksort($sorted_cards);
 
-	// redefine order for each list
+	// redefine order for each card
 	$order = 0;
-	foreach ($sorted_lists as $list) {
-		$list->order = $order;
+	foreach ($sorted_cards as $card) {
+		$card->order = $order;
 		$order += 1;
 	}
 
-	system_message(elgg_echo('workflow:list:delete:success'));
+	system_message(elgg_echo('workflow:card:delete:success'));
 	forward(REFERER);
 }
 
-register_error(elgg_echo('workflow:list:delete:failure'));
+register_error(elgg_echo('workflow:card:delete:failure'));
 forward(REFERER);
