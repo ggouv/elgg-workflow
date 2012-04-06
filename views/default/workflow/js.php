@@ -246,7 +246,7 @@ elgg.workflow.card.init = function() {
 		'onComplete': function(){
 			$('#fancybox-content .elgg-button-submit').live('click', elgg.workflow.card.popupForms);
 			elgg.ui.initDatePicker();
-			elgg.tinymce.init();
+			//elgg.tinymce.init();
 			elgg.userpicker.init();
 		},
 	});
@@ -320,7 +320,6 @@ elgg.workflow.card.add = function(event) {
 	$(this).parent().find('.elgg-input-text').val(elgg.echo("workflow:list:add_card"));
 	$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').hide();
 	event.preventDefault();
-	return false;
 };
 
 /**
@@ -340,8 +339,11 @@ elgg.workflow.card.popupForms = function(event) {
 		data: data,
 		success: function(json) {
 			$.fancybox.close();
-			if (card_guid && json.output) {
+			if (card_guid && json.output && json.status == 0) {
 				$('#workflow-card-'+card_guid).replaceWith(json.output);
+			} else if (json.output == '' && json.status == 0) {
+				TxtComment = $('#workflow-card-'+card_guid+' .workflow-card-comment-value');
+				TxtComment.text(parseInt(TxtComment.text())+1);
 			}
 		}
 	});

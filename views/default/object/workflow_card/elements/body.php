@@ -13,7 +13,7 @@ if ($workflow_card->description) {
 
 $comments_count = $workflow_card->countComments();
 if ($comments_count != 0) {
-	$comment = "<div class='workflow-card-comment'>" . elgg_view_icon('workflow-speech-bubble') . $comments_count . "</div>";
+	$comment = "<div class='workflow-card-comment'>" . elgg_view_icon('workflow-speech-bubble') . "<span class='workflow-card-comment-value'>" . $comments_count . "</span></div>";
 }
 
 $duedate = $workflow_card->duedate;
