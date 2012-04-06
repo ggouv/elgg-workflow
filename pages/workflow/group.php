@@ -29,6 +29,7 @@ $lists = elgg_get_entities(array(
 	'type' => 'object',
 	'subtypes' => 'workflow_list',
 	'container_guid' => $group->guid,
+	'limit' => 0
 ));
 
 $sorted_lists = array();

@@ -203,14 +203,17 @@
 	float: right;
 	margin-top: 2px;
 }
+#card-forms {
+	float: left;
+}
 #fancybox-content .elgg-comments {
 	float: right;
 	width: 380px;
-	margin: 0 10px 0 0;
-	background-color: #EEE;
-	padding: 10px;
+	margin: 0 0 0 20px;
 }
 #fancybox-content .elgg-form-workflow-card-edit-card {
 	float: left;
-	width: 400px;
+	width: 380px;
+	background-color: #EEE;
+	padding: 10px;
 }

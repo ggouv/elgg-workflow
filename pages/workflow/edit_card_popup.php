@@ -23,5 +23,7 @@ if (!elgg_instanceof($card, 'object', 'workflow_card') || !$card->canEdit()) {
 
 $vars = workflow_card_prepare_form_vars($card);
 
-echo elgg_view_form('workflow/card/edit_card', array(), $vars);
-echo elgg_view('page/elements/comments', $vars);
+echo '<div id="card-forms">' .
+	elgg_view_form('workflow/card/edit_card', array(), $vars) .
+	elgg_view('page/elements/comments', $vars) .
+	'</div>';

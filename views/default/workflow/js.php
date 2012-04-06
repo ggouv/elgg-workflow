@@ -242,8 +242,12 @@ elgg.workflow.card.init = function() {
 	// Edit card popup
 	$('.workflow-edit-card').fancybox({
 		'autoDimensions': false,
-		'width': 830,
+		'width': 810,
+		'scrolling': 'no',
 		'onComplete': function(){
+			h = $('#card-forms').height();
+			$('#fancybox-wrap').css('top', '36px');
+			$('#fancybox-content, #fancybox-content > div, .elgg-form-workflow-card-edit-card').css('height', h);
 			$('#fancybox-content .elgg-button-submit').live('click', elgg.workflow.card.popupForms);
 			elgg.ui.initDatePicker();
 			//elgg.tinymce.init();

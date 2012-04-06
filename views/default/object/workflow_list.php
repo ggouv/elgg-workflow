@@ -49,6 +49,7 @@ if ($view_type == 'group') {
 		'subtypes' => 'workflow_card',
 		'metadata_name' => 'parent_guid',
 		'metadata_value' => $workflow_list->guid,
+		'limit' => 0
 	));			
 			
 	$sorted_cards = array();
