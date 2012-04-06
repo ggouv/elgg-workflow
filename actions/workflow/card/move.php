@@ -12,12 +12,10 @@
 $card_guid = get_input('card_guid');
 $list_guid = get_input('list_guid');
 $position = get_input('position');
-$owner_guid = get_input('owner_guid', elgg_get_logged_in_user_guid());
 
 $moved_card = get_entity($card_guid);
-$owner = get_entity($owner_guid);
 
-if ($moved_card && $moved_card->canEdit($owner_guid)) {
+if ( $moved_card && is_group_member( $moved_card->container_guid, elgg_get_logged_in_user_guid() ) ) {
 
 	// get cards from orginal list
 	$cards = elgg_get_entities_from_metadata(array(
@@ -49,7 +47,7 @@ if ($moved_card && $moved_card->canEdit($owner_guid)) {
 		// redefine order for each card
 		$order = 0;
 		foreach ($cards as $card) {
-			$card->order = $order;
+			$card->order = $order; // @todo don't work with $card->save(); for just member of group 
 			$order += 1;
 		}
 

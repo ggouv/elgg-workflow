@@ -20,9 +20,7 @@ if (!$container_guid || !$parent_guid) {
 	forward(REFERER);
 }
 
-$container = get_entity($container_guid);
-
-if ($container->canEdit()) {
+if (is_group_member( $container_guid, $user_guid )) {
 
 	$nbr_cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
