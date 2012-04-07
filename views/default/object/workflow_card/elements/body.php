@@ -32,10 +32,12 @@ if (true) { //($comments_count != 0) {
 
 echo '<div class="workflow-card-info">' . $description . $comment . $due_date_string . $checklist_string . '</div>';
 
-$assignedto = $workflow_card->getOwnerEntity();
-
-if (true) { //$workflow_card->assignedto;
+$assignedto = $workflow_card->assignedto;
+if ($assignedto) {
 	echo '<div class="workflow-card-assignedto">';
-	echo elgg_view_entity_icon($assignedto, 'tiny', array('use_hover' => false));
+	foreach ( $assignedto as $user_guid) {
+		$user = get_entity($user_guid);
+		echo elgg_view_entity_icon($user, 'tiny', array('use_hover' => false));
+	}
 	echo '</div>';
 }

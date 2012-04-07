@@ -10,9 +10,6 @@
  *
  */
 
-// Load Elgg engine
-require_once(dirname(dirname(dirname(dirname(dirname(__FILE__))))) . "/engine/start.php");
-
 $card_guid = get_input('card_guid');
 $card = get_entity($card_guid);
 

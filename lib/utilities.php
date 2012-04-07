@@ -16,6 +16,7 @@ function workflow_card_prepare_form_vars($card = null) {
 	$values = array(
 		'title' => get_input('title', ''),
 		'description' => '',
+		'assignedto' => '',
 		'duedate' => '',
 		'access_id' => ACCESS_DEFAULT,
 		'tags' => '',

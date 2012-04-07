@@ -10,12 +10,14 @@
  *
  */
 
+$card_guid = elgg_extract('guid', $vars, get_input('entity_guid'));
 $title = elgg_extract('title', $vars, get_input('title'));
 $desc = elgg_extract('description', $vars, get_input('description'));
+$assignedto =  elgg_extract('members', $vars, get_input('members'));
 $duedate = elgg_extract('duedate', $vars, get_input('duedate'));
 $tags = elgg_extract('tags', $vars, get_input('tags'));
 $access_id = elgg_extract('access_id', $vars, get_input('access_id', ACCESS_DEFAULT));
-$card_guid = elgg_extract('guid', $vars, get_input('entity_guid'));
+
 $user = elgg_get_logged_in_user_guid();
 
 // start a new sticky form session in case of failure
@@ -31,8 +33,10 @@ $card = get_entity($card_guid);
 if ($card->canEdit()) {
 	$card->title = $title;
 	$card->description = $desc;
+	$card->assignedto = $assignedto;
 	$card->duedate = $duedate;
 	$card->tags = $tags;
+	$card->access_id = $access_id;
 
 	if ($card->save()) {
 		elgg_clear_sticky_form('card');
