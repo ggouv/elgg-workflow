@@ -199,7 +199,6 @@
 	background-color: Palegreen;
 }
 .workflow-card-assignedto {
-	clear: both;
 	float: right;
 	margin-top: 2px;
 	height: 25px;
