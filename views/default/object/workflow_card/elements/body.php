@@ -32,7 +32,7 @@ if (true) { //($comments_count != 0) {
 
 echo '<div class="workflow-card-info">' . $description . $comment . $due_date_string . $checklist_string . '</div>';
 
-$assignedto = $workflow_card->assignedto;
+$assignedto = (array) $workflow_card->assignedto;
 if ($assignedto) {
 	echo '<div class="workflow-card-assignedto">';
 	foreach ( $assignedto as $user_guid) {
