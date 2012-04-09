@@ -11,9 +11,9 @@
  */
 
 $deleted_card_guid = get_input('card_guid');
-$parent_guid = get_input('parent_guid', null);
 
 $deleted_card = get_entity($deleted_card_guid);
+$parent_guid = $deleted_card->parent_guid;
 
 if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_card->getOwnerGuid()) {
 	delete_entity($deleted_card_guid);

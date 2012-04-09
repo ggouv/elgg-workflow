@@ -28,7 +28,8 @@ $english = array(
 	'groups:enableworkflow' => "Enable group workflow",
 
 	'workflow:list:none' => "No list created yet",
-	'workflow_list:delete:confirm' => "Are you sure to delete this list and all of his cards?",
+	'workflow:list:delete:confirm' => "Are you sure to delete this list and all of his cards?",
+	'workflow:card:delete:confirm' => "Are you sure to delete this card?",
 
 /*
 	'tasks' => "Tasks",
@@ -138,6 +139,9 @@ $english = array(
 	'workflow:card:add:failure' => "Error with server connexion. Add card doesn't saved.",
 	'workflow:card:add:cannotadd' => "You cannot add a card for this group.",
 	'workflow:card:add:success' => "Card successfully added.",
+	'workflow:card:delete:success' => "Card deleted.",
+	'workflow:card:delete:failure' => "Delete card doesn't saved.",
+
 /*
 	'tasks:noaccess' => 'No access to task',
 	'tasks:cantedit' => 'You cannot edit this task',

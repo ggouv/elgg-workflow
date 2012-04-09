@@ -40,10 +40,8 @@ echo "
 	";
 	elgg_load_js('lightbox');
 	elgg_load_css('lightbox');
-elgg_load_js('tinymce');
-elgg_load_js('elgg.tinymce');
-elgg_load_js('elgg.userpicker');
-elgg_load_js('jquery.ui.autocomplete.html');
+	elgg_load_js('elgg.userpicker');
+	elgg_load_js('jquery.ui.autocomplete.html');
 
 // the all important content
 $content = elgg_extract('content', $vars, '');

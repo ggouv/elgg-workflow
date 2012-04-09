@@ -77,8 +77,6 @@ elgg.workflow.list.init = function() {
 	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', elgg.workflow.list.remove);
 	// add card from list footer
 	elgg.workflow.list.addCard();
-//	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
-//	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
 };
 elgg.register_hook_handler('init', 'system', elgg.workflow.list.init);
@@ -150,7 +148,7 @@ elgg.workflow.list.add = function(event) {
  * @return void
  */
 elgg.workflow.list.remove = function(event) {
-	if (confirm(elgg.echo('workflow_list:delete:confirm'))) {
+	if (confirm(elgg.echo('workflow:list:delete:confirm'))) {
 		var $list = $(this).closest('.workflow-list');
 
 		$list.remove();
@@ -334,9 +332,10 @@ elgg.workflow.card.popup = function() {
 				$('#fancybox-content, #fancybox-content > div').css('height', $('#card-forms').height());
 			});
 			$('#fancybox-content .elgg-button-submit').live('click', elgg.workflow.card.popupForms);
+			$('#fancybox-content .elgg-button-delete').live('click', elgg.workflow.card.remove);
 		},
 		'onClosed': function() {
-			$('#fancybox-content .elgg-button-submit').die();
+			$('#fancybox-content .elgg-button').die();
 		}
 	});
 };
@@ -375,6 +374,32 @@ elgg.workflow.card.popupForms = function(event) {
 		}
 	});
 
+	event.preventDefault();
+};
+
+/**
+ * Removes a card from the layout
+ *
+ * Event callback the uses Ajax to delete the list and removes its HTML
+ *
+ * @param {Object} event
+ * @return void
+ */
+elgg.workflow.card.remove = function(event) {
+	if (confirm(elgg.echo('workflow:card:delete:confirm'))) {
+		card = $(this).parent().find('input[name=entity_guid]').val();
+		
+		// delete the card through ajax
+		elgg.action('workflow/card/delete', {
+			data: {
+				card_guid: card
+			},
+			success: function() {
+				$('#workflow-card-'+card).remove();
+				$.fancybox.close();
+			}
+		});
+	}
 	event.preventDefault();
 };
 

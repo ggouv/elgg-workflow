@@ -193,7 +193,7 @@
 }
 .workflow-card-info .elgg-icon-workflow-checklist {
 	background-position: 0 -406px;
-	margin: -2px 3px 0 0;
+	margin: -1px 3px 0 0;
 }
 .workflow-card-info .workflow-card-checklist-complete {
 	background-color: Palegreen;

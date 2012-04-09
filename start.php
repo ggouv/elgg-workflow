@@ -46,6 +46,7 @@ function workflow_init() {
 	$action_base = "$root/actions/workflow/card";
 	elgg_register_action('workflow/card/move', "$action_base/move.php");
 	elgg_register_action('workflow/card/add', "$action_base/add.php");
+	elgg_register_action('workflow/card/delete', "$action_base/delete.php");
 	elgg_register_action('workflow/card/edit_card', "$action_base/edit_card.php");
 
 	// Register entity type

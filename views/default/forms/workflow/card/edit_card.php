@@ -62,5 +62,7 @@ if ($categories) {
 	
 	echo elgg_view('input/submit', array('value' => elgg_echo("save")));
 	
+	echo elgg_view('input/button', array('value' => elgg_echo("delete"), 'class' => 'elgg-button-delete'));
+	
 	?>
 </div>
