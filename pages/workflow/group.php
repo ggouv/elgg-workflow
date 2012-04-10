@@ -54,15 +54,9 @@ $content .= "</div></div>";
 if (!$lists) {
 	$content = $addlist . '<div class="workflow-lists-container"><p>' . elgg_echo('workflow:list:none') . '</p></div>';
 }
-/*
-$filter_context = '';
-if (elgg_get_page_owner_guid() == elgg_get_logged_in_user_guid()) {
-	$filter_context = 'mine';
-}
 
-$sidebar = elgg_view('tasks/sidebar/navigation');
-$sidebar .= elgg_view('tasks/sidebar');
-*/
+$sidebar .= elgg_view('workflow/sidebar');
+
 $params = array(
 	'content' => $content,
 	'title' => $title,

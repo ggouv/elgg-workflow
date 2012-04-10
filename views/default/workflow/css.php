@@ -14,6 +14,7 @@
 	background-color: #DEDEDE;
 	padding: 2px;
 	position: relative;
+	width: <?php echo elgg_get_plugin_setting('min_width_list', 'elgg-workflow'); ?>;
 	max-width: <?php echo elgg_get_plugin_setting('max_width_list', 'elgg-workflow'); ?>;
 }
 .workflow-list:hover {

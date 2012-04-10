@@ -216,6 +216,7 @@ $english = array(
 	/**
 	 * Sidebar items
 	 */
+	 'workflow:sidebar:assignedto_user' => "Participants:",
 /*
 	'tasks:sidebar:this' => "This list",
 	'tasks:sidebar:children' => "List tasks",
