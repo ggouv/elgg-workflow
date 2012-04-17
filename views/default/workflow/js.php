@@ -289,7 +289,8 @@ elgg.workflow.card.move = function(event, ui) {
  */
 elgg.workflow.card.add = function(event) {
 	workflow_list = $(this).parent().find('[name=workflow_list]').val();
-	card_title = $(this).parent().find('.elgg-input-text').val();
+	input_add_card = $(this).parent().find('.elgg-input-text');
+	card_title = input_add_card.val();
 
 	if (card_title) {
 		elgg.action('workflow/card/add', {
@@ -306,8 +307,13 @@ elgg.workflow.card.add = function(event) {
 		});
 	}
 
-	$(this).parent().find('.elgg-input-text').val(elgg.echo("workflow:list:add_card"));
-	$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').hide();
+	if ( input_add_card.is(':focus') ) {
+		input_add_card.val('');
+	} else {
+		input_add_card.val(elgg.echo("workflow:list:add_card"));
+		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').hide();
+	}
+
 	event.preventDefault();
 };
 
