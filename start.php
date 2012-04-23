@@ -26,7 +26,8 @@ function workflow_init() {
 	elgg_register_page_handler('workflow', 'workflow_page_handler');
 
 	// Register URL handler
-	elgg_register_entity_url_handler('object', 'todolist', 'todolist_url');
+	elgg_register_entity_url_handler('object', 'workflow_list', 'workflow_list_url_handler');
+	elgg_register_entity_url_handler('object', 'workflow_card', 'workflow_card_url_handler');
 
 	// Extend view
 	elgg_extend_view('css/elgg', 'workflow/css');
@@ -55,14 +56,8 @@ function workflow_init() {
 
 	// Register entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:workflow_list', 'workflow_list_entity_menu_setup');
-/*
-	elgg_register_action('brainstorm/editidea', "$action_base/editidea.php");
-	elgg_register_action("brainstorm/rateidea", "$action_base/rateidea.php");
-	elgg_register_action('brainstorm/delete', "$action_base/deleteidea.php");
 
-	elgg_register_plugin_hook_handler('register', 'menu:page', 'brainstorm_page_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'brainstorm_owner_block_menu');
-	
+/*
 
 	// Register widget
 	elgg_register_widget_type('brainstorm', elgg_echo('brainstorm:widget:title'), elgg_echo('brainstorm:widget:description'));
@@ -73,24 +68,28 @@ function workflow_init() {
 	// Listen to notification events and supply a more useful message
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'brainstorm_notify_message');
 
-	// Groups
-	add_group_tool_option('brainstorm', elgg_echo('brainstorm:enablebrainstorm'), false);
-	elgg_extend_view('groups/tool_latest', 'brainstorm/group_module');
+
 */
 }
 
 /**
- * Dispatcher for todo plugin.
- * URLs take the form of
- *  All lists:        todo/all
- *  User's lists:     todo/owner/<username>
- *  Friend's lists:   todo/friends/<username>
- *  Group lists:      todo/group/<guid>/all
-		 *  View task:        todo/view/<guid>/<title>
- 		*  New task:         todo/add/<guid> (container: user, group, parent)
- 		*  Edit task:        todo/edit/<guid>
+ * Dispatcher for elgg-workflow plugin.
+ * URLs take the form of :
+ *  All boards:        workflow/all
+ *  User's board:      workflow/owner/<username> (user board are private. No friend's board view)
+ *  Group board:       workflow/group/<guid>
  *
- * Title is ignored
+ *  Cards assigned to all:        workflow/assigned-cards/all
+ *  Cards assigned to user:       workflow/assigned-cards/owner/<username>
+ *  Cards assigned to friends:    workflow/assigned-cards/friends/<username>
+ *
+ * card and list are viewed in board (simple object view doesn't make sense)
+ *  View user's card:             workflow/owner/<username>/card/<guid>/<title> (title is ignored)
+ *  View group's card:             workflow/group/<guid>/card/<guid>/<title> (title is ignored)
+ *  View user's list:             workflow/owner/<username>/list/<guid>/<title> (title is ignored)
+ *  View group's list:             workflow/group/<guid>/list/<guid>/<title> (title is ignored)
+ *
+ *  Edit card:         workflow/edit_card_popup (only by ajax call)
  *
  * @param array $page
  */
@@ -107,46 +106,35 @@ function workflow_page_handler($page) {
 	$base_dir = dirname(__FILE__) . '/pages/workflow';
 
 	switch ($page[0]) {
-		case 'all':
 		default:
+		case 'all':
 			include "$base_dir/world.php";
 			break;
 		case 'owner':
+			if ($page[3]) {}
 			include "$base_dir/owner.php";
 			break;
-		case 'friends':
-			include "$base_dir/friends.php";
-			break;
 		case 'group':
+			if ($page[3]) {}
 			include "$base_dir/group.php";
+			break;
+		case 'assigned-cards':
+			switch ($page[1]) {
+				default:
+				case 'all':
+					include "$base_dir/assigned-cards/world.php";
+					break;
+				case 'owner':
+					include "$base_dir/assigned-cards/owner.php";
+					break;
+				case 'friends':
+					include "$base_dir/assigned-cards/owner.php";
+					break;
+			}
 			break;
 		case 'edit_card_popup':
 			include "$base_dir/edit_card_popup.php";
 			break;
-
-
-/*
-		case 'view':
-			set_input('guid', $page[1]);
-			include "$base_dir/view.php";
-			break;
-		case 'add':
-			set_input('guid', $page[1]);
-			include "$base_dir/new_task.php";
-			break;
-		case 'addlist':
-			set_input('guid', $page[1]);
-			include "$base_dir/new_tasklist.php";
-			break;
-		case 'edit':
-			set_input('guid', $page[1]);
-			include "$base_dir/edit_task.php";
-			break;
-		case 'editlist':
-			set_input('guid', $page[1]);
-			include("$base_dir/edit_tasklist.php");
-			break;
-*/
 	}
 
 	elgg_pop_context();
@@ -156,15 +144,37 @@ function workflow_page_handler($page) {
 
 
 /**
- * Override the workflow url
+ * Override the workflow list url
  * 
- * @param ElggObject $entity workflow object
+ * @param ElggObject $entity workflow_list
  * @return string
  */
-function workflow_url($entity) {
+function workflow_list_url_handler($entity) {
 	$title = elgg_get_friendly_title($entity->title);
-	return "workflow/view/$entity->guid/$title";
+	$container = get_entity($entity->container_guid);
+	if (elgg_instanceof($container, 'user')) {
+		return "workflow/owner/$container->title/list/$entity->guid/$title";
+	} elseif (elgg_instanceof($container, 'group')) {
+		return "workflow/group/$container->guid/list/$entity->guid/$title";
+	}
 }
+
+/**
+ * Override the workflow card url
+ * 
+ * @param ElggObject $entity workflow_card
+ * @return string
+ */
+function workflow_card_url_handler($entity) {
+	$title = elgg_get_friendly_title($entity->title);
+	$container = get_entity($entity->container_guid);
+	if (elgg_instanceof($container, 'user')) {
+		return "workflow/owner/$container->title/card/$entity->guid/$title";
+	} elseif (elgg_instanceof($container, 'group')) {
+		return "workflow/group/$container->guid/card/$entity->guid/$title";
+	}
+}
+
 
 /**
  * Add a menu item to the user ownerblock
@@ -175,7 +185,7 @@ function workflow_owner_block_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('workflow', elgg_echo('workflow'), $url);
 		$return[] = $item;
 	} else {
-		if ($params['entity']->todo_enable != "no") {
+		if ($params['entity']->workflow_enable != "no") {
 			$url = "workflow/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('workflow', elgg_echo('workflow:group'), $url);
 			$return[] = $item;
