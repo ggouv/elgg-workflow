@@ -17,6 +17,19 @@ $deleted_list = get_entity($deleted_list_guid);
 $container = get_entity($container_guid);
 
 if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list->getOwnerGuid()) {
+
+	// delete cards of this list
+	$cards = elgg_get_entities_from_metadata(array(
+		'type' => 'object',
+		'subtypes' => 'workflow_card',
+		'metadata_name' => 'parent_guid',
+		'metadata_value' => $deleted_list_guid,
+		'limit' => 0
+	));
+	foreach($cards as $card) {
+		delete_entity($card->guid);
+	}
+	// delete list
 	delete_entity($deleted_list_guid);
 
 	$lists = elgg_get_entities(array(
