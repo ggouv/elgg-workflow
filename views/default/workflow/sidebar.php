@@ -2,7 +2,7 @@
 /**
  * Brainstorm group sidebar
  */
-$group_guid = elgg_get_page_owner_guid();
+$group_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid());
 
 // get all cards of the group
 $cards = elgg_get_entities(array(
@@ -34,10 +34,8 @@ foreach ($all_assignedto as $user_guid) {
 
 $title = elgg_echo('workflow:sidebar:assignedto_user');
 
-if ($content) echo elgg_view_module('aside', $title, $content);
-
-
-echo elgg_view('page/elements/tagcloud_block', array(
-	'subtypes' => 'workflow_card',
-	'owner_guid' => elgg_get_page_owner_guid(),
-));
+if ($content) {
+	 echo elgg_view_module('aside', $title, $content);
+} else {
+	 echo elgg_view_module('aside', '', '');
+}

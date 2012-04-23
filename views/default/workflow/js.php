@@ -156,7 +156,11 @@ elgg.workflow.list.remove = function(event) {
 		elgg.workflow.list.resize();
 
 		// delete the widget through ajax
-		elgg.action($(this).attr('href'));
+		elgg.action($(this).attr('href'), {
+			success: function(json) {
+				$('.elgg-sidebar .elgg-module-aside').replaceWith(json.output.sidebar);
+			}
+		});
 	}
 	event.preventDefault();
 };
@@ -364,10 +368,11 @@ elgg.workflow.card.popupForms = function(event) {
 		data: data,
 		success: function(json) {
 			$.fancybox.close();
-			if (card_guid && json.output && json.status == 0) {
-				$('#workflow-card-'+card_guid).replaceWith(json.output);
+			if (card_guid && json.output && json.status == 0) { // card modified
+				$('#workflow-card-'+card_guid).replaceWith(json.output.card);
+				$('.elgg-sidebar .elgg-module-aside').replaceWith(json.output.sidebar);
 				elgg.workflow.card.popup();
-			} else if (json.output == '' && json.status == 0) {
+			} else if (json.output == '' && json.status == 0) { // card commented
 				if ( $('#workflow-card-'+card_guid+' .workflow-card-comment').length == 0 ) {
 					if ( $('#workflow-card-'+card_guid+' .workflow-card-description').length == 0 ) {
 						$('#workflow-card-'+card_guid+' .workflow-card-info').prepend('<div class="workflow-card-comment">0</div>');
@@ -401,8 +406,9 @@ elgg.workflow.card.remove = function(event) {
 			data: {
 				card_guid: card
 			},
-			success: function() {
+			success: function(json) {
 				$('#workflow-card-'+card).remove();
+				$('.elgg-sidebar .elgg-module-aside').replaceWith(json.output.sidebar);
 				$.fancybox.close();
 			}
 		});

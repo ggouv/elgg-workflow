@@ -41,7 +41,10 @@ if ($card->canEdit()) {
 	if ($card->save()) {
 		elgg_clear_sticky_form('card');
 		system_message(elgg_echo('workflow:card:edit:success'));
-		echo elgg_view_entity($card, array('view_type' => 'group'));
+		echo json_encode(array(
+			'card' => elgg_view_entity($card, array('view_type' => 'group')),
+			'sidebar' => elgg_view('workflow/sidebar', array('container_guid' => $card->container_guid)),
+		));
 	} else {
 		register_error(elgg_echo('workflow:card:edit:failure'));
 	}

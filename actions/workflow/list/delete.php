@@ -39,6 +39,9 @@ if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list
 	}
 
 	system_message(elgg_echo('workflow:list:delete:success'));
+	echo json_encode(array(
+		'sidebar' => elgg_view('workflow/sidebar', array('container_guid' => $deleted_list->container_guid)),
+	));
 	forward(REFERER);
 }
 
