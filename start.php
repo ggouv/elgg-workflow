@@ -18,6 +18,8 @@ function workflow_init() {
 	$root = dirname(__FILE__);
 	elgg_register_library('workflow:utilities', "$root/lib/utilities.php");
 
+	elgg_register_ajax_view('workflow/edit_card_popup');
+
 	// register global menu
 	$item = new ElggMenuItem('workflow', elgg_echo('workflow'), 'workflow/all');
 	elgg_register_menu_item('site', $item);
@@ -89,8 +91,6 @@ function workflow_init() {
  *  View user's list:             workflow/owner/<username>/list/<guid>/<title> (title is ignored)
  *  View group's list:             workflow/group/<guid>/list/<guid>/<title> (title is ignored)
  *
- *  Edit card:         workflow/edit_card_popup (only by ajax call)
- *
  * @param array $page
  */
 function workflow_page_handler($page) {
@@ -131,9 +131,6 @@ function workflow_page_handler($page) {
 					include "$base_dir/assigned-cards/owner.php";
 					break;
 			}
-			break;
-		case 'edit_card_popup':
-			include "$base_dir/edit_card_popup.php";
 			break;
 	}
 

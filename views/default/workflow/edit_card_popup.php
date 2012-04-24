@@ -10,6 +10,8 @@
  *
  */
 
+elgg_load_library('workflow:utilities');
+
 $card_guid = get_input('card_guid');
 $card = get_entity($card_guid);
 
