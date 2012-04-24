@@ -87,9 +87,9 @@ function workflow_init() {
  *
  * card and list are viewed in board (simple object view doesn't make sense)
  *  View user's card:             workflow/owner/<username>/card/<guid>/<title> (title is ignored)
- *  View group's card:             workflow/group/<guid>/card/<guid>/<title> (title is ignored)
+ *  View group's card:            workflow/group/<guid>/card/<guid>/<title> (title is ignored)
  *  View user's list:             workflow/owner/<username>/list/<guid>/<title> (title is ignored)
- *  View group's list:             workflow/group/<guid>/list/<guid>/<title> (title is ignored)
+ *  View group's list:            workflow/group/<guid>/list/<guid>/<title> (title is ignored)
  *
  * @param array $page
  */
@@ -111,11 +111,11 @@ function workflow_page_handler($page) {
 			include "$base_dir/world.php";
 			break;
 		case 'owner':
-			if ($page[3]) {}
+			if ($page[3]) echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
 			include "$base_dir/owner.php";
 			break;
 		case 'group':
-			if ($page[3]) {}
+			if ($page[3]) echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
 			include "$base_dir/group.php";
 			break;
 		case 'assigned-cards':

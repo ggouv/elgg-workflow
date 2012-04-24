@@ -11,8 +11,7 @@
 }
 .workflow-list {
 	float: left;
-	background-color: #DEDEDE;
-	padding: 2px;
+	border: 2px solid #DEDEDE;
 	position: relative;
 	width: <?php echo elgg_get_plugin_setting('min_width_list', 'elgg-workflow'); ?>;
 	max-width: <?php echo elgg_get_plugin_setting('max_width_list', 'elgg-workflow'); ?>;
