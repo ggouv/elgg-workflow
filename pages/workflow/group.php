@@ -11,9 +11,10 @@
  */
 
 $group = elgg_get_page_owner_entity();
+$user_guid = elgg_get_logged_in_user_guid()
 
 if (!$group || $group->type != 'group') {
-	forward('workflow/all');
+	forward('workflow/owner/' . $user_guid);
 }
 
 // access check for closed groups
@@ -45,9 +46,8 @@ $addlist = '<div id="add-list" class="elgg-module elgg-module-popup hidden">' . 
 $content .= $addlist . "<div id='workflow-card-popup' class='elgg-module elgg-module-popup hidden mbl'></div>";
 
 $content .= "<div class='workflow-lists-container'><div class='workflow-lists'>";
-for ($list_index = 1; $list_index <= $num_lists; $list_index++) {
-	$listguid = $sorted_lists[$list_index-1]->guid;
-	$content .= elgg_view_entity($sorted_lists[$list_index-1], array('view_type' => 'group'));
+foreach ($sorted_lists as $sorted_list) {
+	$content .= elgg_view_entity($sorted_list, array('view_type' => 'group'));
 }
 $content .= "</div></div>";
 

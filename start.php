@@ -23,6 +23,8 @@ function workflow_init() {
 	// register global menu
 	$item = new ElggMenuItem('workflow', elgg_echo('workflow'), 'workflow/all');
 	elgg_register_menu_item('site', $item);
+	$item = new ElggMenuItem('my_workflow', elgg_echo('my_workflow'), 'workflow/owner');
+	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('workflow', 'workflow_page_handler');

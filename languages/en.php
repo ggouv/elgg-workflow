@@ -17,6 +17,7 @@ $english = array(
 	 */
 
 	'workflow' => "Workflow",
+	'my_workflow' => "My Workflow",
 	'workflow:owner' => "%s's workflow",
 
  	'item:object:workflow_list' => "Workflow lists",
@@ -131,13 +132,13 @@ $english = array(
 
 	'workflow:list:move:failure' => "Error with server connexion. Move list doesn't saved.",
 	'workflow:list:add:failure' => "Error with server connexion. Add list doesn't saved.",
-	'workflow:list:add:cannotadd' => "You cannot add a list for this group.",
+	'workflow:list:add:cannotadd' => "You cannot add a list.",
 	'workflow:list:add:success' => "List successfully added.",
 	'workflow:list:delete:failure' => "Delete list doesn't saved.",
 	'workflow:list:delete:success' => "List deleted.",
 
 	'workflow:card:add:failure' => "Error with server connexion. Add card doesn't saved.",
-	'workflow:card:add:cannotadd' => "You cannot add a card for this group.",
+	'workflow:card:add:cannotadd' => "You cannot add a card.",
 	'workflow:card:add:success' => "Card successfully added.",
 	'workflow:card:delete:success' => "Card deleted.",
 	'workflow:card:delete:failure' => "Delete card doesn't saved.",

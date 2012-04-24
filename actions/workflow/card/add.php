@@ -20,7 +20,7 @@ if (!$container_guid || !$parent_guid) {
 	forward(REFERER);
 }
 
-if (is_group_member( $container_guid, $user_guid )) {
+if (is_group_member( $container_guid, $user_guid ) || $user_guid == $container_guid) {
 
 	$nbr_cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',

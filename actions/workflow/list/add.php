@@ -14,7 +14,7 @@ $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $container_guid = get_input('container_guid', elgg_get_page_owner_guid());
 $list_title = get_input('list_title', 'a list');
 
-if (is_group_member( $container_guid, $user_guid )) {
+if (is_group_member( $container_guid, $user_guid ) || $user_guid == $container_guid) {
 
 	$nbr_lists = elgg_get_entities(array(
 		'type' => 'object',
