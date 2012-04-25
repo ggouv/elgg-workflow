@@ -17,6 +17,7 @@ function workflow_init() {
 	// register a library of helper functions
 	$root = dirname(__FILE__);
 	elgg_register_library('workflow:utilities', "$root/lib/utilities.php");
+	elgg_register_js('jquery.scrollTo',"/mod/elgg-workflow/views/default/workflow/jquery.scrollTo-min.js");
 
 	elgg_register_ajax_view('workflow/edit_card_popup');
 
@@ -113,11 +114,17 @@ function workflow_page_handler($page) {
 			include "$base_dir/world.php";
 			break;
 		case 'owner':
-			if ($page[3]) echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
+			if ($page[3]) {
+				echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
+				elgg_load_js('jquery.scrollTo');
+			}
 			include "$base_dir/owner.php";
 			break;
 		case 'group':
-			if ($page[3]) echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
+			if ($page[3]) {
+				echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
+				elgg_load_js('jquery.scrollTo');
+			}
 			include "$base_dir/group.php";
 			break;
 		case 'assigned-cards':

@@ -29,7 +29,11 @@ elgg.workflow.init = function() {
 		$('li.elgg-menu-item-add-list a.elgg-button-action').attr("href", "#add-list").attr("rel", "popup"); 
 
 		// highlight object
-		if (typeof(highlight) !== 'undefined') $('#workflow-'+highlight).css('border','2px solid red');
+		if (typeof(highlight) !== 'undefined') {
+			$(window).scrollTo($('#workflow-'+highlight), 'slow', function() {
+				$('#workflow-'+highlight).css('border','2px solid red');
+			});
+		}
 
 	});
 
