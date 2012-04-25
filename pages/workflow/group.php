@@ -11,7 +11,7 @@
  */
 
 $group = elgg_get_page_owner_entity();
-$user_guid = elgg_get_logged_in_user_guid()
+$user_guid = elgg_get_logged_in_user_guid();
 
 if (!$group || $group->type != 'group') {
 	forward('workflow/owner/' . $user_guid);
