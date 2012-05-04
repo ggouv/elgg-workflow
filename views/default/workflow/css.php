@@ -203,6 +203,7 @@
 	margin-top: 2px;
 	height: 25px;
 }
+/* CSS for card in group view */
 #card-forms {
 	float: left;
 }
@@ -216,4 +217,8 @@
 	width: 380px;
 	background-color: #EEE;
 	padding: 10px;
+}
+#fancybox-content .elgg-subtext {
+	float: right;
+	text-align: right;
 }

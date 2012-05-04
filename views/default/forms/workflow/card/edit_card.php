@@ -21,7 +21,7 @@ $card_guid = elgg_extract('guid', $vars, null);
 
 $card = get_entity($card_guid);
 $user_guid = elgg_get_logged_in_user_guid();
-
+global $fb; $fb->info($card);
 ?>
 
 <div>
@@ -70,4 +70,16 @@ if ($categories) {
 	echo elgg_view('input/button', array('value' => elgg_echo("delete"), 'class' => 'elgg-button-delete'));
 	
 	?>
+	<div class="elgg-subtext">
+		<?php
+			$creator = get_entity($card->owner_guid);
+			$creator_link = elgg_view('output/url', array(
+				'href' => "markdown_wiki/owner/$creator->username",
+				'text' => $creator->name,
+				'is_trusted' => true,
+			));
+			echo elgg_echo('workflow:card:number', array($card_guid)) . '<br/>' .
+			elgg_echo('workflow:card:added', array(elgg_view_friendly_time($card->time_created), $creator_link));
+		?>
+	</div>
 </div>

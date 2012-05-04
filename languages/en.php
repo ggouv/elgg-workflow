@@ -91,6 +91,8 @@ $english = array(
 
 	'workflow:duedate' => "Due date",
 	'workflow:assignedto' => "Assigned to",
+	'workflow:card:number' => "Card number %d",
+	'workflow:card:added' => "Added %s by %s",
 /*
 	'tasks:title' => 'Name',
 	'tasks:description' => 'Description',
