@@ -226,7 +226,7 @@ function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
 		$delete = array(
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete-alt'),
-			'title' => elgg_echo('workflow_list:delete', array($tasklist->title)),
+			'title' => elgg_echo('workflow:list:delete', array($tasklist->title)),
 			'href' => "action/workflow/list/delete?list_guid=$workflow_list->guid",
 			'is_action' => true,
 			'class' => 'workflow-list-delete-button',
@@ -239,7 +239,7 @@ function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
 			$edit = array(
 				'name' => 'settings',
 				'text' => elgg_view_icon('settings-alt'),
-				'title' => elgg_echo('workflow_list:edit'),
+				'title' => elgg_echo('workflow:list:edit'),
 				'href' => "#workflow-list-edit-$workflow_list->guid",
 				'class' => "workflow-list-edit-button",
 				'rel' => 'toggle',

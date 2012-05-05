@@ -29,6 +29,9 @@ $english = array(
 	'groups:enableworkflow' => "Enable group workflow",
 
 	'workflow:list:none' => "No list created yet",
+
+	'workflow:list:delete' => "Delete this list",
+	'workflow:list:edit' => "Edit this list",
 	'workflow:list:delete:confirm' => "Are you sure to delete this list and all of his cards?",
 	'workflow:card:delete:confirm' => "Are you sure to delete this card?",
 
@@ -93,44 +96,12 @@ $english = array(
 	'workflow:assignedto' => "Assigned to",
 	'workflow:card:number' => "Card number %d",
 	'workflow:card:added' => "Added %s by %s",
-/*
-	'tasks:title' => 'Name',
-	'tasks:description' => 'Description',
-	'tasks:list' => 'List',
-	'tasks:priority' => 'Priority',
-	'tasks:tags' => 'Tags',
-	'tasks:elapsed_time' => 'Elapsed time',
-	'tasks:remaining_time' => 'Remaining time (time to finish the task)',
-	'tasks:access_id' => 'Who can see this task?',
-	
-	'tasks:changehistory' => 'Change history',
-	'tasks:comments:post' => 'Save changes',
-	
-	'tasks:state:actions' => 'Actions',
-	'tasks:state:action:noaction' => 'Leave as <em>%s</em>',
-	'tasks:state:action:assign' => 'Accept this task',
-	'tasks:state:action:leave' => 'Leave this task',
-	'tasks:state:action:activate' => 'Set as your active task',
-	'tasks:state:action:deactivate' => 'Unset as your active task',
-	'tasks:state:action:assign_and_activate' => 'Accept this task and set as your active one',
-	'tasks:state:action:mark_as_done' => 'Mark this task as done',
-	'tasks:state:action:close' => 'Close this task',
-	'tasks:state:action:reopen' => 'Reopen this task',
-	
-	'tasks:assigned' => 'Assigned tasks',
-	'tasks:unassigned' => 'Unassigned tasks',
-	'tasks:closed' => 'Closed tasks',
-	
-	'tasks:lists:title' => 'Name',
-	'tasks:lists:description' => 'Description',
-	'tasks:lists:startdate' => 'Start date',
-	'tasks:lists:enddate' => 'End date (deadline)',
-	'tasks:lists:tags' => 'Tags',
-	'tasks:lists:access_id' => 'Who can see this task list?',
 
 	/**
 	 * Status and error messages
 	 */
+
+	'workflow:unknown_card' => "Unknown card",
 
 	'workflow:list:move:failure' => "Error with server connexion. Move list doesn't saved.",
 	'workflow:list:add:failure' => "Error with server connexion. Add list doesn't saved.",
@@ -139,11 +110,15 @@ $english = array(
 	'workflow:list:delete:failure' => "Delete list doesn't saved.",
 	'workflow:list:delete:success' => "List deleted.",
 
+	'workflow:card:move:failure' => "Error. Move card doesn't saved.",
 	'workflow:card:add:failure' => "Error with server connexion. Add card doesn't saved.",
 	'workflow:card:add:cannotadd' => "You cannot add a card.",
 	'workflow:card:add:success' => "Card successfully added.",
 	'workflow:card:delete:success' => "Card deleted.",
 	'workflow:card:delete:failure' => "Delete card doesn't saved.",
+	'workflow:card:edit:success' => "Card changes successfully saved.",
+	'workflow:card:edit:failure' => "Card changes don't saved.",
+	'workflow:card:edit:cannot_edit' => "You cannot edit this card.",
 
 /*
 	'tasks:noaccess' => 'No access to task',

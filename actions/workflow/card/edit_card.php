@@ -24,7 +24,7 @@ $user = elgg_get_logged_in_user_guid();
 elgg_make_sticky_form('card');
 
 if (!$card_guid) {
-	register_error(elgg_echo('workflow:card:edit:error'));
+	register_error(elgg_echo('workflow:unknown_card'));
 	forward(REFERER);
 }
 
@@ -50,5 +50,5 @@ if ($card->canEdit()) {
 	}
 
 } else {
-	register_error(elgg_echo('workflow:card:edit:error'));
+	register_error(elgg_echo('workflow:card:edit:cannot_edit'));
 }
