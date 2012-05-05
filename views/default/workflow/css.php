@@ -110,7 +110,6 @@
 	padding: 2px;
 	position: relative;
 	margin: 2px;
-	z-index: 1;
 	-webkit-border-radius: 4px;
 		-moz-border-radius: 4px;
 		border-radius: 4px;
@@ -124,7 +123,7 @@
 	position: absolute;
 	height: 22px;
 	background-color: transparent;
-	z-index: 0;
+	z-index: -1;
 }
 .workflow-card-none:hover {
 	border: 1px solid transparent;
