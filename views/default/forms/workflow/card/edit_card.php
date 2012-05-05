@@ -21,7 +21,7 @@ $card_guid = elgg_extract('guid', $vars, null);
 
 $card = get_entity($card_guid);
 $user_guid = elgg_get_logged_in_user_guid();
-global $fb; $fb->info($card);
+
 ?>
 
 <div>

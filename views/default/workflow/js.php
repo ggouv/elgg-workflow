@@ -349,11 +349,11 @@ elgg.workflow.card.popup = function() {
 			$('.elgg-userpicker-remove, .ui-menu-item').live('click', function() {
 				$('#fancybox-content, #fancybox-content > div').css('height', $('#card-forms').height());
 			});
-			$('#fancybox-content .elgg-button-submit').live('click', elgg.workflow.card.popupForms);
-			$('#fancybox-content .elgg-button-delete').live('click', elgg.workflow.card.remove);
+			$('#fancybox-content .elgg-button-submit').die().live('click', elgg.workflow.card.popupForms);
+			$('#fancybox-content .elgg-button-delete').die().live('click', elgg.workflow.card.remove);
 		},
-		'onClosed': function() {
-			$('#fancybox-content .elgg-button').die();
+		'onCleanup': function() {
+			$('#fancybox-content .elgg-button-submit, #fancybox-content .elgg-button-delete').die();
 		}
 	});
 };
