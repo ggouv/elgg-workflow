@@ -194,6 +194,7 @@ function workflow_owner_block_menu($hook, $type, $return, $params) {
 		if ($params['entity']->workflow_enable != "no") {
 			$url = "workflow/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('workflow', elgg_echo('workflow:group'), $url);
+			if (elgg_in_context('workflow')) $item->setSelected();
 			$return[] = $item;
 		}
 	}

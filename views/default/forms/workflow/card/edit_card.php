@@ -74,7 +74,7 @@ if ($categories) {
 		<?php
 			$creator = get_entity($card->owner_guid);
 			$creator_link = elgg_view('output/url', array(
-				'href' => "markdown_wiki/owner/$creator->username",
+				'href' => "profile/$creator->username",
 				'text' => $creator->name,
 				'is_trusted' => true,
 			));
