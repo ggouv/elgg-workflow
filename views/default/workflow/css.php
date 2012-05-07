@@ -202,9 +202,13 @@
 	margin-top: 2px;
 	height: 25px;
 }
-/* CSS for card in group view */
+/* CSS for card popup */
 #card-forms {
 	float: left;
+}
+#card-forms textarea {
+	resize: vertical;
+	height: 80px
 }
 #fancybox-content .elgg-comments {
 	float: right;

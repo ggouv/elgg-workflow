@@ -72,14 +72,18 @@ if ($categories) {
 	?>
 	<div class="elgg-subtext">
 		<?php
+			echo elgg_view('output/url', array(
+				'href' => $card->getURL(),
+				'text' => elgg_echo('workflow:card:number', array($card_guid)),
+				'is_trusted' => true,
+			));
 			$creator = get_entity($card->owner_guid);
 			$creator_link = elgg_view('output/url', array(
 				'href' => "profile/$creator->username",
 				'text' => $creator->name,
 				'is_trusted' => true,
 			));
-			echo elgg_echo('workflow:card:number', array($card_guid)) . '<br/>' .
-			elgg_echo('workflow:card:added', array(elgg_view_friendly_time($card->time_created), $creator_link));
+			echo  '<br/>' . elgg_echo('workflow:card:added', array(elgg_view_friendly_time($card->time_created), $creator_link));
 		?>
 	</div>
 </div>
