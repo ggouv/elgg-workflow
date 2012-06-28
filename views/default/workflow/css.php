@@ -210,18 +210,18 @@
 	resize: vertical;
 	height: 80px
 }
-#fancybox-content .elgg-comments {
+#card-forms .elgg-comments {
 	float: right;
 	width: 380px;
 	margin: 0 0 0 20px;
 }
-#fancybox-content .elgg-form-workflow-card-edit-card {
+#card-forms .elgg-form-workflow-card-edit-card {
 	float: left;
 	width: 380px;
 	background-color: #EEE;
 	padding: 10px;
 }
-#fancybox-content .elgg-subtext {
+#card-forms .elgg-foot .elgg-subtext {
 	float: right;
 	text-align: right;
 }

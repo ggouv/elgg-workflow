@@ -10,13 +10,13 @@
  *
  */
 
-$card_guid = elgg_extract('guid', $vars, get_input('entity_guid'));
-$title = elgg_extract('title', $vars, get_input('title'));
-$desc = elgg_extract('description', $vars, get_input('description'));
-$assignedto =  elgg_extract('members', $vars, get_input('members'));
-$duedate = elgg_extract('duedate', $vars, get_input('duedate'));
-$tags = elgg_extract('tags', $vars, get_input('tags'));
-$access_id = elgg_extract('access_id', $vars, get_input('access_id', ACCESS_DEFAULT));
+$card_guid = (int) get_input('entity_guid');
+$title = get_input('title');
+$desc = get_input('description');
+$assignedto =  get_input('members');
+$duedate = get_input('duedate');
+$tags = get_input('tags');
+$access_id = get_input('access_id', ACCESS_DEFAULT);
 
 $user = elgg_get_logged_in_user_guid();
 

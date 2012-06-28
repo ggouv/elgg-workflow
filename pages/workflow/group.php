@@ -23,6 +23,12 @@ group_gatekeeper();
 elgg_push_breadcrumb($group->name);
 
 elgg_register_title_button('workflow', 'add_list');
+/*elgg_register_menu_item('title', array(
+	'name' => 'new',
+	'href' => "#",
+	'text' => elgg_echo('markdown_wiki:new'),
+	'link_class' => 'elgg-button elgg-button-action',
+));*/
 
 $title = elgg_echo('workflow:owner', array($group->name));
 

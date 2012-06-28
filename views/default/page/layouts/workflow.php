@@ -33,11 +33,11 @@ $header = elgg_view('page/layouts/content/header', $vars);
 $filter = elgg_view('page/layouts/content/filter', $vars);*/
 
 // Pass plugin options to jQuery
-echo "
+$passOpt = "
 	<script type='text/javascript'>
-   var workflow_min_width_list = '" . elgg_get_plugin_setting('min_width_list', 'elgg-workflow') . "';
-   </script>
-	";
+		var workflow_min_width_list = '" . elgg_get_plugin_setting('min_width_list', 'elgg-workflow') . "';
+	</script>";
+
 	elgg_load_js('lightbox');
 	elgg_load_css('lightbox');
 	elgg_load_js('elgg.userpicker');
@@ -55,7 +55,7 @@ $footer = elgg_view('page/layouts/content/footer', $params);
 $body = $header . $content . $footer;
 
 $params = array(
-	'content' => $body,
+	'content' => $body . $passOpt,
 	'sidebar' => $sidebar,
 );
 if (isset($vars['class'])) {

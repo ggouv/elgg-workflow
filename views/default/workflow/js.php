@@ -20,7 +20,7 @@ elgg.provide('elgg.workflow');
 elgg.workflow.init = function() {
 	$(document).ready(function() {
 		if ( $('.workflow-lists-container').length == 0) {
-			return;
+			//return;
 		}
 		elgg.workflow.list.resize();
 		elgg.workflow.list.resize(); //do it again cause scrollbar. @todo find another way to fix that.
@@ -59,7 +59,7 @@ elgg.workflow.list.init = function() {
 
 	// workflow layout?
 	if ($(".workflow-lists-container").length == 0) {
-		return;
+		//return;
 	}
 
 	$(".workflow-lists-container").sortable({
@@ -192,6 +192,7 @@ elgg.workflow.list.resize = function() {
 	var WorkflowWidth = $('.workflow-lists-container').width();
 	var CountLists = $('.workflow-list').length;
 	var ListWidth = 0; var i = 0;
+	workflow_min_width_list = 200;
 	if ( (parseInt(workflow_min_width_list) + 5 + 4) * CountLists > (WorkflowWidth - 5) ) {
 		ListWidth = parseInt(workflow_min_width_list);
 		$('.workflow-lists').width( (ListWidth + 5 + 4) * CountLists - 5); // margin + border minus last margin doesn't displayed
@@ -233,7 +234,7 @@ elgg.provide('elgg.workflow.card');
 elgg.workflow.card.init = function() {
 	// workflow layout?
 	if ($(".workflow-lists-container").length == 0) {
-		return;
+		//return;
 	}
 
 	$(".workflow-lists").sortable({
