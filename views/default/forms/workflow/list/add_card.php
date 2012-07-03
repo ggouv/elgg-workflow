@@ -17,7 +17,7 @@ echo elgg_view('input/hidden', array(
 	'value' => $workflow_list->guid,
 ));
 
-echo elgg_view('input/text', array(
+echo elgg_view('input/plaintext', array(
 	'name' => 'title',
 	'value' => elgg_echo("workflow:list:add_card"),
 	'class' => 'mbs',
@@ -25,7 +25,7 @@ echo elgg_view('input/text', array(
 
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo("workflow:list:add_card"),
-	'class' => 'elgg-button-submit mrs',
+	'class' => 'elgg-button-submit hidden',
 ));
 echo elgg_view_icon('delete');
 

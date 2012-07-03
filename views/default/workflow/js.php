@@ -72,10 +72,10 @@ elgg.workflow.list.init = function() {
 
 	// add list popup
 	$('.elgg-form-workflow-list-add-list-popup .elgg-button-submit').live('click', elgg.workflow.list.add);
-	$('.elgg-form-workflow-list-add-list-popup .elgg-input-text').focusin(function(){
+	$('.elgg-form-workflow-list-add-list-popup .elgg-input-plaintext').focusin(function(){
 		if ( $(this).val() == elgg.echo("workflow:add_list") ) $(this).val('');
 	});
-	$('.elgg-form-workflow-list-add-list-popup .elgg-input-text').focusout(function(){
+	$('.elgg-form-workflow-list-add-list-popup .elgg-input-plaintext').focusout(function(){
 		if ( $(this).val() == '' ) $(this).val(elgg.echo("workflow:add_list"));
 	});
 	// delete list button 
@@ -120,7 +120,7 @@ elgg.workflow.list.move = function(event, ui) {
  * @return void
  */
 elgg.workflow.list.add = function(event) {
-	list_title = $('.elgg-form-workflow-list-add-list-popup .elgg-input-text').val();
+	list_title = $('.elgg-form-workflow-list-add-list-popup .elgg-input-plaintext').val();
 	elgg.action('workflow/list/add', {
 		data: {
 			user_guid: elgg.get_logged_in_user_guid(),
@@ -132,7 +132,7 @@ elgg.workflow.list.add = function(event) {
 				$('.workflow-lists-container p').remove();
 				$('.workflow-lists-container').append('<div class="workflow-lists ui-sortable"></div>');
 			}
-			$('.elgg-form-workflow-list-add-list-popup .elgg-input-text').val(elgg.echo("workflow:add_list"));
+			$('.elgg-form-workflow-list-add-list-popup .elgg-input-plaintext').val(elgg.echo("workflow:add_list"));
 			$('.workflow-lists').append(json.output);
 			elgg.workflow.list.addCard();
 			elgg.workflow.list.resize();
@@ -203,13 +203,13 @@ elgg.workflow.list.resize = function() {
  * Attach event on text area to add card on list
  */
 elgg.workflow.list.addCard = function() {
-	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusin(function(){
+	$('.elgg-form-workflow-list-add-card .elgg-input-plaintext').focusin(function(){
 		if ( $(this).val() == elgg.echo("workflow:list:add_card") ) {
 			$(this).val('');
 			$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'block');
 		}
 	});
-	$('.elgg-form-workflow-list-add-card .elgg-input-text').focusout(function(){
+	$('.elgg-form-workflow-list-add-card .elgg-input-plaintext').focusout(function(){
 		if ( $(this).val() == '' ) {
 			$(this).val(elgg.echo("workflow:list:add_card"));
 			$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
@@ -298,7 +298,7 @@ elgg.workflow.card.move = function(event, ui) {
  */
 elgg.workflow.card.add = function(event) {
 	workflow_list = $(this).parent().find('[name=workflow_list]').val();
-	input_add_card = $(this).parent().find('.elgg-input-text');
+	input_add_card = $(this).parent().find('.elgg-input-plaintext');
 	card_title = input_add_card.val();
 
 	if (card_title) {

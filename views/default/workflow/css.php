@@ -1,3 +1,9 @@
+/* CSS for list popup */
+.elgg-form-workflow-list-add-list-popup .elgg-input-plaintext {
+	height: 28px;
+	resize: none;
+	overflow: hidden;
+}
 /* CSS for list in group view */
 #add-list {
 	position: absolute;
@@ -80,28 +86,39 @@
 	overflow: hidden;
 	width: 100%;
 }
-.elgg-form-workflow-list-add-card .elgg-input-text {
+.workflow-list-footer {
+	padding: 5px 2px 0;
+}
+.elgg-form-workflow-list-add-card .elgg-input-plaintext {
 	border: 1px solid transparent;
 	background-color: transparent;
 	cursor: pointer;
+	height: 28px;
+	resize: none;
+	overflow: hidden;
 }
-.elgg-form-workflow-list-add-card .elgg-input-text:focus {
+.elgg-form-workflow-list-add-card .elgg-input-plaintext:hover {
+	background-color: #DEDEDE;
+}
+.elgg-form-workflow-list-add-card .elgg-input-plaintext:focus {
 	cursor: text;
+	background-color: white;
+	border: 1px solid #DEDEDE;
 }
 .elgg-form-workflow-list-add-card .elgg-icon-delete {
-	margin-top: 2px;
+	margin-top: 3px;
 	cursor: pointer;
 	display: none;
 	float: left;
 }
 .elgg-form-workflow-list-add-card .elgg-button-submit {
-	display: none;
 	float: left;
+	margin: 0 5px 5px 1px;
 }
 
 /* CSS for card in group view */
 .workflow-cards {
-	min-height: 28px;
+	min-height: 30px;
 }
 .workflow-card {
 	float: left;
