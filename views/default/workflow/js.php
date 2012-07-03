@@ -25,9 +25,6 @@ elgg.workflow.init = function() {
 		elgg.workflow.list.resize();
 		elgg.workflow.list.resize(); //do it again cause scrollbar. @todo find another way to fix that.
 
-		// hack for button add list
-		$('li.elgg-menu-item-add-list a.elgg-button-action').attr("href", "#add-list").attr("rel", "popup"); 
-
 		// highlight object
 		if (typeof(highlight) !== 'undefined') {
 			$(window).scrollTo($('#workflow-'+highlight), 'slow', function() {
