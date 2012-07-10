@@ -13,7 +13,9 @@
 $card_guid = (int) get_input('entity_guid');
 $title = get_input('title');
 $desc = get_input('description');
-$assignedto =  get_input('members');
+$assignedto = get_input('members');
+$checklist = get_input('checklist');
+$checklist_checked = get_input('checklist_checked');
 $duedate = get_input('duedate');
 $tags = get_input('tags');
 $access_id = get_input('access_id', ACCESS_DEFAULT);
@@ -34,6 +36,8 @@ if ($card->canEdit()) {
 	$card->title = $title;
 	$card->description = $desc;
 	$card->assignedto = $assignedto;
+	$card->checklist = $checklist;
+	$card->checklist_checked = $checklist_checked;
 	$card->duedate = $duedate;
 	$card->tags = $tags;
 	$card->access_id = $access_id;

@@ -24,10 +24,11 @@ if ($duedate) {
 	$due_date_string = "<div class='workflow-card-duedate$overdue'>" . elgg_view_icon('workflow-calendar') . gmdate('M d', $duedate_timestamp) . "</div>";
 }
 
-$checklist = '1/2';//$workflow_card->checklist;
-if (true) { //($comments_count != 0) {
-	//if ( $due_date >= date() ) $complete = '-complete';
-	$checklist_string = "<div class='workflow-card-checklist$complete'>" . elgg_view_icon('workflow-checklist') . $checklist . "</div>";
+$checklist = count($workflow_card->checklist);
+$checklist_checked = count($workflow_card->checklist_checked);
+if ($checklist != 0) {
+	if ( $checklist_checked >= $checklist ) $complete = '-complete';
+	$checklist_string = "<div class='workflow-card-checklist$complete'>" . elgg_view_icon('workflow-checklist') . $checklist_checked . '/' . $checklist . "</div>";
 }
 
 echo '<div class="workflow-card-info">' . $description . $comment . $due_date_string . $checklist_string . '</div>';

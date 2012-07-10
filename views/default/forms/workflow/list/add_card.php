@@ -19,13 +19,13 @@ echo elgg_view('input/hidden', array(
 
 echo elgg_view('input/plaintext', array(
 	'name' => 'title',
-	'value' => elgg_echo("workflow:list:add_card"),
+	'value' => elgg_echo('workflow:list:add_card'),
 	'class' => 'mbs',
 ));
 
 echo elgg_view('input/submit', array(
-	'value' => elgg_echo("workflow:list:add_card"),
-	'class' => 'elgg-button-submit hidden',
+	'value' => elgg_echo('workflow:list:add_card'),
+	'class' => 'elgg-button-submit hidden float',
 ));
-echo elgg_view_icon('delete');
+echo elgg_view_icon('delete', 'hidden float');
 

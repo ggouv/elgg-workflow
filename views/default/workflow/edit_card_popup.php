@@ -16,8 +16,8 @@ $card_guid = get_input('card_guid');
 $card = get_entity($card_guid);
 
 if (!elgg_instanceof($card, 'object', 'workflow_card') || !$card->canEdit()) {
-	register_error(elgg_echo('workflow:unknown_card'));
-	forward(REFERRER);
+	echo elgg_echo('workflow:unknown_card');
+	return true;
 }
 
 $vars = workflow_card_prepare_form_vars($card);

@@ -35,56 +35,12 @@ $english = array(
 	'workflow:list:delete:confirm' => "Are you sure to delete this list and all of his cards?",
 	'workflow:card:delete:confirm' => "Are you sure to delete this card?",
 
-/*
-	'tasks' => "Tasks",
-	'tasks:owner' => "%s's tasks",
-	'tasks:friends' => "Friends' tasks",
-	'tasks:all' => "All site tasks",
-	'tasks:add' => "Add task",
-	'tasks:addlist' => "Add list",
-	
-	'tasks:lists' => "Task lists",
-	'tasks:lists:owner' => "%s's task lists",
-	'tasks:lists:friends' => "Friends' task lists",
-	'tasks:lists:all' => "All site task lists",
-
-	'tasks:group' => "Group tasks",
-	'groups:enabletasks' => 'Enable group tasks',
-
-	'tasks:edit' => "Edit this task",
-	'tasks:delete' => "Delete this task",
-	'tasks:view' => "View task",
-	
-	'tasks:lists:add' => "Add a task list",
-	'tasks:lists:edit' => "Edit this task list",
-	'tasks:lists:delete' => "Delete this task list",
-	'tasks:lists:view' => "View task list",
-
-	'tasks:via' => "via tasks",
-	'item:object:tasklist' => 'Task lists',
-	'item:object:task' => 'Tasks',
-	'tasks:nogroup' => 'This group does not have any tasks yet',
-	'tasks:more' => 'More tasks',
-	'tasks:none' => 'No tasks created yet',
-	'tasks:lists:none' => 'No task list created yet',
-	
-	'tasks:priority:low' => 'Low priority',
-	'tasks:priority:normal' => 'Normal priority',
-	'tasks:priority:high' => 'High prioritiy',
-
 	/**
 	* River
 	**/
 	'river:create:object:workflow_list' => "%s added a new list %s",
 	'river:create:object:workflow_card' => "%s added a new card %s",
 	'river:comment:object:workflow_card' => "%s commented card %s",
-/*
-	'river:create:object:task' => '%s created a task %s',
-	'river:create:object:tasklist' => '%s created a task list %s',
-	'river:update:object:task' => '%s updated a task %s',
-	'river:update:object:tasklist' => '%s updated a task list %s',
-	'river:comment:object:task' => '%s commented on a task titled %s',
-	'river:comment:object:tasklist' => '%s commented on a task list titled %s',
 
 	/**
 	 * Form fields
@@ -92,8 +48,10 @@ $english = array(
 	'workflow:list:add_list' => "Add list",
 	'workflow:list:add_card' => "Add card",
 
-	'workflow:duedate' => "Due date",
 	'workflow:assignedto' => "Assigned to",
+	'workflow:checklist' => "Check list",
+	'workflow:checklist:add_item' => "Add item",
+	'workflow:duedate' => "Due date",
 	'workflow:card:number' => "Card number %d",
 	'workflow:card:added' => "Added %s by %s",
 

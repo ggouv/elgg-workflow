@@ -108,11 +108,8 @@
 .elgg-form-workflow-list-add-card .elgg-icon-delete {
 	margin-top: 3px;
 	cursor: pointer;
-	display: none;
-	float: left;
 }
 .elgg-form-workflow-list-add-card .elgg-button-submit {
-	float: left;
 	margin: 0 5px 5px 1px;
 }
 
@@ -237,6 +234,39 @@
 	width: 380px;
 	background-color: #EEE;
 	padding: 10px;
+}
+#card-forms .elgg-input-checkboxes label {
+	font-weight: normal;
+	font-size: 100%;
+}
+#card-forms .card-checklist input[type="checkbox"] {
+	text-decoration: line-through;
+}
+#card-forms .card-checklist .elgg-input-plaintext {
+	border: 1px solid transparent;
+	background-color: transparent;
+	cursor: pointer;
+	height: 28px;
+	resize: none;
+	overflow: hidden;
+}
+#card-forms .card-checklist .elgg-input-plaintext:hover {
+	background-color: #DEDEDE;
+}
+#card-forms .card-checklist .elgg-input-plaintext:focus {
+	cursor: text;
+	background-color: white;
+	border: 1px solid #DEDEDE;
+}
+#card-forms .card-checklist .elgg-icon-delete {
+	margin-top: 3px;
+	cursor: pointer;
+}
+#card-forms .card-checklist .elgg-button-submit {
+	margin: 0 5px 15px 1px;
+}
+#card-forms .duedate {
+	clear: both;
 }
 #card-forms .elgg-foot .elgg-subtext {
 	float: right;
