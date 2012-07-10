@@ -20,6 +20,7 @@ function workflow_init() {
 	elgg_register_js('jquery.scrollTo',"/mod/elgg-workflow/views/default/workflow/jquery.scrollTo-min.js");
 
 	elgg_register_ajax_view('workflow/edit_card_popup');
+	elgg_register_ajax_view('workflow/view_card_popup');
 
 	// register global menu
 	$item = new ElggMenuItem('workflow', elgg_echo('workflow'), 'workflow/all');
