@@ -32,6 +32,7 @@ function workflow_init() {
 	elgg_register_page_handler('workflow', 'workflow_page_handler');
 
 	// Register URL handler
+	elgg_register_entity_url_handler('object', 'workflow_board', 'workflow_board_url_handler');
 	elgg_register_entity_url_handler('object', 'workflow_list', 'workflow_list_url_handler');
 	elgg_register_entity_url_handler('object', 'workflow_card', 'workflow_card_url_handler');
 
@@ -44,6 +45,10 @@ function workflow_init() {
 	//elgg_extend_view('groups/tool_latest', 'workflow/group_module');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'workflow_owner_block_menu');
 
+	// actions for board
+	$action_base = "$root/actions/workflow/board";
+	elgg_register_action('workflow/board/add', "$action_base/add.php");
+	elgg_register_action('workflow/board/delete', "$action_base/delete.php");
 	// actions for list
 	$action_base = "$root/actions/workflow/list";
 	elgg_register_action('workflow/list/move', "$action_base/move.php");
@@ -57,6 +62,7 @@ function workflow_init() {
 	elgg_register_action('workflow/card/edit_card', "$action_base/edit_card.php");
 
 	// Register entity type
+	elgg_register_entity_type('object', 'workflow_board');
 	elgg_register_entity_type('object', 'workflow_list');
 	elgg_register_entity_type('object', 'workflow_card');
 
@@ -83,17 +89,15 @@ function workflow_init() {
  * URLs take the form of :
  *  All boards:        workflow/all
  *  User's board:      workflow/owner/<username> (user board are private. No friend's board view)
- *  Group board:       workflow/group/<guid>
+ *  Group boards:      workflow/group/<guid>
+ *
+ * card and list are viewed in board (simple object view doesn't make sense)
+ *  View owner's card:            workflow/board/<guid>/card/<guid>/<title> (title is ignored)
+ *  View owner's list:            workflow/board/<guid>/list/<guid>/<title> (title is ignored)
  *
  *  Cards assigned to all:        workflow/assigned-cards/all
  *  Cards assigned to user:       workflow/assigned-cards/owner/<username>
  *  Cards assigned to friends:    workflow/assigned-cards/friends/<username>
- *
- * card and list are viewed in board (simple object view doesn't make sense)
- *  View user's card:             workflow/owner/<username>/card/<guid>/<title> (title is ignored)
- *  View group's card:            workflow/group/<guid>/card/<guid>/<title> (title is ignored)
- *  View user's list:             workflow/owner/<username>/list/<guid>/<title> (title is ignored)
- *  View group's list:            workflow/group/<guid>/list/<guid>/<title> (title is ignored)
  *
  * @param array $page
  */
@@ -127,6 +131,13 @@ function workflow_page_handler($page) {
 				elgg_load_js('jquery.scrollTo');
 			}
 			include "$base_dir/group.php";
+			break;
+		case 'board':
+			if ($page[3]) {
+				echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
+				elgg_load_js('jquery.scrollTo');
+			}
+			include "$base_dir/board.php";
 			break;
 		case 'assigned-cards':
 			switch ($page[1]) {
