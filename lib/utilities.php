@@ -10,6 +10,42 @@
  *
  */
 
+function workflow_board_prepare_form_vars($board = null) {
+	$user = elgg_get_logged_in_user_guid();
+	
+	$values = array(
+		'title' => get_input('title', ''),
+		'description' => '',
+		'access_id' => ACCESS_DEFAULT,
+		'tags' => '',
+		'container_guid' => elgg_get_page_owner_guid(),
+		'guid' => null,
+		'entity' => $board,
+	);
+
+	if ($board) {
+		foreach (array_keys($values) as $field) {
+			if (isset($board->$field)) {
+				$values[$field] = $board->$field;
+			}
+		}
+
+		$values['order'] = $board->order;
+	}
+
+	if (elgg_is_sticky_form('board')) {
+		$sticky_values = elgg_get_sticky_values('board');
+		foreach ($sticky_values as $key => $value) {
+			$values[$key] = $value;
+		}
+	}
+
+	elgg_clear_sticky_form('board');
+
+	return $values;
+}
+
+
 function workflow_card_prepare_form_vars($card = null) {
 	$user = elgg_get_logged_in_user_guid();
 	
@@ -48,6 +84,8 @@ function workflow_card_prepare_form_vars($card = null) {
 
 	return $values;
 }
+
+
 
 /*
 function workflow_list_get_cards($options) {

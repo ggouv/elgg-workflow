@@ -47,7 +47,7 @@ function workflow_init() {
 
 	// actions for board
 	$action_base = "$root/actions/workflow/board";
-	elgg_register_action('workflow/board/add', "$action_base/add.php");
+	elgg_register_action('workflow/board/edit_board', "$action_base/edit_board.php");
 	elgg_register_action('workflow/board/delete', "$action_base/delete.php");
 	// actions for list
 	$action_base = "$root/actions/workflow/list";
@@ -91,6 +91,10 @@ function workflow_init() {
  *  User's board:      workflow/owner/<username> (user board are private. No friend's board view)
  *  Group boards:      workflow/group/<guid>
  *
+ *  Add board:         workflow/add/<guid>
+ *
+ *  Board view:        workflow/board/<guid>/<title> (title is ignored)
+ *
  * card and list are viewed in board (simple object view doesn't make sense)
  *  View owner's card:            workflow/board/<guid>/card/<guid>/<title> (title is ignored)
  *  View owner's list:            workflow/board/<guid>/list/<guid>/<title> (title is ignored)
@@ -126,17 +130,18 @@ function workflow_page_handler($page) {
 			include "$base_dir/owner.php";
 			break;
 		case 'group':
-			if ($page[3]) {
-				echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
-				elgg_load_js('jquery.scrollTo');
-			}
-			include "$base_dir/group.php";
+			group_gatekeeper();
+			include "$base_dir/owner.php";
+			break;
+		case 'add':
+			include "$base_dir/new.php";
+			break;
+		case 'edit':
+			set_input('guid', $page[1]);
+			include "$base_dir/edit.php";
 			break;
 		case 'board':
-			if ($page[3]) {
-				echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
-				elgg_load_js('jquery.scrollTo');
-			}
+			set_input('guid', $page[1]);
 			include "$base_dir/board.php";
 			break;
 		case 'assigned-cards':
@@ -162,6 +167,23 @@ function workflow_page_handler($page) {
 
 
 /**
+ * Override the workflow board url
+ * 
+ * @param ElggObject $entity workflow_board
+ * @return string
+ */
+function workflow_board_url_handler($entity) {
+	$title = elgg_get_friendly_title($entity->title);
+	$container = get_entity($entity->container_guid);
+	if (elgg_instanceof($container, 'user')) {
+		return "workflow/board/$entity->guid/$title";
+	} elseif (elgg_instanceof($container, 'group')) {
+		return "workflow/board/$entity->guid/$title";
+	}
+}
+
+
+/**
  * Override the workflow list url
  * 
  * @param ElggObject $entity workflow_list
@@ -176,6 +198,7 @@ function workflow_list_url_handler($entity) {
 		return "workflow/group/$container->guid/list/$entity->guid/$title";
 	}
 }
+
 
 /**
  * Override the workflow card url

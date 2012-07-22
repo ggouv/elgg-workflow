@@ -6,7 +6,7 @@
  *	@license GNU Affero General Public License, version 3 or late
  *	@link https://github.com/ManUtopiK/elgg-workflow
  *
- *	Elgg-workflow add/edit board
+ *	Elgg-workflow edit board
  *
  */
 
@@ -14,6 +14,7 @@ gatekeeper();
 
 $board_guid = (int)get_input('guid');
 $board = get_entity($board_guid);
+
 if (!$board) {
 	register_error(elgg_echo('noaccess'));
 	forward(REFERER);
@@ -28,13 +29,13 @@ if (!$container) {
 elgg_push_breadcrumb($board->title, $board->getURL());
 elgg_push_breadcrumb(elgg_echo('edit'));
 
-$title = elgg_echo("board:edit");
+$title = elgg_echo("workflow:board:edit");
 
 if ($board->canEdit()) {
-	$vars = board_prepare_form_vars($board);
-	$content = elgg_view_form('pages/edit', array(), $vars);
+	$vars = workflow_board_prepare_form_vars($board);
+	$content = elgg_view_form('workflow/board/edit_board', array(), $vars);
 } else {
-	$content = elgg_echo("pages:noaccess");
+	$content = elgg_echo("noaccess");
 }
 
 $body = elgg_view_layout('content', array(

@@ -6,35 +6,22 @@
  *	@license GNU Affero General Public License, version 3 or late
  *	@link https://github.com/ManUtopiK/elgg-workflow
  *
- *	Elgg-workflow board view
+ *	Elgg-workflow owner board view
  *
  */
 
-$board_guid = get_input('guid');
-$board = get_entity($board_guid);
 
-//$user_guid = elgg_get_logged_in_user_guid(); @todo
+$user = elgg_get_logged_in_user_entity();
+elgg_set_page_owner_guid($user->getGUID());
 
-if (!$board) {
-	//forward(REFERER);
+if (!$user || $user->type != 'user') {
+	forward('workflow/owner/' . $user->guid);
 }
 
-elgg_set_page_owner_guid($board->getContainerGUID());
-$container = elgg_get_page_owner_entity();
+// access check for closed user boards
+gatekeeper();
 
-if ($container->type != 'group') {
-	gatekeeper();
-} else {
-	group_gatekeeper();
-}
-
-if (elgg_instanceof($container, 'group')) {
-	elgg_push_breadcrumb($container->name, "workflow/group/$container->guid/all");
-} else {
-	elgg_push_breadcrumb($container->name, "workflow/owner/$container->username");
-}
-
-elgg_push_breadcrumb($board->title);
+elgg_push_breadcrumb($user->name);
 
 elgg_register_menu_item('title', array(
 	'name' => 'add_list',
@@ -44,12 +31,12 @@ elgg_register_menu_item('title', array(
 	'link_class' => 'elgg-button elgg-button-action',
 ));
 
-$title = elgg_echo('workflow:board', array($board->title));
+$title = elgg_echo('workflow:owner', array($user->name));
 
 $lists = elgg_get_entities(array(
 	'type' => 'object',
 	'subtypes' => 'workflow_list',
-	'container_guid' => $container->guid,
+	'container_guid' => $user->guid,
 	'limit' => 0
 ));
 
@@ -74,8 +61,6 @@ $content .= "</div></div>";
 if (!$lists) {
 	$content = $addlist . '<div class="workflow-lists-container"><p>' . elgg_echo('workflow:list:none') . '</p></div>';
 }
-
-$sidebar .= elgg_view('workflow/sidebar');
 
 $params = array(
 	'content' => $content,
