@@ -31,12 +31,10 @@
 .workflow-list-placeholder {
 	float: left;
 	border: 2px dashed #dedede;
-	margin-left: 5px;
+	margin-right: -1px;
 	max-width: <?php echo elgg_get_plugin_setting('max_width_list', 'elgg-workflow'); ?>;
 }
-.workflow-list-placeholder:nth-child(2) {
-	margin-left: 0px;
-}
+
 .workflow-list > .elgg-head {
 	background-color: #EEEEEE;
 	height: 26px;

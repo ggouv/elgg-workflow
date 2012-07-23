@@ -31,6 +31,7 @@ $english = array(
 	'workflow:board:owner' => "%s's boards",
 	'workflow:board:add' => "Add new board",
 
+	'workflow:list:title:default' => "A list",
 	'workflow:list:none' => "No list created yet",
 	'workflow:list:delete' => "Delete this list",
 	'workflow:list:edit' => "Edit this list",
@@ -66,6 +67,7 @@ $english = array(
 	'workflow:unknown_card' => "Unknown card",
 
 	'workflow:list:move:failure' => "Error with server connexion. Move list doesn't saved.",
+	'workflow:list:move:success' => "List successfully moved.",
 	'workflow:list:add:failure' => "Error with server connexion. Add list doesn't saved.",
 	'workflow:list:add:cannotadd' => "You cannot add a list.",
 	'workflow:list:add:success' => "List successfully added.",

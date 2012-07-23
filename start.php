@@ -52,7 +52,7 @@ function workflow_init() {
 	// actions for list
 	$action_base = "$root/actions/workflow/list";
 	elgg_register_action('workflow/list/move', "$action_base/move.php");
-	elgg_register_action('workflow/list/add', "$action_base/add.php");
+	elgg_register_action('workflow/list/add_list_popup', "$action_base/add.php");
 	elgg_register_action('workflow/list/delete', "$action_base/delete.php");
 	// actions for card
 	$action_base = "$root/actions/workflow/card";
@@ -141,7 +141,7 @@ function workflow_page_handler($page) {
 			include "$base_dir/edit.php";
 			break;
 		case 'board':
-			set_input('guid', $page[1]);
+			set_input('board_guid', $page[1]);
 			include "$base_dir/board.php";
 			break;
 		case 'assigned-cards':

@@ -10,7 +10,7 @@
  *
  */
 
-$board_guid = get_input('guid');
+$board_guid = get_input('board_guid');
 $board = get_entity($board_guid);
 
 //$user_guid = elgg_get_logged_in_user_guid(); @todo
@@ -46,10 +46,11 @@ elgg_register_menu_item('title', array(
 
 $title = elgg_echo('workflow:board', array($board->title));
 
-$lists = elgg_get_entities(array(
+$lists = elgg_get_entities_from_metadata(array(
 	'type' => 'object',
 	'subtypes' => 'workflow_list',
-	'container_guid' => $container->guid,
+	'metadata_name' => 'parent_guid',
+	'metadata_value' => $board_guid,
 	'limit' => 0
 ));
 
@@ -75,7 +76,7 @@ if (!$lists) {
 	$content = $addlist . '<div class="workflow-lists-container"><p>' . elgg_echo('workflow:list:none') . '</p></div>';
 }
 
-$sidebar .= elgg_view('workflow/sidebar');
+$sidebar .= elgg_view('workflow/sidebar', array('parent_guid' => $board_guid));
 
 $params = array(
 	'content' => $content,

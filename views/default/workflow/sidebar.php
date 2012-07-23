@@ -2,13 +2,14 @@
 /**
  * Brainstorm group sidebar
  */
-$group_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid());
+$board_guid = elgg_extract('board_guid', $vars, elgg_get_page_owner_guid());
 
-// get all cards of the group
-$cards = elgg_get_entities(array(
+// get all cards of the board
+$cards = elgg_get_entities_from_metadata(array(
 	'type' => 'object',
 	'subtypes' => 'workflow_card',
-	'container_guid' => $group_guid,
+	'metadata_name' => 'parent_guid',
+	'metadata_value' => $board_guid,
 	'limit' => 0
 ));
 

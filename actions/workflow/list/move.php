@@ -12,17 +12,18 @@
 
 $list_guid = get_input('list_guid');
 $position = get_input('position');
-$owner_guid = get_input('owner_guid', elgg_get_logged_in_user_guid());
+$owner_guid = elgg_get_logged_in_user_guid();
 
 $moved_list = get_entity($list_guid);
-$owner = get_entity($owner_guid);
 
 if ($moved_list && $moved_list->canEdit($owner_guid)) {
 
-	$lists = elgg_get_entities(array(
+	$lists = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_list',
-		'container_guid' => $moved_list->container_guid,
+		'metadata_name' => 'parent_guid',
+		'metadata_value' => $moved_list->parent_guid,
+		'limit' => 0
 	));
 
 	// sort the list and remove the list that's being moved from the array
@@ -47,7 +48,8 @@ if ($moved_list && $moved_list->canEdit($owner_guid)) {
 		$list->order = $order;
 		$order += 1;
 	}
-
+	
+	system_message(elgg_echo('workflow:list:move:success'));
 	forward(REFERER);
 }
 

@@ -10,7 +10,7 @@
  *
  */
 
-$deleted_list_guid = get_input('list_guid');
+$deleted_list_guid = (int) get_input('list_guid');
 $container_guid = get_input('container_guid', elgg_get_page_owner_guid());
 
 $deleted_list = get_entity($deleted_list_guid);
@@ -29,15 +29,16 @@ if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list
 	foreach($cards as $card) {
 		delete_entity($card->guid);
 	}
+	
 	// delete list
 	delete_entity($deleted_list_guid);
-
-	$lists = elgg_get_entities(array(
+	$lists = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_list',
-		'container_guid' => $moved_list->container_guid,
+		'metadata_name' => 'parent_guid',
+		'metadata_value' => $deleted_list->parent_guid,
+		'limit' => 0
 	));
-
 	$sorted_lists = array();
 	foreach ($lists as $list) {
 		$sorted_lists[$list->order] = $list;
@@ -53,7 +54,7 @@ if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list
 
 	system_message(elgg_echo('workflow:list:delete:success'));
 	echo json_encode(array(
-		'sidebar' => elgg_view('workflow/sidebar', array('container_guid' => $deleted_list->container_guid)),
+		'sidebar' => elgg_view('workflow/sidebar', array('parent_guid' => $deleted_list->parent_guid)),
 	));
 	forward(REFERER);
 }
