@@ -18,6 +18,7 @@ function workflow_init() {
 	$root = dirname(__FILE__);
 	elgg_register_library('workflow:utilities', "$root/lib/utilities.php");
 	elgg_register_js('jquery.scrollTo',"/mod/elgg-workflow/views/default/workflow/jquery.scrollTo-min.js");
+	elgg_load_js('jquery.scrollTo');
 
 	elgg_register_ajax_view('workflow/edit_card_popup');
 	elgg_register_ajax_view('workflow/view_card_popup');
@@ -56,8 +57,8 @@ function workflow_init() {
 	elgg_register_action('workflow/list/delete', "$action_base/delete.php");
 	// actions for card
 	$action_base = "$root/actions/workflow/card";
+	elgg_register_action('workflow/list/add_card', "$action_base/add.php");
 	elgg_register_action('workflow/card/move', "$action_base/move.php");
-	elgg_register_action('workflow/card/add', "$action_base/add.php");
 	elgg_register_action('workflow/card/delete', "$action_base/delete.php");
 	elgg_register_action('workflow/card/edit_card', "$action_base/edit_card.php");
 
@@ -123,10 +124,6 @@ function workflow_page_handler($page) {
 			include "$base_dir/world.php";
 			break;
 		case 'owner':
-			if ($page[3]) {
-				echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
-				elgg_load_js('jquery.scrollTo');
-			}
 			include "$base_dir/owner.php";
 			break;
 		case 'group':
@@ -141,6 +138,11 @@ function workflow_page_handler($page) {
 			include "$base_dir/edit.php";
 			break;
 		case 'board':
+			if ($page[3]) {
+				echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
+			} else {
+				echo "<script type='text/javascript'></script>"; // ?? hack. If we not do that, php in css file doesn't work. Curious bug ?
+			}
 			set_input('board_guid', $page[1]);
 			include "$base_dir/board.php";
 			break;
@@ -191,12 +193,8 @@ function workflow_board_url_handler($entity) {
  */
 function workflow_list_url_handler($entity) {
 	$title = elgg_get_friendly_title($entity->title);
-	$container = get_entity($entity->container_guid);
-	if (elgg_instanceof($container, 'user')) {
-		return "workflow/owner/$container->title/list/$entity->guid/$title";
-	} elseif (elgg_instanceof($container, 'group')) {
-		return "workflow/group/$container->guid/list/$entity->guid/$title";
-	}
+	$container = get_entity($entity->parent_guid);
+	return "workflow/board/$container->guid/list/$entity->guid/$title";
 }
 
 
@@ -208,12 +206,9 @@ function workflow_list_url_handler($entity) {
  */
 function workflow_card_url_handler($entity) {
 	$title = elgg_get_friendly_title($entity->title);
-	$container = get_entity($entity->container_guid);
-	if (elgg_instanceof($container, 'user')) {
-		return "workflow/owner/$container->title/card/$entity->guid/$title";
-	} elseif (elgg_instanceof($container, 'group')) {
-		return "workflow/group/$container->guid/card/$entity->guid/$title";
-	}
+	$list = get_entity($entity->parent_guid);
+	$container = get_entity($list->parent_guid);
+	return "workflow/board/$container->guid/card/$entity->guid/$title";
 }
 
 

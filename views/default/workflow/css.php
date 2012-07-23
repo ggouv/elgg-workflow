@@ -101,7 +101,7 @@
 .elgg-form-workflow-list-add-card .elgg-input-plaintext:focus {
 	cursor: text;
 	background-color: white;
-	border: 1px solid #DEDEDE;
+	border: 1px solid #4690D6;
 }
 .elgg-form-workflow-list-add-card .elgg-icon-delete {
 	margin-top: 3px;
@@ -111,7 +111,7 @@
 	margin: 0 5px 5px 1px;
 }
 
-/* CSS for card in group view */
+/* CSS for card in board view */
 .workflow-cards {
 	min-height: 30px;
 }
@@ -254,7 +254,7 @@
 #card-forms .card-checklist .elgg-input-plaintext:focus {
 	cursor: text;
 	background-color: white;
-	border: 1px solid #DEDEDE;
+	border: 1px solid #4690D6;
 }
 #card-forms .card-checklist .elgg-icon-delete {
 	margin-top: 3px;
