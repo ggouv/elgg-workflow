@@ -165,7 +165,7 @@
 		box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2); 
 }
 .workflow-card-info div {
-	color: #AAA;
+	color: #666;
 	float: left;
 	padding: 0 3px;
 	font-size: 0.9em;
@@ -176,7 +176,7 @@
 		-moz-border-radius: 4px;
 		border-radius: 4px;
 }
-.workflow-card-info span {
+.workflow-card-info span, #card-forms .elgg-input-checkboxes span {
 	vertical-align: middle;
 	background-size: 100% auto;
 	height: 12px;
@@ -195,7 +195,6 @@
 }
 .workflow-card-info .workflow-card-duedate-overdue {
 	background-color: tomato;
-	color: #666;
 }
 .workflow-card-info .elgg-icon-workflow-calendar {
 	background-size: 100% auto;
@@ -207,7 +206,7 @@
 	margin: -1px 3px 0 0;
 }
 .workflow-card-info .workflow-card-checklist-complete {
-	background-color: Palegreen;
+	background-color: #89C23C;
 }
 .workflow-card-assignedto {
 	float: right;
@@ -233,12 +232,26 @@
 	background-color: #EEE;
 	padding: 10px;
 }
+#card-forms .elgg-input-checkboxes {
+	background-color: white;
+}
+#card-forms .elgg-input-checkboxes > li {
+	padding: 0 5px;
+}
+#card-forms .elgg-input-checkboxes > li:hover {
+	background-color: #4690D6;
+	cursor: move;
+}
 #card-forms .elgg-input-checkboxes label {
 	font-weight: normal;
 	font-size: 100%;
+	cursor: move;
 }
-#card-forms .card-checklist input[type="checkbox"] {
-	text-decoration: line-through;
+#card-forms .elgg-input-checkboxes .elgg-icon-delete {
+	background-position: 0 -203px;
+}
+#card-forms .elgg-input-checkboxes .elgg-icon-delete:hover {
+	background-position: 0 -190px;
 }
 #card-forms .card-checklist .elgg-input-plaintext {
 	border: 1px solid transparent;

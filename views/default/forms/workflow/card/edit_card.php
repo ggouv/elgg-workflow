@@ -48,19 +48,21 @@ $user_guid = elgg_get_logged_in_user_guid();
 	<?php
 		if ($checklist) {
 			$checklist = array_flip($checklist);
-			echo elgg_view('input/checkboxes', array(
+			$checklist_view = elgg_view('input/checkboxes', array(
 				'options' => $checklist,
 				'value' => $checklist_checked,
 				'name' => 'checklist_checked',
 				'align' => 'vertical',
 			));
+			$checklist_icons = elgg_view_icon('delete', 'float-alt');
+			echo preg_replace('/<\/li>/',"$checklist_icons</li>", $checklist_view);
 		} else {
 			echo '<ul class="elgg-input-checkboxes elgg-vertical"></ul>';
 		}
 		echo elgg_view('input/plaintext', array(
 			'name' => 'checklist_item',
 			'value' => elgg_echo('workflow:checklist:add_item'),
-			'class' => 'mbs',
+			'class' => 'mbs mts',
 		));
 		echo elgg_view('input/button', array(
 			'value' => elgg_echo('workflow:checklist:add_item'),
