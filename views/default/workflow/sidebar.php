@@ -2,16 +2,29 @@
 /**
  * Brainstorm group sidebar
  */
-$board_guid = elgg_extract('board_guid', $vars, elgg_get_page_owner_guid());
+$board_guid = elgg_extract('parent_guid', $vars, elgg_get_page_owner_guid());
 
-// get all cards of the board
-$cards = elgg_get_entities_from_metadata(array(
+// get all lists of the board
+$lists = elgg_get_entities_from_metadata(array(
 	'type' => 'object',
-	'subtypes' => 'workflow_card',
+	'subtypes' => 'workflow_list',
 	'metadata_name' => 'parent_guid',
 	'metadata_value' => $board_guid,
 	'limit' => 0
 ));
+
+// get all cards of the board
+$cards = array();
+foreach ($lists as $list) {
+	$temp_cards = elgg_get_entities_from_metadata(array(
+		'type' => 'object',
+		'subtypes' => 'workflow_card',
+		'metadata_name' => 'parent_guid',
+		'metadata_value' => $list->guid,
+		'limit' => 0
+	));
+	$cards = array_merge($cards, $temp_cards);
+}
 
 // get all users assignedto
 $all_assignedto = array();

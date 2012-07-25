@@ -31,6 +31,7 @@ if (!$card_guid) {
 }
 
 $card = get_entity($card_guid);
+$list = get_entity($card->parent_guid);
 
 if ($card->canEdit()) {
 	$card->title = $title;
@@ -47,7 +48,7 @@ if ($card->canEdit()) {
 		system_message(elgg_echo('workflow:card:edit:success'));
 		echo json_encode(array(
 			'card' => elgg_view_entity($card, array('view_type' => 'group')),
-			'sidebar' => elgg_view('workflow/sidebar', array('container_guid' => $card->container_guid)),
+			'sidebar' => elgg_view('workflow/sidebar', array('parent_guid' => $list->parent_guid)),
 		));
 	} else {
 		register_error(elgg_echo('workflow:card:edit:failure'));

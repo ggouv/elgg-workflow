@@ -58,7 +58,6 @@
 	height: 18px;
 	padding: 2px 2px 0 0;
 	position: absolute;
-	top: 4px;
 	width: 18px;
 }
 .elgg-menu-workflow-list > .elgg-menu-item-delete {
@@ -194,7 +193,7 @@
 	color: #4690D6;
 }
 .workflow-card-info .workflow-card-duedate-overdue {
-	background-color: tomato;
+	background-color: red;
 }
 .workflow-card-info .elgg-icon-workflow-calendar {
 	background-size: 100% auto;
