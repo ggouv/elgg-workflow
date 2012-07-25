@@ -88,13 +88,6 @@ $user_guid = elgg_get_logged_in_user_guid();
 	}
 ?>
 
-<?php if($user_guid != $card->container_guid) { ?>
-<div>
-	<label><?php echo elgg_echo('access'); ?></label><br />
-	<?php echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id)); ?>
-</div>
-<?php } ?>
-
 <div class="elgg-foot">
 	<?php
 	
