@@ -20,13 +20,15 @@ $english = array(
 	'my_workflow' => "My Workflow",
 	'workflow:owner' => "%s's workflow",
 
- 	'item:object:workflow_list' => "Workflow lists",
- 	'item:object:workflow_card' => "Workflow cards",
+	'item:object:workflow_board' => "Workflow boards",
+	'item:object:workflow_list' => "Workflow lists",
+	'item:object:workflow_card' => "Workflow cards",
 
 	'workflow:add' => "Add board",
 	'workflow:add_list' => "Add list",
 
 	'workflow:group' => "Group workflow",
+	'workflow:board:none' => "No board created yet",
 	'workflow:board' => "Board %s",
 	'workflow:board:owner' => "%s's boards",
 	'workflow:board:add' => "Add new board",
