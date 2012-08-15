@@ -32,6 +32,8 @@ $english = array(
 	'workflow:board' => "Board %s",
 	'workflow:board:owner' => "%s's boards",
 	'workflow:board:add' => "Add new board",
+	'workflow:board:created_by' => "Created by %s",
+	'workflow:board:info' => "Contains %s lists and %s cards.",
 
 	'workflow:list:title:default' => "A list",
 	'workflow:list:none' => "No list created yet",

@@ -141,7 +141,7 @@ function workflow_page_handler($page) {
 			if ($page[3]) {
 				echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
 			} else {
-				echo "<script type='text/javascript'></script>"; // ?? hack. If we not do that, php in css file doesn't work. Curious bug ?
+				echo "<script type='text/javascript'></script>"; // ?? hack. @todo If we not do that, php in css file doesn't work. Curious bug ?
 			}
 			set_input('board_guid', $page[1]);
 			include "$base_dir/board.php";

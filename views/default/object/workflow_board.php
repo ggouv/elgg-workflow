@@ -6,7 +6,7 @@
  *	@license GNU Affero General Public License, version 3 or late
  *	@link https://github.com/ManUtopiK/elgg-workflow
  *
- *	Elgg-workflow board view
+ *	Elgg-workflow board object view
  *
  */
 
@@ -18,18 +18,17 @@ if (!$board) {
 }
 
 $owner = $board->getOwnerEntity();
-$owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $container = $board->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
 
-$description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
+$description = elgg_view('output/longtext', array('value' => $board->description, 'class' => 'pbs'));
 
 $owner_link = elgg_view('output/url', array(
 	'href' => "board/owner/$owner->username",
 	'text' => $owner->name,
 	'is_trusted' => true,
 ));
-$author_text = elgg_echo('byline', array($owner_link));
+$author_text = elgg_echo('workflow:board:created_by', array($owner_link));
 
 $date = elgg_view_friendly_time($board->time_created);
 
@@ -45,6 +44,27 @@ if ($comments_count != 0) {
 } else {
 	$comments_link = '';
 }
+
+$lists = elgg_get_entities_from_metadata(array(
+	'type' => 'object',
+	'subtypes' => 'workflow_list',
+	'metadata_name' => 'parent_guid',
+	'metadata_value' => $board->guid,
+	'limit' => 0
+));
+
+$cards_count = 0;
+foreach($lists as $list) {
+	$cards_count += elgg_get_entities_from_metadata(array(
+		'type' => 'object',
+		'subtypes' => 'workflow_card',
+		'metadata_name' => 'parent_guid',
+		'metadata_value' => $list->guid,
+		'limit' => 0,
+		'count' => true
+	));
+}
+$board_info = elgg_echo('workflow:board:info', array(count($lists), $cards_count));
 
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $vars['entity'],
@@ -70,17 +90,15 @@ if ($full && !elgg_in_context('gallery')) {
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
 
-	$bookmark_icon = elgg_view_icon('push-pin-alt');
 	$body = <<<HTML
-<div class="board elgg-content mts">
-	$bookmark_icon<span class="elgg-heading-basic mbs">$link</span>
+<div class="board elgg-content">
 	$description
+	<span class="elgg-heading-basic mbs">$board_info</span>
 </div>
 HTML;
 
 	echo elgg_view('object/elements/full', array(
 		'entity' => $board,
-		'icon' => $owner_icon,
 		'summary' => $summary,
 		'body' => $body,
 	));
