@@ -21,7 +21,7 @@ if ($duedate) {
 	$duedate = explode('-', $duedate);
 	$duedate_timestamp = gmmktime(23, 59, 59, $duedate[1], $duedate[2], $duedate[0]);
 	if ( $duedate_timestamp <= time() ) $overdue = '-overdue';
-	$due_date_string = "<div class='workflow-card-duedate$overdue'>" . elgg_view_icon('workflow-calendar') . gmdate('M d', $duedate_timestamp) . "</div>";
+	$due_date_string = "<div class='workflow-card-duedate$overdue'>" . elgg_view_icon('workflow-calendar') . gmdate(elgg_echo('workflow:card:view:duedate'), $duedate_timestamp) . "</div>";
 }
 
 $checklist = count($workflow_card->checklist);

@@ -61,6 +61,8 @@ $english = array(
 	'workflow:checklist' => "Check list",
 	'workflow:checklist:add_item' => "Add item",
 	'workflow:duedate' => "Due date",
+	'workflow:card:view:duedate' => "M d",
+	'workflow:card:view_popup:duedate' => "l j F y",
 	'workflow:card:number' => "Card number %d",
 	'workflow:card:added' => "Added %s by %s",
 

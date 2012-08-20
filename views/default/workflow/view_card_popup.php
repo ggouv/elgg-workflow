@@ -23,20 +23,14 @@ if (!elgg_instanceof($card, 'object', 'workflow_card')) {
 <div id="card-forms">
 	<div class="elgg-form elgg-form-workflow-card-edit-card">
 
-		<div>
-			<label><?php echo elgg_echo('title'); ?></label><br />
-			<?php echo $card->title; ?>
-		</div>
+		<h2><?php echo $card->title; ?></h2>
 
 		<?php if ($card->description) { ?>
-		<div>
-			<label><?php echo elgg_echo('description'); ?></label><br />
-			<?php echo $card->description; ?>
-		</div>
+			<div class="mts"><?php echo $card->description; ?></div>
 		<?php } ?>
 
 		<?php if ($card->assignedto) { ?>
-		<div>
+		<div class="mts">
 			<label><?php echo elgg_echo('workflow:assignedto'); ?></label><br />
 			<?php $assignedto = (array) $card->assignedto;
 				if ($assignedto) {
@@ -52,7 +46,7 @@ if (!elgg_instanceof($card, 'object', 'workflow_card')) {
 		<?php } ?>
 
 		<?php if ($card->checklist) { ?>
-		<div class="card-checklist"><br />
+		<div class="card-checklist mts">
 			<label><?php echo elgg_echo('workflow:checklist'); ?></label>
 			<?php $checklist = array_flip($card->checklist);
 				echo elgg_view('input/checkboxes', array(
@@ -67,14 +61,14 @@ if (!elgg_instanceof($card, 'object', 'workflow_card')) {
 		<?php } ?>
 
 		<?php if ($card->duedate) { ?>
-		<div class="duedate">
+		<div class="duedate mts">
 			<label><?php echo elgg_echo('workflow:duedate'); ?></label><br />
 			<?php $duedate = $card->duedate;
 				if ($duedate) {
 					$duedate = explode('-', $duedate);
 					$duedate_timestamp = gmmktime(23, 59, 59, $duedate[1], $duedate[2], $duedate[0]);
-					if ( $duedate_timestamp <= time() ) $overdue = '-overdue';
-					echo "<div class='workflow-card-duedate$overdue'>" . elgg_view_icon('workflow-calendar') . gmdate('M d', $duedate_timestamp) . "</div>";
+					if ( $duedate_timestamp <= time() ) $overdue = 'overdue';
+					echo "<div class='$overdue'>" . gmdate(elgg_echo('workflow:card:view_popup:duedate'), $duedate_timestamp) . "</div>";
 				}
 			?>
 		</div>

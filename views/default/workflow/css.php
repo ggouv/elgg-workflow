@@ -19,8 +19,8 @@
 	float: left;
 	border: 2px solid #DEDEDE;
 	position: relative;
-	width: <?php echo elgg_get_plugin_setting('min_width_list', 'elgg-workflow'); ?>;
-	max-width: <?php echo elgg_get_plugin_setting('max_width_list', 'elgg-workflow'); ?>;
+	width: <?php echo elgg_get_plugin_setting('min_width_list', 'elgg-workflow') .'px'; ?>;
+	max-width: <?php echo elgg_get_plugin_setting('max_width_list', 'elgg-workflow') .'px'; ?>;
 }
 .workflow-list:hover {
 	background-color: #CCCCCC;
@@ -32,7 +32,7 @@
 	float: left;
 	border: 2px dashed #dedede;
 	margin-right: -1px;
-	max-width: <?php echo elgg_get_plugin_setting('max_width_list', 'elgg-workflow'); ?>;
+	max-width: <?php echo elgg_get_plugin_setting('max_width_list', 'elgg-workflow') . 'px'; ?>;
 }
 
 .workflow-list > .elgg-head {
@@ -184,10 +184,11 @@
 }
 .workflow-card-info .elgg-icon-workflow-info {
 	background-position: 0 -352px;
+	margin-top: 4px;
 }
 .workflow-card-info .elgg-icon-workflow-speech-bubble {
 	background-position: 0 -838px;
-	margin: 0 3px 0 0;
+	margin: -1px 3px 0 0;
 }
 .workflow-card-info .workflow-card-comment {
 	color: #4690D6;
@@ -231,20 +232,19 @@
 	background-color: #EEE;
 	padding: 10px;
 }
-#card-forms .elgg-input-checkboxes {
+#card-forms .sortable .elgg-input-checkboxes {
 	background-color: white;
+	cursor: move;
 }
 #card-forms .elgg-input-checkboxes > li {
 	padding: 0 5px;
 }
-#card-forms .elgg-input-checkboxes > li:hover {
+#card-forms .sortable .elgg-input-checkboxes > li:hover {
 	background-color: #4690D6;
-	cursor: move;
 }
 #card-forms .elgg-input-checkboxes label {
 	font-weight: normal;
 	font-size: 100%;
-	cursor: move;
 }
 #card-forms .elgg-input-checkboxes .elgg-icon-delete {
 	background-position: 0 -203px;
@@ -277,6 +277,9 @@
 }
 #card-forms .duedate {
 	clear: both;
+}
+#card-forms .duedate .overdue {
+	color: red;
 }
 #card-forms .elgg-foot .elgg-subtext {
 	float: right;

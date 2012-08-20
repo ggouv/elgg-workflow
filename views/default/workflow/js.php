@@ -19,9 +19,6 @@ elgg.provide('elgg.workflow');
 
 elgg.workflow.init = function() {
 	$(document).ready(function() {
-		if ( $('.workflow-lists-container').length == 0) {
-			//return;
-		}
 
 		// highlight object
 		if (typeof(highlight) !== 'undefined') {
@@ -195,6 +192,7 @@ elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
  * Resize lists
  */
 elgg.workflow.list.resize = function() {
+
 	var WorkflowWidth = $('.workflow-lists-container').width();
 	var CountLists = $('.workflow-list').length;
 	var ListWidth = 0;
@@ -206,6 +204,7 @@ elgg.workflow.list.resize = function() {
 		ListWidth = (WorkflowWidth - (9*CountLists) + 5 ) / CountLists;
 		$('.workflow-lists').width(WorkflowWidth);
 	}
+
 	$('.workflow-list, .workflow-list-placeholder').width(ListWidth);
 }
 
@@ -365,7 +364,7 @@ elgg.workflow.card.popup = function() {
 			$('#fancybox-content .elgg-foot .elgg-button-delete').die().live('click', elgg.workflow.card.remove);
 
 			// checklist
-			$("#card-forms .card-checklist").sortable({
+			$("#card-forms .card-checklist.sortable").sortable({
 				items:                '.elgg-input-checkboxes > li',
 				//connectWith:          '.elgg-input-checkboxes',
 				//handle:               '.elgg-input-checkboxes > li span',
@@ -492,5 +491,20 @@ elgg.workflow.card.remove = function(event) {
 	}
 	event.preventDefault();
 };
+
+
+/**
+ * Elgg-workflow re-initialization for ajax call
+ *
+ * @return void
+ */
+elgg.workflow.reload = function() {
+	elgg.workflow.init();
+	elgg.workflow.list.init();
+	elgg.workflow.list.addCard();
+	elgg.workflow.card.init();
+	elgg.workflow.card.popup();
+	elgg.workflow.list.resize();
+}
 
 // End of js for elgg-workflow plugin

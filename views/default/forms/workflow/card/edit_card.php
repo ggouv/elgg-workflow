@@ -43,7 +43,7 @@ $user_guid = elgg_get_logged_in_user_guid();
 </div>
 <?php } ?>
 
-<div class="card-checklist">
+<div class="card-checklist sortable">
 	<label><?php echo elgg_echo('workflow:checklist'); ?></label>
 	<?php
 		if ($checklist) {
