@@ -35,6 +35,7 @@ if (is_group_member( $container_guid, $user_guid ) || $user_guid == $container_g
 	$card = new ElggObject;
 	$card->subtype = "workflow_card";
 	$card->container_guid = $container_guid;
+	$card->board_guid = $list->parent_guid;
 	$card->parent_guid = $list_guid;
 	$card->title = $card_title;
 	$card->access_id = $list->access_id;

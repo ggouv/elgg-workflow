@@ -53,17 +53,14 @@ $lists = elgg_get_entities_from_metadata(array(
 	'limit' => 0
 ));
 
-$cards_count = 0;
-foreach($lists as $list) {
-	$cards_count += elgg_get_entities_from_metadata(array(
-		'type' => 'object',
-		'subtypes' => 'workflow_card',
-		'metadata_name' => 'parent_guid',
-		'metadata_value' => $list->guid,
-		'limit' => 0,
-		'count' => true
-	));
-}
+$cards_count = elgg_get_entities_from_metadata(array(
+	'type' => 'object',
+	'subtypes' => 'workflow_card',
+	'metadata_name' => 'board_guid',
+	'metadata_value' => $board->guid,
+	'limit' => 0,
+	'count' => true
+));
 $board_info = elgg_echo('workflow:board:info', array(count($lists), $cards_count));
 
 $metadata = elgg_view_menu('entity', array(

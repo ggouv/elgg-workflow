@@ -4,27 +4,15 @@
  */
 $board_guid = elgg_extract('parent_guid', $vars, elgg_get_page_owner_guid());
 
-// get all lists of the board
-$lists = elgg_get_entities_from_metadata(array(
+// get all cards of the board
+$cards = elgg_get_entities_from_metadata(array(
 	'type' => 'object',
-	'subtypes' => 'workflow_list',
-	'metadata_name' => 'parent_guid',
+	'subtypes' => 'workflow_card',
+	'metadata_name' => 'board_guid',
 	'metadata_value' => $board_guid,
 	'limit' => 0
 ));
 
-// get all cards of the board
-$cards = array();
-foreach ($lists as $list) {
-	$temp_cards = elgg_get_entities_from_metadata(array(
-		'type' => 'object',
-		'subtypes' => 'workflow_card',
-		'metadata_name' => 'parent_guid',
-		'metadata_value' => $list->guid,
-		'limit' => 0
-	));
-	$cards = array_merge($cards, $temp_cards);
-}
 
 // get all users assignedto
 $all_assignedto = array();
