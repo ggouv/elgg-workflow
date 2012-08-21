@@ -138,11 +138,6 @@ function workflow_page_handler($page) {
 			include "$base_dir/edit.php";
 			break;
 		case 'board':
-			if ($page[3]) {
-				echo "<script type='text/javascript'>var highlight = '$page[2]-$page[3]';</script>";
-			} else {
-				echo "<script type='text/javascript'></script>"; // ?? hack. @todo If we not do that, php in css file doesn't work. Curious bug ?
-			}
 			set_input('board_guid', $page[1]);
 			include "$base_dir/board.php";
 			break;
@@ -193,8 +188,7 @@ function workflow_board_url_handler($entity) {
  */
 function workflow_list_url_handler($entity) {
 	$title = elgg_get_friendly_title($entity->title);
-	$board = get_entity($entity->board_guid);
-	return "workflow/board/$board->guid/list/$entity->guid/$title";
+	return "workflow/board/{$entity->board_guid}/list/{$entity->guid}/$title";
 }
 
 
@@ -206,8 +200,7 @@ function workflow_list_url_handler($entity) {
  */
 function workflow_card_url_handler($entity) {
 	$title = elgg_get_friendly_title($entity->title);
-	$board = get_entity($list->board);
-	return "workflow/board/$board->guid/card/$entity->guid/$title";
+	return "workflow/board/{$entity->board_guid}/card/{$entity->guid}/$title";
 }
 
 

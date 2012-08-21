@@ -21,9 +21,19 @@ elgg.workflow.init = function() {
 	$(document).ready(function() {
 
 		// highlight object
-		if (typeof(highlight) !== 'undefined') {
-			$(window).scrollTo($('#workflow-'+highlight), 'slow', function() {
-				$('#workflow-'+highlight).css('border','2px solid red');
+		var url = elgg.parse_url(elgg.normalize_url(decodeURIComponent(window.location.href)), 'path');
+		if (url.match('/card/(.*)/') !== null) {
+			$(window).scrollTo($('#workflow-card-'+url.match('/card/(.*)/')[1]), 'slow', function() {
+				$('#workflow-card-'+url.match('/card/(.*)/')[1]).delay(300).fadeOut(100).delay(100).fadeIn(100).delay(100).fadeOut(100).delay(100).fadeIn(100, function() {
+					$(this).css('border','1px solid #00FF00');
+				});
+			});
+		}
+		if (url.match('/list/(.*)/') !== null) {
+			$(window).scrollTo($('#workflow-list-'+url.match('/list/(.*)/')[1]), 'slow', function() {
+				$('#workflow-list-'+url.match('/list/(.*)/')[1]).delay(300).fadeOut(100).delay(100).fadeIn(100).delay(100).fadeOut(100).delay(100).fadeIn(100, function() {
+					$(this).css('border','2px solid #00FF00');
+				});
 			});
 		}
 
@@ -500,10 +510,10 @@ elgg.workflow.card.remove = function(event) {
  */
 elgg.workflow.reload = function() {
 	elgg.workflow.init();
-	elgg.workflow.list.init();
+	//elgg.workflow.list.init();
 	elgg.workflow.list.addCard();
 	elgg.workflow.card.init();
-	elgg.workflow.card.popup();
+	//elgg.workflow.card.popup();
 	elgg.workflow.list.resize();
 }
 
