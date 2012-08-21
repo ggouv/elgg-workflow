@@ -19,6 +19,7 @@ $english = array(
 	'workflow' => "Workflow",
 	'my_workflow' => "My Workflow",
 	'workflow:owner' => "%s's workflow",
+	'workflow:board:all' => "All workflow boards",
 
 	'item:object:workflow_board' => "Workflow boards",
 	'item:object:workflow_list' => "Workflow lists",

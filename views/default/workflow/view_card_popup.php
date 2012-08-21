@@ -74,13 +74,6 @@ if (!elgg_instanceof($card, 'object', 'workflow_card')) {
 		</div>
 		<?php } ?>
 
-		<?php if ($card->tags) { ?>
-		<div>
-			<label><?php echo elgg_echo('tags'); ?></label><br />
-			<?php echo elgg_view('output/tags', array('value' => $tags)); ?>
-		</div>
-		<?php } ?>
-
 		<?php $categories = elgg_view('output/categories', $vars);
 			if ($categories) {
 				echo $categories;
