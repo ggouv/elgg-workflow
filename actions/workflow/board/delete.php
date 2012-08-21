@@ -10,53 +10,43 @@
  *
  */
 
-$deleted_list_guid = get_input('list_guid');
-$container_guid = get_input('container_guid', elgg_get_page_owner_guid());
+$board_guid = get_input('guid');
 
-$deleted_list = get_entity($deleted_list_guid);
-$container = get_entity($container_guid);
+$board = get_entity($board_guid);
+$container = get_entity($board->container_guid);
 
 if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list->getOwnerGuid()) {
 
-	// delete cards of this list
+	// delete all cards of this board
 	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_card',
-		'metadata_name' => 'parent_guid',
-		'metadata_value' => $deleted_list_guid,
+		'metadata_name' => 'board_guid',
+		'metadata_value' => $board_guid,
 		'limit' => 0
 	));
 	foreach($cards as $card) {
 		delete_entity($card->guid);
 	}
-	// delete list
-	delete_entity($deleted_list_guid);
-
-	$lists = elgg_get_entities(array(
+	
+	// delete all lists
+	$lists = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_list',
-		'container_guid' => $moved_list->container_guid,
+		'metadata_name' => 'board_guid',
+		'metadata_value' => $board_guid,
+		'limit' => 0
 	));
-
-	$sorted_lists = array();
-	foreach ($lists as $list) {
-		$sorted_lists[$list->order] = $list;
-	}
-	ksort($sorted_lists);
-
-	// redefine order for each list
-	$order = 0;
-	foreach ($sorted_lists as $list) {
-		$list->order = $order;
-		$order += 1;
+	foreach($lists as $list) {
+		delete_entity($list->guid);
 	}
 
-	system_message(elgg_echo('workflow:list:delete:success'));
-	echo json_encode(array(
-		'sidebar' => elgg_view('workflow/sidebar', array('container_guid' => $deleted_list->container_guid)),
-	));
+	// and delete board
+	delete_entity($board_guid);
+	
+	system_message(elgg_echo('workflow:board:delete:success'));
 	forward(REFERER);
 }
 
-register_error(elgg_echo('workflow:list:delete:failure'));
+register_error(elgg_echo('workflow:bord:delete:failure'));
 forward(REFERER);

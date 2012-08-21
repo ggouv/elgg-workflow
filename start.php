@@ -49,7 +49,7 @@ function workflow_init() {
 	// actions for board
 	$action_base = "$root/actions/workflow/board";
 	elgg_register_action('workflow/board/edit_board', "$action_base/edit_board.php");
-	elgg_register_action('workflow/board/delete', "$action_base/delete.php");
+	elgg_register_action('workflow/delete', "$action_base/delete.php");
 	// actions for list
 	$action_base = "$root/actions/workflow/list";
 	elgg_register_action('workflow/list/move', "$action_base/move.php");
@@ -281,68 +281,3 @@ function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
 
 	return $return;
 }
-
-/**
- * Returns the body of a notification message
- *
- * @param string $hook
- * @param string $entity_type
- * @param string $returnvalue
- * @param array  $params
- *
-function brainstorm_notify_message($hook, $entity_type, $returnvalue, $params) {
-	$entity = $params['entity'];
-	$to_entity = $params['to_entity'];
-	$method = $params['method'];
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'idea')) {
-		$descr = $entity->description;
-		$title = $entity->title;
-		
-		$url = elgg_get_site_url() . "view/" . $entity->guid;
-		if ($method == 'sms') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo("brainstorm:via") . ': ' . $url . ' (' . $title . ')';
-		}
-		if ($method == 'email') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo("brainstorm:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
-		}
-		if ($method == 'web') {
-			$owner = $entity->getOwnerEntity();
-			return $owner->name . ' ' . elgg_echo("brainstorm:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
-		}
-
-	}
-	return null;
-}
-
-/**
- * Add a page menu.
- *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- *
-function brainstorm_page_menu($hook, $type, $return, $params) {
-	if (elgg_is_logged_in()) {
-
-		if (elgg_in_context('brainstorm')) {
-			$page_owner = elgg_get_page_owner_entity();
-			if (!$page_owner) {
-				$page_owner = elgg_get_logged_in_user_entity();
-			}
-			
-			if ($page_owner instanceof ElggGroup) {
-				$title = elgg_echo('brainstorm:bookmarklet:group');
-			} else {
-				$title = elgg_echo('brainstorm:bookmarklet');
-			}
-
-			//$return[] = new ElggMenuItem('brainstorm', $title, 'brainstorm/bookmarklet/' . $page_owner->getGUID());
-		}
-	}
-
-	return $return;
-}
-*/
