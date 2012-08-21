@@ -94,6 +94,7 @@
 	resize: none;
 	overflow: hidden;
 	box-shadow: none;
+	-webkit-box-shadow: none;
 }
 .elgg-form-workflow-list-add-card .elgg-input-plaintext:hover {
 	background-color: #DEDEDE;
@@ -260,6 +261,8 @@
 	height: 28px;
 	resize: none;
 	overflow: hidden;
+	box-shadow: none;
+	-webkit-box-shadow: none;
 }
 #card-forms .card-checklist .elgg-input-plaintext:hover {
 	background-color: #DEDEDE;

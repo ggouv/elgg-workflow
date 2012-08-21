@@ -43,7 +43,12 @@ $user_guid = elgg_get_logged_in_user_guid();
 </div>
 <?php } ?>
 
-<div class="card-checklist sortable">
+<div class="duedate">
+	<label><?php echo elgg_echo('workflow:duedate'); ?></label>
+	<?php echo elgg_view('input/date', array('name' => 'duedate', 'value' => $duedate)); ?>
+</div>
+
+<div class="card-checklist sortable clearfix">
 	<label><?php echo elgg_echo('workflow:checklist'); ?></label>
 	<?php
 		if ($checklist) {
@@ -70,16 +75,6 @@ $user_guid = elgg_get_logged_in_user_guid();
 		));
 		echo elgg_view_icon('delete', 'hidden float');
 	?>
-</div>
-
-<div class="duedate">
-	<label><?php echo elgg_echo('workflow:duedate'); ?></label>
-	<?php echo elgg_view('input/date', array('name' => 'duedate', 'value' => $duedate)); ?>
-</div>
-
-<div>
-	<label><?php echo elgg_echo('tags'); ?></label>
-	<?php echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags)); ?>
 </div>
 
 <?php $categories = elgg_view('input/categories', $vars);
