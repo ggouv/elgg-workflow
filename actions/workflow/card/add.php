@@ -27,7 +27,7 @@ if (is_group_member( $container_guid, $user_guid ) || $user_guid == $container_g
 	$nbr_cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_card',
-		'metadata_name' => 'parent_guid',
+		'metadata_name' => 'list_guid',
 		'metadata_value' => $list_guid,
 		'count' => true,
 	));
@@ -35,8 +35,8 @@ if (is_group_member( $container_guid, $user_guid ) || $user_guid == $container_g
 	$card = new ElggObject;
 	$card->subtype = "workflow_card";
 	$card->container_guid = $container_guid;
-	$card->board_guid = $list->parent_guid;
-	$card->parent_guid = $list_guid;
+	$card->board_guid = $list->board_guid;
+	$card->list_guid = $list_guid;
 	$card->title = $card_title;
 	$card->access_id = $list->access_id;
 	$card->order = $nbr_cards;

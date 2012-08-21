@@ -22,7 +22,7 @@ if (is_group_member( $container_guid, $user_guid ) || $user_guid == $container_g
 	$nbr_lists = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_list',
-		'metadata_name' => 'parent_guid',
+		'metadata_name' => 'board_guid',
 		'metadata_value' => $board_guid,
 		'count' => true,
 		'limit' => 0
@@ -31,7 +31,7 @@ if (is_group_member( $container_guid, $user_guid ) || $user_guid == $container_g
 	$list = new ElggObject;
 	$list->subtype = "workflow_list";
 	$list->container_guid = $container_guid;
-	$list->parent_guid = $board_guid;
+	$list->board_guid = $board_guid;
 	$list->title = $list_title;
 	$list->access_id = $board->access_id;
 	$list->order = $nbr_lists;

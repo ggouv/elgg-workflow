@@ -13,7 +13,7 @@
 $deleted_card_guid = get_input('card_guid');
 
 $deleted_card = get_entity($deleted_card_guid);
-$parent_guid = $deleted_card->parent_guid;
+$list_guid = $deleted_card->list_guid;
 
 if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_card->getOwnerGuid()) {
 	delete_entity($deleted_card_guid);
@@ -21,8 +21,8 @@ if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_card
 	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_card',
-		'metadata_name' => 'parent_guid',
-		'metadata_value' => $parent_guid,
+		'metadata_name' => 'list_guid',
+		'metadata_value' => $list_guid,
 	));
 
 	$sorted_cards = array();
@@ -40,7 +40,7 @@ if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_card
 
 	system_message(elgg_echo('workflow:card:delete:success'));
 	echo json_encode(array(
-		'sidebar' => elgg_view('workflow/sidebar', array('container_guid' => $deleted_card->container_guid)),
+		'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $deleted_card->board_guid)),
 	));
 	forward(REFERER);
 }

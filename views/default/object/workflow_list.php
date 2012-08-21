@@ -47,7 +47,7 @@ if ($view_type == 'group') {
 	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_card',
-		'metadata_name' => 'parent_guid',
+		'metadata_name' => 'list_guid',
 		'metadata_value' => $workflow_list->guid,
 		'limit' => 0
 	));			

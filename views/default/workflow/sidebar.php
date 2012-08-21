@@ -2,7 +2,7 @@
 /**
  * Brainstorm group sidebar
  */
-$board_guid = elgg_extract('parent_guid', $vars, elgg_get_page_owner_guid());
+$board_guid = elgg_extract('board_guid', $vars, elgg_get_page_owner_guid());
 
 // get all cards of the board
 $cards = elgg_get_entities_from_metadata(array(

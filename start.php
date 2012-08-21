@@ -193,8 +193,8 @@ function workflow_board_url_handler($entity) {
  */
 function workflow_list_url_handler($entity) {
 	$title = elgg_get_friendly_title($entity->title);
-	$container = get_entity($entity->parent_guid);
-	return "workflow/board/$container->guid/list/$entity->guid/$title";
+	$board = get_entity($entity->board_guid);
+	return "workflow/board/$board->guid/list/$entity->guid/$title";
 }
 
 
@@ -206,9 +206,8 @@ function workflow_list_url_handler($entity) {
  */
 function workflow_card_url_handler($entity) {
 	$title = elgg_get_friendly_title($entity->title);
-	$list = get_entity($entity->parent_guid);
-	$container = get_entity($list->parent_guid);
-	return "workflow/board/$container->guid/card/$entity->guid/$title";
+	$board = get_entity($list->board);
+	return "workflow/board/$board->guid/card/$entity->guid/$title";
 }
 
 

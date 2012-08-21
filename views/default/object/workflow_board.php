@@ -48,7 +48,7 @@ if ($comments_count != 0) {
 $lists = elgg_get_entities_from_metadata(array(
 	'type' => 'object',
 	'subtypes' => 'workflow_list',
-	'metadata_name' => 'parent_guid',
+	'metadata_name' => 'board_guid',
 	'metadata_value' => $board->guid,
 	'limit' => 0
 ));

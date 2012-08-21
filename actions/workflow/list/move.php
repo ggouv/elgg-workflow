@@ -21,8 +21,8 @@ if ($moved_list && $moved_list->canEdit($owner_guid)) {
 	$lists = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_list',
-		'metadata_name' => 'parent_guid',
-		'metadata_value' => $moved_list->parent_guid,
+		'metadata_name' => 'board_guid',
+		'metadata_value' => $moved_list->board_guid,
 		'limit' => 0
 	));
 

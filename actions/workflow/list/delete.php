@@ -22,7 +22,7 @@ if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list
 	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_card',
-		'metadata_name' => 'parent_guid',
+		'metadata_name' => 'list_guid',
 		'metadata_value' => $deleted_list_guid,
 		'limit' => 0
 	));
@@ -35,8 +35,8 @@ if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list
 	$lists = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_list',
-		'metadata_name' => 'parent_guid',
-		'metadata_value' => $deleted_list->parent_guid,
+		'metadata_name' => 'board_guid',
+		'metadata_value' => $deleted_list->board_guid,
 		'limit' => 0
 	));
 	$sorted_lists = array();
@@ -54,7 +54,7 @@ if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list
 
 	system_message(elgg_echo('workflow:list:delete:success'));
 	echo json_encode(array(
-		'sidebar' => elgg_view('workflow/sidebar', array('parent_guid' => $deleted_list->parent_guid)),
+		'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $deleted_list->board_guid)),
 	));
 	forward(REFERER);
 }

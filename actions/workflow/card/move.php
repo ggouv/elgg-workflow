@@ -21,8 +21,8 @@ if ( $moved_card && is_group_member( $moved_card->container_guid, elgg_get_logge
 	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_card',
-		'metadata_name' => 'parent_guid',
-		'metadata_value' => $moved_card->parent_guid,
+		'metadata_name' => 'list_guid',
+		'metadata_value' => $moved_card->list_guid,
 	));
 
 	// sort the list and remove the list that's being moved from the array
@@ -35,7 +35,7 @@ if ( $moved_card && is_group_member( $moved_card->container_guid, elgg_get_logge
 	ksort($sorted_cards);
 
 	// check if the card ordered in the same list
-	if ( $moved_card->parent_guid == $list_guid ) {
+	if ( $moved_card->list_guid == $list_guid ) {
 
 		// split the array in two and recombine with the moved card in middle
 		$before = array_slice($sorted_cards, 0, $position);
@@ -66,7 +66,7 @@ if ( $moved_card && is_group_member( $moved_card->container_guid, elgg_get_logge
 		$cards = elgg_get_entities_from_metadata(array(
 			'type' => 'object',
 			'subtypes' => 'workflow_card',
-			'metadata_name' => 'parent_guid',
+			'metadata_name' => 'list_guid',
 			'metadata_value' => $list_guid,
 		));
 
@@ -91,8 +91,8 @@ if ( $moved_card && is_group_member( $moved_card->container_guid, elgg_get_logge
 			$order += 1;
 		}
 
-	// define parent_guid's card to destination list
-		$moved_card->parent_guid = $list_guid;
+	// define list_guid's card to destination list
+		$moved_card->list_guid = $list_guid;
 		$moved_card->save();
 
 	}

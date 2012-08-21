@@ -16,7 +16,7 @@ $board = get_entity($board_guid);
 //$user_guid = elgg_get_logged_in_user_guid(); @todo
 
 if (!$board) {
-	//forward(REFERER);
+	forward(REFERER);
 }
 
 elgg_set_page_owner_guid($board->getContainerGUID());
@@ -49,7 +49,7 @@ $title = elgg_echo('workflow:board', array($board->title));
 $lists = elgg_get_entities_from_metadata(array(
 	'type' => 'object',
 	'subtypes' => 'workflow_list',
-	'metadata_name' => 'parent_guid',
+	'metadata_name' => 'board_guid',
 	'metadata_value' => $board_guid,
 	'limit' => 0
 ));
@@ -76,7 +76,7 @@ if (!$lists) {
 	$content = $addlist . '<div class="workflow-lists-container"><p>' . elgg_echo('workflow:list:none') . '</p></div>';
 }
 
-$sidebar .= elgg_view('workflow/sidebar', array('parent_guid' => $board_guid));
+$sidebar .= elgg_view('workflow/sidebar', array('board_guid' => $board_guid));
 
 $params = array(
 	'content' => $content,
