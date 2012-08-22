@@ -186,7 +186,7 @@
 }
 .workflow-card-info .elgg-icon-workflow-info {
 	background-position: 0 -352px;
-	margin-top: 4px;
+	margin-top: -2px;
 }
 .workflow-card-info .elgg-icon-workflow-speech-bubble {
 	background-position: 0 -838px;

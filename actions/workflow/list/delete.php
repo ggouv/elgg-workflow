@@ -11,10 +11,9 @@
  */
 
 $deleted_list_guid = (int) get_input('list_guid');
-$container_guid = get_input('container_guid', elgg_get_page_owner_guid());
 
 $deleted_list = get_entity($deleted_list_guid);
-$container = get_entity($container_guid);
+$board_guid = $deleted_list->board_guid;
 
 if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list->getOwnerGuid()) {
 
@@ -54,7 +53,7 @@ if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list
 
 	system_message(elgg_echo('workflow:list:delete:success'));
 	echo json_encode(array(
-		'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $deleted_list->board_guid)),
+		'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $board_guid)),
 	));
 	forward(REFERER);
 }

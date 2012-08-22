@@ -95,7 +95,7 @@ elgg.workflow.list.init = function() {
 		$('.elgg-form-workflow-list-add-list-popup .elgg-input-plaintext').focus();
 	});
 	// add list popup
-	$('.elgg-form-workflow-list-add-list-popup .elgg-button-submit').live('click', function(e){
+	$('.elgg-form-workflow-list-add-list-popup .elgg-button-submit').die().live('click', function(e){
 		e.preventDefault();
 		elgg.workflow.list.add($(this).closest('form'));
 	});
@@ -110,7 +110,7 @@ elgg.workflow.list.init = function() {
 		}
 	});
 	// delete list button 
-	$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', elgg.workflow.list.remove);
+	$('li.elgg-menu-item-delete a.workflow-list-delete-button').die().live('click', elgg.workflow.list.remove);
 	// add card from list footer
 	elgg.workflow.list.addCard();
 
@@ -184,13 +184,13 @@ elgg.workflow.list.add = function(form) {
  */
 elgg.workflow.list.remove = function(event) {
 	if (confirm(elgg.echo('workflow:list:delete:confirm'))) {
-		var $list = $(this).closest('.workflow-list');
+		var list = $(this).closest('.workflow-list');
 		// delete the widget through ajax
 		elgg.action($(this).attr('href'), {
 			success: function(json) {
-				$list.remove();
+				list.remove();
 				elgg.workflow.list.resize();
-				$('.elgg-sidebar .elgg-module-aside').replaceWith(json.output.sidebar);
+				$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
 				if ( $('.workflow-list').length == 0 ) {
 					$('.workflow-lists-container').empty();
 					$('.workflow-lists-container').append('<p>' + elgg.echo('workflow:list:none') + '</p>');
@@ -476,7 +476,7 @@ elgg.workflow.card.popupForms = function(event) {
 				$.fancybox.close();
 				if (card_guid && json.output && json.status == 0) { // card modified
 					$('#workflow-card-'+card_guid).replaceWith(json.output.card);
-					$('.elgg-sidebar .elgg-module-aside.participants').replaceWith(json.output.sidebar);
+					$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
 					elgg.workflow.card.popup();
 				} else if (json.output == '' && json.status == 0) { // card commented
 					if ( $('#workflow-card-'+card_guid+' .workflow-card-comment').length == 0 ) {
@@ -507,7 +507,6 @@ elgg.workflow.card.popupForms = function(event) {
 elgg.workflow.card.remove = function(event) {
 	if (confirm(elgg.echo('workflow:card:delete:confirm'))) {
 		card = $(this).parent().find('input[name=entity_guid]').val();
-		
 		// delete the card through ajax
 		elgg.action('workflow/card/delete', {
 			data: {
@@ -515,7 +514,7 @@ elgg.workflow.card.remove = function(event) {
 			},
 			success: function(json) {
 				$('#workflow-card-'+card).remove();
-				$('.elgg-sidebar .elgg-module-aside').replaceWith(json.output.sidebar);
+				$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
 				$.fancybox.close();
 			}
 		});
@@ -532,9 +531,8 @@ elgg.workflow.card.remove = function(event) {
 elgg.workflow.reload = function() {
 	elgg.workflow.init();
 	elgg.workflow.list.init();
-	elgg.workflow.list.addCard();
 	elgg.workflow.card.init();
-	//elgg.workflow.card.popup();
+	elgg.workflow.card.popup();
 	elgg.workflow.list.resize();
 }
 

@@ -4,6 +4,8 @@
  */
 $board_guid = elgg_extract('board_guid', $vars);
 
+echo '<div class="workflow-sidebar">';
+
 if ($board_guid) {
 	// get all cards of the board
 	$cards = elgg_get_entities_from_metadata(array(
@@ -50,6 +52,8 @@ if ($board_guid) {
 // board activity
 global $CONFIG;
 $dbprefix = $CONFIG->dbprefix;
+$board = get_entity($board_guid);
+elgg_set_page_owner_guid($board->container_guid);
 
 $options['joins'][] = "JOIN {$dbprefix}entities e ON e.guid = rv.object_guid";
 $options['wheres'][] = "e.container_guid = " . elgg_get_page_owner_guid();
@@ -82,7 +86,7 @@ if ($board_guid) {
 			}
 		}
 		
-		$title = elgg_echo('workflow:sidebar:last_activity_on_this_board');
+		$title = elgg_echo('workflow:sidebar:last_activity_on_this_board', array($board->title));
 	}
 	
 	if ($content) {
@@ -117,3 +121,5 @@ if ($board_guid) {
 		 echo elgg_view_module('aside', '', '', array('class' => 'river'));
 	}
 }
+
+echo '</div>';

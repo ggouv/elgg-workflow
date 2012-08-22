@@ -75,5 +75,6 @@ echo elgg_view('river/item', array(
 	'item' => $vars['item'],
 	'summary' => $summary,
 	'message' => '',
+	'responses' => ' ',
 	'size' => $size
 ));
