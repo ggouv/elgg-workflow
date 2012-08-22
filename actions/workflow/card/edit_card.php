@@ -13,7 +13,7 @@
 $card_guid = (int) get_input('entity_guid');
 $title = get_input('title');
 $desc = get_input('description');
-$assignedto = get_input('members');
+$assignedto = (array)get_input('members');
 $checklist = get_input('checklist');
 $checklist_checked = get_input('checklist_checked');
 $duedate = get_input('duedate');
@@ -36,7 +36,6 @@ $board = get_entity($list->board_guid);
 if ($card->canEdit()) {
 	$card->title = $title;
 	$card->description = $desc;
-	$card->assignedto = $assignedto;
 	$card->checklist = $checklist;
 	$card->checklist_checked = $checklist_checked;
 	$card->duedate = $duedate;
@@ -44,6 +43,20 @@ if ($card->canEdit()) {
 	$card->access_id = $board->access_id;
 
 	if ($card->save()) {
+		
+		// Remove unassigned user
+		$assigned_users = elgg_get_entities_from_relationship(array(
+			'relationship' => 'assignedto',
+			'relationship_guid'=> $card_guid,
+		));
+		foreach($assigned_users as $assigned_user) {
+			if (!in_array($assigned_user->guid, $assignedto)) remove_entity_relationship($card_guid, 'assignedto', $assigned_user->guid);
+		}
+		// Assign to users
+		foreach ($assignedto as $assignedto_user) {
+			add_entity_relationship($card_guid, 'assignedto', $assignedto_user);
+		}
+		
 		elgg_clear_sticky_form('card');
 		system_message(elgg_echo('workflow:card:edit:success'));
 		echo json_encode(array(

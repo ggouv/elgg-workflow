@@ -24,15 +24,27 @@ elgg.workflow.init = function() {
 		var url = elgg.parse_url(elgg.normalize_url(decodeURIComponent(window.location.href)), 'path');
 		if (url.match('/card/(.*)/') !== null) {
 			$(window).scrollTo($('#workflow-card-'+url.match('/card/(.*)/')[1]), 'slow', function() {
-				$('#workflow-card-'+url.match('/card/(.*)/')[1]).delay(300).fadeOut(100).delay(100).fadeIn(100).delay(100).fadeOut(100).delay(100).fadeIn(100, function() {
-					$(this).css('border','1px solid #00FF00');
+				$('#workflow-card-'+url.match('/card/(.*)/')[1]).delay(300).animate({opacity: 0}, 100, function() {
+					$(this).delay(100).animate({opacity: 1}, 100, function() {
+						$(this).delay(100).animate({opacity: 0}, 100, function() {
+							$(this).delay(100).animate({opacity: 1}, 100, function() {
+								$(this).css('border','1px solid #00FF00');
+							});
+						});
+					});
 				});
 			});
 		}
 		if (url.match('/list/(.*)/') !== null) {
 			$(window).scrollTo($('#workflow-list-'+url.match('/list/(.*)/')[1]), 'slow', function() {
-				$('#workflow-list-'+url.match('/list/(.*)/')[1]).delay(300).fadeOut(100).delay(100).fadeIn(100).delay(100).fadeOut(100).delay(100).fadeIn(100, function() {
-					$(this).css('border','2px solid #00FF00');
+				$('#workflow-list-'+url.match('/list/(.*)/')[1]).delay(300).animate({opacity: 0}, 100, function() {
+					$(this).delay(100).animate({opacity: 1}, 100, function() {
+						$(this).delay(100).animate({opacity: 0}, 100, function() {
+							$(this).delay(100).animate({opacity: 1}, 100, function() {
+								$(this).css('border','2px solid #00FF00');
+							});
+						});
+					});
 				});
 			});
 		}
@@ -143,12 +155,13 @@ elgg.workflow.list.add = function(form) {
 	elgg.action(form.attr('action'), {
 		data: form.serialize(),
 		success: function(json) {
-			if ( $('.workflow-lists').length == 0 && json.output !== '') {
+			if ( $('.workflow-lists').length == 0 && json.output.list !== '') {
 				$('.workflow-lists-container > p').remove();
 				$('.workflow-lists-container').append('<div class="workflow-lists ui-sortable"></div>');
 			}
 			form.find('.elgg-input-plaintext').val(elgg.echo("workflow:add_list"));
-			$('.workflow-lists').append(json.output);
+			$('.workflow-lists').append(json.output.list);
+			$('.elgg-sidebar .elgg-module-aside.river > .elgg-body').prepend(json.output.river);
 			elgg.workflow.list.addCard();
 			elgg.workflow.list.resize();
 			$('.workflow-lists-container').animate({ scrollLeft: $('.workflow-lists-container').width()});
@@ -332,8 +345,10 @@ elgg.workflow.card.add = function(form) {
 		elgg.action(form.attr('action'), {
 			data: form.serialize(),
 			success: function(json) {
-				$('#workflow-list-content-' + workflow_list + ' .workflow-cards').append(json.output);
+				$('#workflow-list-content-' + workflow_list + ' .workflow-cards').append(json.output.card);
+				$('.elgg-sidebar .elgg-module-aside.river > .elgg-body').prepend(json.output.river);
 				elgg.workflow.card.popup();
+				elgg.workflow.list.resize();
 			}
 		});
 	}
@@ -456,7 +471,7 @@ elgg.workflow.card.popupForms = function(event) {
 			$.fancybox.close();
 			if (card_guid && json.output && json.status == 0) { // card modified
 				$('#workflow-card-'+card_guid).replaceWith(json.output.card);
-				$('.elgg-sidebar .elgg-module-aside').replaceWith(json.output.sidebar);
+				$('.elgg-sidebar .elgg-module-aside.participants').replaceWith(json.output.sidebar);
 				elgg.workflow.card.popup();
 			} else if (json.output == '' && json.status == 0) { // card commented
 				if ( $('#workflow-card-'+card_guid+' .workflow-card-comment').length == 0 ) {
@@ -510,7 +525,7 @@ elgg.workflow.card.remove = function(event) {
  */
 elgg.workflow.reload = function() {
 	elgg.workflow.init();
-	//elgg.workflow.list.init();
+	elgg.workflow.list.init();
 	elgg.workflow.list.addCard();
 	elgg.workflow.card.init();
 	//elgg.workflow.card.popup();

@@ -32,11 +32,13 @@ if (!elgg_instanceof($card, 'object', 'workflow_card')) {
 		<?php if ($card->assignedto) { ?>
 		<div class="mts">
 			<label><?php echo elgg_echo('workflow:assignedto'); ?></label><br />
-			<?php $assignedto = (array) $card->assignedto;
+			<?php $assignedto = elgg_get_entities_from_relationship(array(
+					'relationship' => 'assignedto',
+					'relationship_guid'=> $card_guid
+				));
 				if ($assignedto) {
 					// echo '<div class="workflow-card-assignedto">';
-					foreach ( $assignedto as $user_guid) {
-						$user = get_entity($user_guid);
+					foreach ( $assignedto as $user) {
 						echo elgg_view_entity_icon($user, 'tiny', array('use_hover' => false));
 					}
 					// echo '</div>';

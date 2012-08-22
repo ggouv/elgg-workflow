@@ -46,9 +46,11 @@ $english = array(
 	/**
 	* River
 	**/
-	'river:create:object:workflow_list' => "%s added a new list %s",
-	'river:create:object:workflow_card' => "%s added a new card %s",
-	'river:comment:object:workflow_card' => "%s commented card %s",
+	'river:inboard' => "in board %s",
+	'river:inlist' => "in list %s",
+	'river:create:object:workflow_list' => "%s added list %s %s %s",
+	'river:create:object:workflow_card' => "%s added card %s %s %s %s",
+	'river:comment:object:workflow_card' => "%s commented the card %s",
 
 	/**
 	 * Form fields
@@ -112,7 +114,9 @@ $english = array(
 	/**
 	 * Sidebar items
 	 */
-	 'workflow:sidebar:assignedto_user' => "Participants:",
+	 'workflow:sidebar:assignedto_user' => "Participants",
+	 'workflow:sidebar:last_activity_all_board' => "Last activity on all group's boards",
+	 'workflow:sidebar:last_activity_on_this_board' => "Last activity on this board",
 
 	/**
 	 * Settings

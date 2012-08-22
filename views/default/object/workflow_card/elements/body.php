@@ -33,11 +33,13 @@ if ($checklist != 0) {
 
 echo '<div class="workflow-card-info">' . $description . $comment . $due_date_string . $checklist_string . '</div>';
 
-$assignedto = (array) $workflow_card->assignedto;
+$assignedto = elgg_get_entities_from_relationship(array(
+	'relationship' => 'assignedto',
+	'relationship_guid'=> $workflow_card->guid
+));
 if ($assignedto) {
 	echo '<div class="workflow-card-assignedto">';
-	foreach ( $assignedto as $user_guid) {
-		$user = get_entity($user_guid);
+	foreach ($assignedto as $user) {
 		echo elgg_view_entity_icon($user, 'tiny', array('use_hover' => false));
 	}
 	echo '</div>';

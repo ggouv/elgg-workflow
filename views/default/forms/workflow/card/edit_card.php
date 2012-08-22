@@ -39,7 +39,15 @@ $user_guid = elgg_get_logged_in_user_guid();
 <?php if($user_guid != $card->container_guid) { ?>
 <div>
 	<label><?php echo elgg_echo('workflow:assignedto'); ?></label>
-	<?php echo elgg_view('input/userpicker', array('name' => 'assignedto', 'value' => $assignedto)); ?>
+	<?php $assignedto = elgg_get_entities_from_relationship(array(
+			'relationship' => 'assignedto',
+			'relationship_guid'=> $card_guid
+		));
+		foreach ($assignedto as $user) {
+			$users[] = $user->guid;
+		}
+		echo elgg_view('input/userpicker', array('name' => 'assignedto', 'value' => $users));
+	?>
 </div>
 <?php } ?>
 
