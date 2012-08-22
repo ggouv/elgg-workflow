@@ -57,7 +57,7 @@ elgg_set_page_owner_guid($board->container_guid);
 
 $options['joins'][] = "JOIN {$dbprefix}entities e ON e.guid = rv.object_guid";
 $options['wheres'][] = "e.container_guid = " . elgg_get_page_owner_guid();
-$options['types_filter'][] = "'object' AND (rv.subtype IN ('workflow_list','workflow_card'))'";
+$options['wheres'][] = "(rv.subtype IN ('workflow_list','workflow_card'))";
 
 if ($board_guid) {
 	$metastring = get_metastring_id('board_guid');
@@ -80,7 +80,7 @@ if ($board_guid) {
 		$content = '';
 		if (is_array($items)) {
 			foreach ($items as $item) {
-				$content .= "<li id='item-river-{$item->guid}' class='elgg-list-item' datetime=\"{$item->posted}\">";
+				$content .= "<li id='item-river-{$item->id}' class='elgg-list-item board-{$board_guid}' datetime=\"{$item->posted}\">";
 					$content .= elgg_view('river/item', array('item' => $item, 'size' => 'tiny', 'short' => true));
 				$content .= '</li>';
 			}
@@ -107,7 +107,8 @@ if ($board_guid) {
 	$content = '';
 	if (is_array($items)) {
 		foreach ($items as $item) {
-			$content .= "<li id='item-river-{$item->guid}' class='elgg-list-item' datetime=\"{$item->posted}\">";
+			$object = $item->getObjectEntity();
+			$content .= "<li id='item-river-{$item->id}' class='elgg-list-item board-{$object->board_guid}' datetime=\"{$item->posted}\">";
 				$content .= elgg_view('river/item', array('item' => $item, 'size' => 'tiny', 'short' => 'group'));
 			$content .= '</li>';
 		}

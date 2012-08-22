@@ -34,7 +34,7 @@ $object_link = elgg_view('output/url', array(
 if ($short) {
 	$board_string = $group_string = '';
 	
-	if ($short === 'group') {
+	if ($board && $short === 'group') {
 		$board_link = elgg_view('output/url', array(
 			'href' => $board->getURL(),
 			'text' => $board->title ? $board->title : $board->name,
@@ -43,7 +43,7 @@ if ($short) {
 		));
 		$board_string = elgg_echo('river:inboard', array($board_link));
 	}
-} else {
+} else if ($board) {
 	$board_link = elgg_view('output/url', array(
 		'href' => $board->getURL(),
 		'text' => $board->title ? $board->title : $board->name,

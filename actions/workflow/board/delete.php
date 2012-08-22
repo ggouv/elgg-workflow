@@ -13,9 +13,8 @@
 $board_guid = get_input('guid');
 
 $board = get_entity($board_guid);
-$container = get_entity($board->container_guid);
 
-if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list->getOwnerGuid()) {
+if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $board->getOwnerGuid()) {
 
 	// delete all cards of this board
 	$cards = elgg_get_entities_from_metadata(array(
