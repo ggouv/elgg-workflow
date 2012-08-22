@@ -59,29 +59,31 @@ if ($board_guid) {
 	$metastring = get_metastring_id('board_guid');
 	$board_string = get_metastring_id($board_guid);
 	
-	$options['joins'][] = "LEFT JOIN {$dbprefix}metadata d ON d.entity_guid = e.guid";
-	$options['joins'][] = "LEFT JOIN {$dbprefix}metastrings m ON m.id = d.value_id";
-	$options['wheres'][] = "d.name_id = {$metastring} AND d.value_id = {$board_string}";
-	
-	$defaults = array(
-		//'offset' => (int) get_input('offset', 0),
-		'limit' => 10,
-		'pagination' => FALSE,
-		'count' => FALSE,
-	);
-	$options = array_merge($defaults, $options);
-	$items = elgg_get_river($options);
-	
-	$content = '';
-	if (is_array($items)) {
-		foreach ($items as $item) {
-			$content .= "<li id='item-river-{$item->guid}' class='elgg-list-item' datetime=\"{$item->posted}\">";
-				$content .= elgg_view('river/item', array('item' => $item, 'size' => 'tiny', 'short' => true));
-			$content .= '</li>';
+	if ($board_string) { // if board_string doesn't exist that mind no card and list are created > board just created.
+		$options['joins'][] = "LEFT JOIN {$dbprefix}metadata d ON d.entity_guid = e.guid";
+		$options['joins'][] = "LEFT JOIN {$dbprefix}metastrings m ON m.id = d.value_id";
+		$options['wheres'][] = "d.name_id = {$metastring} AND d.value_id = {$board_string}";
+		
+		$defaults = array(
+			//'offset' => (int) get_input('offset', 0),
+			'limit' => 10,
+			'pagination' => FALSE,
+			'count' => FALSE,
+		);
+		$options = array_merge($defaults, $options);
+		$items = elgg_get_river($options);
+		
+		$content = '';
+		if (is_array($items)) {
+			foreach ($items as $item) {
+				$content .= "<li id='item-river-{$item->guid}' class='elgg-list-item' datetime=\"{$item->posted}\">";
+					$content .= elgg_view('river/item', array('item' => $item, 'size' => 'tiny', 'short' => true));
+				$content .= '</li>';
+			}
 		}
+		
+		$title = elgg_echo('workflow:sidebar:last_activity_on_this_board');
 	}
-	
-	$title = elgg_echo('workflow:sidebar:last_activity_on_this_board');
 	
 	if ($content) {
 		 echo elgg_view_module('aside', $title, $content, array('class' => 'river'));

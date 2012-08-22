@@ -161,6 +161,9 @@ elgg.workflow.list.add = function(form) {
 			}
 			form.find('.elgg-input-plaintext').val(elgg.echo("workflow:add_list"));
 			$('.workflow-lists').append(json.output.list);
+			if ($('.elgg-sidebar .elgg-module-aside.river .elgg-head').length == 0) {
+				$('.elgg-sidebar .elgg-module-aside.river').prepend('<div class="elgg-head mbs"><h3>' + elgg.echo('workflow:sidebar:last_activity_on_this_board') + '</h3></div>');
+			}
 			$('.elgg-sidebar .elgg-module-aside.river > .elgg-body').prepend(json.output.river);
 			elgg.workflow.list.addCard();
 			elgg.workflow.list.resize();
@@ -396,7 +399,6 @@ elgg.workflow.card.popup = function() {
 				forcePlaceholderSize: true,
 				placeholder:          'elgg-input-checkboxes-placeholder',
 				revert:               500,
-				sort: console.log('start')
 			});
 			var plaintext = $('#card-forms .card-checklist .elgg-input-plaintext');
 			var addChecklistItem = function() {
@@ -465,27 +467,31 @@ elgg.workflow.card.popupForms = function(event) {
 		checklistItems.push($.trim($(this).text()));
 	});
 
-	elgg.action(form.attr('action'), {
-		data: form.serialize() + '&' + $.param({checklist: checklistItems}),
-		success: function(json) {
-			$.fancybox.close();
-			if (card_guid && json.output && json.status == 0) { // card modified
-				$('#workflow-card-'+card_guid).replaceWith(json.output.card);
-				$('.elgg-sidebar .elgg-module-aside.participants').replaceWith(json.output.sidebar);
-				elgg.workflow.card.popup();
-			} else if (json.output == '' && json.status == 0) { // card commented
-				if ( $('#workflow-card-'+card_guid+' .workflow-card-comment').length == 0 ) {
-					if ( $('#workflow-card-'+card_guid+' .workflow-card-description').length == 0 ) {
-						$('#workflow-card-'+card_guid+' .workflow-card-info').prepend('<div class="workflow-card-comment">0</div>');
-					} else {
-						$('#workflow-card-'+card_guid+' .workflow-card-description').after('<div class="workflow-card-comment">0</div>');
+	if(form.attr('action').match('/comments/') && typeof elgg.galliComments.init == 'function') {
+		return true;
+	} else {
+		elgg.action(form.attr('action'), {
+			data: form.serialize() + '&' + $.param({checklist: checklistItems}),
+			success: function(json) {
+				$.fancybox.close();
+				if (card_guid && json.output && json.status == 0) { // card modified
+					$('#workflow-card-'+card_guid).replaceWith(json.output.card);
+					$('.elgg-sidebar .elgg-module-aside.participants').replaceWith(json.output.sidebar);
+					elgg.workflow.card.popup();
+				} else if (json.output == '' && json.status == 0) { // card commented
+					if ( $('#workflow-card-'+card_guid+' .workflow-card-comment').length == 0 ) {
+						if ( $('#workflow-card-'+card_guid+' .workflow-card-description').length == 0 ) {
+							$('#workflow-card-'+card_guid+' .workflow-card-info').prepend('<div class="workflow-card-comment">0</div>');
+						} else {
+							$('#workflow-card-'+card_guid+' .workflow-card-description').after('<div class="workflow-card-comment">0</div>');
+						}
 					}
+					TxtComment = $('#workflow-card-'+card_guid+' .workflow-card-comment');
+					TxtComment.html('<span class="elgg-icon elgg-icon-workflow-speech-bubble"></span>'+(parseInt(TxtComment.text())+1));
 				}
-				TxtComment = $('#workflow-card-'+card_guid+' .workflow-card-comment');
-				TxtComment.html('<span class="elgg-icon elgg-icon-workflow-speech-bubble"></span>'+(parseInt(TxtComment.text())+1));
 			}
-		}
-	});
+		});
+	}
 
 	event.preventDefault();
 };
