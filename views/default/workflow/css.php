@@ -120,6 +120,14 @@
 .workflow-sidebar .elgg-module.river .elgg-body > li {
 	list-style: none;
 }
+.workflow-sidebar .river .elgg-avatar img {
+	height: 26px;
+	width: 26px;
+}
+.workflow-sidebar .river li:first-child .elgg-avatar img {
+	height: 32px;
+	width: 32px;
+}
 
 /* CSS for card in board view */
 .workflow-cards {

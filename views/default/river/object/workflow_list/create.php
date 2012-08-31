@@ -9,7 +9,6 @@
  *	Elgg-workflow new list river entity
  *
  */
-$size = elgg_extract('size', $vars, 'small');
 $short = elgg_extract('short', $vars, false);
 
 $subject = $vars['item']->getSubjectEntity();
@@ -66,5 +65,4 @@ echo elgg_view('river/item', array(
 	'item' => $vars['item'],
 	'summary' => $summary,
 	'message' => '',
-	'size' => $size
 ));

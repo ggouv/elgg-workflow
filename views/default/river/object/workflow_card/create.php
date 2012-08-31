@@ -9,7 +9,6 @@
  *	Elgg-workflow new card river entity
  *
  */
-$size = elgg_extract('size', $vars, 'small');
 $short = elgg_extract('short', $vars, false);
 
 $subject = $vars['item']->getSubjectEntity();
@@ -76,5 +75,4 @@ echo elgg_view('river/item', array(
 	'summary' => $summary,
 	'message' => '',
 	'responses' => ' ',
-	'size' => $size
 ));

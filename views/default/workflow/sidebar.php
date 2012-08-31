@@ -58,7 +58,7 @@ if ($board_guid) {
 		if (is_array($items)) {
 			foreach ($items as $item) {
 				$content .= "<li id='item-river-{$item->id}' class='elgg-list-item board-{$board_guid}' datetime=\"{$item->posted}\">";
-					$content .= elgg_view('river/item', array('item' => $item, 'size' => 'tiny', 'short' => true));
+					$content .= elgg_view('river/item', array('item' => $item, 'short' => true));
 				$content .= '</li>';
 			}
 		}
@@ -86,7 +86,7 @@ if ($board_guid) {
 		foreach ($items as $item) {
 			$object = $item->getObjectEntity();
 			$content .= "<li id='item-river-{$item->id}' class='elgg-list-item board-{$object->board_guid}' datetime=\"{$item->posted}\">";
-				$content .= elgg_view('river/item', array('item' => $item, 'size' => 'tiny', 'short' => 'group'));
+				$content .= elgg_view('river/item', array('item' => $item, 'short' => 'group'));
 			$content .= '</li>';
 		}
 	}

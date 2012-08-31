@@ -65,14 +65,18 @@ $board_info = elgg_echo('workflow:board:info', array(count($lists), $cards_count
 
 // get participants
 $all_assignedto = workflow_get_board_participants($board->guid);
-$participants = '<p>' . elgg_echo('workflow:sidebar:assignedto_user') . '</p>';
-foreach ($all_assignedto as $user) {
-	$participants .= elgg_view_entity_icon($user, 'small');
+if ($all_assignedto) {
+	$participants = '<p>' . elgg_echo('workflow:sidebar:assignedto_user') . '</p>';
+	foreach ($all_assignedto as $user) {
+		$participants .= elgg_view_entity_icon($user, 'small');
+	}
+} else {
+	$participants = '<p>' . elgg_echo('workflow:sidebar:assignedto_user:none') . '</p>';
 }
 
 // last action
 $last_action = $board->workflow_last_action;
-if ($last_action) $last_action_string = elgg_echo('workflow:board:last_action') . '&nbsp;' . elgg_get_friendly_time($last_action);
+if ($last_action) $last_action_string = '<p>' . elgg_echo('workflow:board:last_action') . '&nbsp;' . elgg_get_friendly_time($last_action) . '</p>';
 
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $vars['entity'],
@@ -102,7 +106,7 @@ if ($full && !elgg_in_context('gallery')) {
 <ul class="board row-fluid">
 	<li class="span8">$description</li>
 	<li class="elgg-heading-basic pam mtm span4">
-		<p>$last_action_string</p>
+		$last_action_string
 		<p>$board_info</p>
 		<div>$participants</div>
 	</li>

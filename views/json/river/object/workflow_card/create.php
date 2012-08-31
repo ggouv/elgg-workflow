@@ -11,7 +11,6 @@
  */
 global $jsonexport;
 
-$size = elgg_extract('size', $vars, 'small');
 $short = elgg_extract('short', $vars, false);
 
 $subject = $vars['item']->getSubjectEntity();
