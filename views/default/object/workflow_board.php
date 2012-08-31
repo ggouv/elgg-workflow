@@ -88,10 +88,10 @@ if ($full && !elgg_in_context('gallery')) {
 	$summary = elgg_view('object/elements/summary', $params);
 
 	$body = <<<HTML
-<div class="board elgg-content">
-	$description
-	<span class="elgg-heading-basic mbs">$board_info</span>
-</div>
+<ul class="board elgg-content">
+	<li>$description</li>
+	<li class="elgg-heading-basic mbs">$board_info</li>
+</ul>
 HTML;
 
 	echo elgg_view('object/elements/full', array(

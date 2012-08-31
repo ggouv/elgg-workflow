@@ -86,7 +86,7 @@ if ($board_guid) {
 			}
 		}
 		
-		$title = elgg_echo('workflow:sidebar:last_activity_on_this_board', array($board->title));
+		$title = elgg_echo('workflow:sidebar:last_activity_on_this_board');
 	}
 	
 	if ($content) {
@@ -114,7 +114,8 @@ if ($board_guid) {
 		}
 	}
 	
-	$title = elgg_echo('workflow:sidebar:last_activity_all_board');
+	
+	$title = elgg_echo('workflow:sidebar:last_activity_all_board', array(elgg_get_page_owner_entity()->name));
 	
 	if ($content) {
 		 echo elgg_view_module('aside', $title, $content, array('class' => 'river'));

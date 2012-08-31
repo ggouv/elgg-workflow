@@ -40,7 +40,7 @@ if ($guid == 0) {
 $board->title = $title;
 $board->description = $description;
 $board->access_id = $access_id;
-$board->tags = $tags;
+$board->tags = string_to_tag_array($tags);
 
 if ($board->save()) {
 

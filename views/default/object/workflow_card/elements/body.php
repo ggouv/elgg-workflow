@@ -19,7 +19,7 @@ if ($comments_count != 0) {
 $duedate = $workflow_card->duedate;
 if ($duedate) {
 	$duedate = explode('-', $duedate);
-	$duedate_timestamp = gmmktime(23, 59, 59, $duedate[1], $duedate[2], $duedate[0]);
+	$duedate_timestamp = get_day_end($duedate[1], $duedate[2], $duedate[0]); //gmmktime(23, 59, 59, $duedate[1], $duedate[2], $duedate[0]);
 	if ( $duedate_timestamp <= time() ) $overdue = '-overdue';
 	$due_date_string = "<div class='workflow-card-duedate$overdue'>" . elgg_view_icon('workflow-calendar') . gmdate(elgg_echo('workflow:card:view:duedate'), $duedate_timestamp) . "</div>";
 }

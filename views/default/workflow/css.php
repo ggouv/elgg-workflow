@@ -111,6 +111,9 @@
 .elgg-form-workflow-list-add-card .elgg-button-submit {
 	margin: 0 5px 5px 1px;
 }
+.workflow-sidebar .elgg-module.river .elgg-body > li {
+	list-style: none;
+}
 
 /* CSS for card in board view */
 .workflow-cards {
@@ -196,7 +199,7 @@
 	color: #4690D6;
 }
 .workflow-card-info .workflow-card-duedate-overdue {
-	background-color: red;
+	color: red;
 }
 .workflow-card-info .elgg-icon-workflow-calendar {
 	background-size: 100% auto;
@@ -208,7 +211,7 @@
 	margin: -1px 3px 0 0;
 }
 .workflow-card-info .workflow-card-checklist-complete {
-	background-color: #89C23C;
+	color: green;
 }
 .workflow-card-assignedto {
 	float: right;
@@ -235,11 +238,14 @@
 	padding: 10px;
 }
 #card-forms .sortable .elgg-input-checkboxes {
-	background-color: white;
 	cursor: move;
 }
 #card-forms .elgg-input-checkboxes > li {
 	padding: 0 5px;
+	border-bottom: 1px dotted #CCCCCC;
+}
+#card-forms .elgg-input-checkboxes > li:first-child {
+	border-top: 1px dotted #CCCCCC;
 }
 #card-forms .sortable .elgg-input-checkboxes > li:hover {
 	background-color: #4690D6;

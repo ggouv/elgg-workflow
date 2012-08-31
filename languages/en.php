@@ -115,7 +115,7 @@ $english = array(
 	 * Sidebar items
 	 */
 	 'workflow:sidebar:assignedto_user' => "Participants",
-	 'workflow:sidebar:last_activity_all_board' => "Last activity on all group's boards",
+	 'workflow:sidebar:last_activity_all_board' => "Last activity on all %s's boards",
 	 'workflow:sidebar:last_activity_on_this_board' => "Last activity on this board",
 
 	/**
