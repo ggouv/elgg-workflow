@@ -63,6 +63,17 @@ $cards_count = elgg_get_entities_from_metadata(array(
 ));
 $board_info = elgg_echo('workflow:board:info', array(count($lists), $cards_count));
 
+// get participants
+$all_assignedto = workflow_get_board_participants($board->guid);
+$participants = '<p>' . elgg_echo('workflow:sidebar:assignedto_user') . '</p>';
+foreach ($all_assignedto as $user) {
+	$participants .= elgg_view_entity_icon($user, 'small');
+}
+
+// last action
+$last_action = $board->workflow_last_action;
+if ($last_action) $last_action_string = elgg_echo('workflow:board:last_action') . '&nbsp;' . elgg_get_friendly_time($last_action);
+
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $vars['entity'],
 	'handler' => 'workflow',
@@ -88,9 +99,13 @@ if ($full && !elgg_in_context('gallery')) {
 	$summary = elgg_view('object/elements/summary', $params);
 
 	$body = <<<HTML
-<ul class="board elgg-content">
-	<li>$description</li>
-	<li class="elgg-heading-basic mbs">$board_info</li>
+<ul class="board row-fluid">
+	<li class="span8">$description</li>
+	<li class="elgg-heading-basic pam mtm span4">
+		<p>$last_action_string</p>
+		<p>$board_info</p>
+		<div>$participants</div>
+	</li>
 </ul>
 HTML;
 

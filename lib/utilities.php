@@ -85,16 +85,35 @@ function workflow_card_prepare_form_vars($card = null) {
 	return $values;
 }
 
+function workflow_get_board_participants($board_guid) {
+	if (!$board_guid) return false;
 
-
-/*
-function workflow_list_get_cards($options) {
-	$default = array(
+	// get all cards of the board
+	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
-		'subtype' => 'task',
-	);
+		'subtypes' => 'workflow_card',
+		'metadata_name' => 'board_guid',
+		'metadata_value' => $board_guid,
+		'limit' => 0
+	));
 	
-	$options = array_merge($default, $options);
-	return elgg_get_entities_from_metadata($options);
+	// get all users assignedto
+	$all_assignedto = array();
+	$all_assignedto_guid = array();
+	foreach($cards as $card) {
+		$assigned_users = elgg_get_entities_from_relationship(array(
+			'relationship' => 'assignedto',
+			'relationship_guid'=> $card->guid,
+		));
+		if ($assigned_users) {
+			foreach ($assigned_users as $user) {
+				if ( !in_array($user->guid, $all_assignedto_guid) ) {
+					$all_assignedto[] = $user;
+					$all_assignedto_guid[] = $user->guid;
+				}
+			}
+		}
+	}
+	
+	return $all_assignedto;
 }
-*/

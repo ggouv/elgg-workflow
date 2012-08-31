@@ -34,6 +34,10 @@ if ( $moved_card && is_group_member( $moved_card->container_guid, elgg_get_logge
 	}
 	ksort($sorted_cards);
 
+	$list = get_entity($moved_card->list_guid);
+	$board = get_entity($list->board_guid);
+	$board->set('workflow_last_action', time());
+
 	// check if the card ordered in the same list
 	if ( $moved_card->list_guid == $list_guid ) {
 
@@ -91,7 +95,7 @@ if ( $moved_card && is_group_member( $moved_card->container_guid, elgg_get_logge
 			$order += 1;
 		}
 
-	// define list_guid's card to destination list
+		// define list_guid's card to destination list
 		$moved_card->list_guid = $list_guid;
 		$moved_card->save();
 

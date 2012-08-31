@@ -2,41 +2,18 @@
 /**
  * Brainstorm group sidebar
  */
+elgg_load_library('workflow:utilities');
+
 $board_guid = elgg_extract('board_guid', $vars);
 
 echo '<div class="workflow-sidebar">';
 
 if ($board_guid) {
-	// get all cards of the board
-	$cards = elgg_get_entities_from_metadata(array(
-		'type' => 'object',
-		'subtypes' => 'workflow_card',
-		'metadata_name' => 'board_guid',
-		'metadata_value' => $board_guid,
-		'limit' => 0
-	));
 	
-	
-	// get all users assignedto
-	$all_assignedto = array();
-	$all_assignedto_guid = array();
-	foreach($cards as $card) {
-		$assigned_users = elgg_get_entities_from_relationship(array(
-			'relationship' => 'assignedto',
-			'relationship_guid'=> $card->guid,
-		));
-		if ($assigned_users) {
-			foreach ($assigned_users as $user) {
-				if ( !in_array($user->guid, $all_assignedto_guid) ) {
-					$all_assignedto[] = $user;
-					$all_assignedto_guid[] = $user->guid;
-				}
-			}
-		}
-	}
+	// get participants
+	$all_assignedto = workflow_get_board_participants($board_guid);
 	$content = '';
 	foreach ($all_assignedto as $user) {
-		//$user = get_entity($user_guid);
 		$content .= elgg_view_entity_icon($user, 'small');
 	}
 	

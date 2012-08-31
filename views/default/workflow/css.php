@@ -1,3 +1,9 @@
+/* CSS for list boards view */
+.board .elgg-heading-basic {
+	background-color: #F4F4F4;
+	border-radius: 4px;
+}
+
 /* CSS for list popup */
 .elgg-form-workflow-list-add-list-popup .elgg-input-plaintext {
 	height: 28px;

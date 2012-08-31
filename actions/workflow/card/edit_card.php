@@ -59,6 +59,9 @@ if ($card->canEdit()) {
 		
 		elgg_clear_sticky_form('card');
 		system_message(elgg_echo('workflow:card:edit:success'));
+		
+		$board->set('workflow_last_action', time());
+	
 		echo json_encode(array(
 			'card' => elgg_view_entity($card, array('view_type' => 'group')),
 			'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $board->guid)),

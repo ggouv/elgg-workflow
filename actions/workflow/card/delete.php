@@ -39,6 +39,9 @@ if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_card
 		$order += 1;
 	}
 
+	$board = get_entity($board_guid);
+	$board->set('workflow_last_action', time());
+
 	system_message(elgg_echo('workflow:card:delete:success'));
 	echo json_encode(array(
 		'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $board_guid)),

@@ -44,6 +44,10 @@ if (is_group_member( $container_guid, $user_guid ) || $user_guid == $container_g
 	if ($card->save()) {
 		system_message(elgg_echo('workflow:card:add:success'));
 		if ($id = add_to_river('river/object/workflow_card/create','create', $user_guid, $card->getGUID())) {
+			
+			$board = get_entity($list->board_guid);
+			$board->set('workflow_last_action', time());
+	
 			$item = elgg_get_river(array('id' => $id));
 			elgg_set_page_owner_guid($container_guid);
 			$echo['river'] = "<li id='item-river-{$item[0]->guid}' class='elgg-list-item' datetime=\"{$item[0]->posted}\">" . 

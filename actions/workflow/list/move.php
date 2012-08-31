@@ -49,6 +49,9 @@ if ($moved_list && $moved_list->canEdit($owner_guid)) {
 		$order += 1;
 	}
 	
+	$board = get_entity($moved_list->board_guid);
+	$board->set('workflow_last_action', time());
+	
 	system_message(elgg_echo('workflow:list:move:success'));
 	forward(REFERER);
 }
