@@ -105,7 +105,7 @@ if ($full && !elgg_in_context('gallery')) {
 	$body = <<<HTML
 <ul class="board row-fluid">
 	<li class="span8">$description</li>
-	<li class="elgg-heading-basic pam mtm span4">
+	<li class="elgg-heading-basic pam span4">
 		$last_action_string
 		<p>$board_info</p>
 		<div>$participants</div>

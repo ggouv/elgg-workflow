@@ -17,12 +17,12 @@ $list = get_entity($list_guid);
 $container_guid = $list->container_guid;
 $user_guid = elgg_get_logged_in_user_guid();
 
-if (!$container_guid || !$list_guid) {
+if (!$container_guid || !$list_guid || !$card_title) {
 	register_error(elgg_echo('workflow:card:add:cannotadd'));
 	forward(REFERER);
 }
 
-if (is_group_member( $container_guid, $user_guid ) || $user_guid == $container_guid) {
+if ($list || $list->canWritetoContainer()) {
 
 	$nbr_cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',

@@ -36,13 +36,15 @@ if (elgg_instanceof($container, 'group')) {
 
 elgg_push_breadcrumb($board->title);
 
-elgg_register_menu_item('title', array(
-	'name' => 'add_list',
-	'href' => '#add-list',
-	'rel' => 'popup',
-	'text' => elgg_echo('workflow:add_list'),
-	'link_class' => 'elgg-button elgg-button-action',
-));
+if ($container->canWritetoContainer()) {
+	elgg_register_menu_item('title', array(
+		'name' => 'add_list',
+		'href' => '#add-list',
+		'rel' => 'popup',
+		'text' => elgg_echo('workflow:add_list'),
+		'link_class' => 'elgg-button elgg-button-action',
+	));
+}
 
 $title = elgg_echo('workflow:board', array($board->title));
 

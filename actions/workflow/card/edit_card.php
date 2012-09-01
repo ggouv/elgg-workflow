@@ -33,7 +33,7 @@ $card = get_entity($card_guid);
 $list = get_entity($card->list_guid);
 $board = get_entity($list->board_guid);
 
-if ($card->canEdit()) {
+if ($card && $list && $board && $card->canWritetoContainer()) {
 	$card->title = $title;
 	$card->description = $desc;
 	$card->checklist = $checklist;

@@ -15,7 +15,7 @@ $deleted_list_guid = (int) get_input('list_guid');
 $deleted_list = get_entity($deleted_list_guid);
 $board_guid = $deleted_list->board_guid;
 
-if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $deleted_list->getOwnerGuid()) {
+if ($deleted_list && $deleted_list->canWritetoContainer()) {
 
 	// delete cards of this list
 	$cards = elgg_get_entities_from_metadata(array(

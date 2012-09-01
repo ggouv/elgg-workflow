@@ -15,7 +15,7 @@ $position = get_input('position');
 
 $moved_card = get_entity($card_guid);
 
-if ( $moved_card && is_group_member( $moved_card->container_guid, elgg_get_logged_in_user_guid() ) ) {
+if ($moved_card && $moved_card->canWritetoContainer()) {
 
 	// get cards from orginal list
 	$cards = elgg_get_entities_from_metadata(array(

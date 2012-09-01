@@ -76,8 +76,10 @@ $english = array(
 
 	'workflow:unknown_card' => "Unknown card",
 	
+	'workflow:board:add:success' => "Board saved.",
+	'workflow:board:save:failed' => "Board cannot be saved.",
 	'workflow:board:delete:success' => "Board successfully moved.",
-	'workflow:bord:delete:failure' => "Delete board doesn't saved.",
+	'workflow:board:delete:failure' => "Delete board doesn't saved.",
 
 	'workflow:list:move:failure' => "Error with server connexion. Move list doesn't saved.",
 	'workflow:list:move:success' => "List successfully moved.",

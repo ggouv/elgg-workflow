@@ -21,7 +21,7 @@ if (!$board) {
 }
 
 $container = $board->getContainerEntity();
-if (!$container) {
+if (!$container->canWritetoContainer()) {
 	register_error(elgg_echo('noaccess'));
 	forward(REFERER);
 }
@@ -31,12 +31,8 @@ elgg_push_breadcrumb(elgg_echo('edit'));
 
 $title = elgg_echo("workflow:board:edit");
 
-if ($board->canEdit()) {
-	$vars = workflow_board_prepare_form_vars($board);
-	$content = elgg_view_form('workflow/board/edit_board', array(), $vars);
-} else {
-	$content = elgg_echo("noaccess");
-}
+$vars = workflow_board_prepare_form_vars($board);
+$content = elgg_view_form('workflow/board/edit_board', array(), $vars);
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',

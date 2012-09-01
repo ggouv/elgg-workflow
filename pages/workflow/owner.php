@@ -14,7 +14,9 @@ $owner = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb($owner->name);
 
-elgg_register_title_button();
+if ($owner->canWritetoContainer()) {
+	elgg_register_title_button();
+}
 
 $title = elgg_echo('workflow:board:owner', array($owner->name));
 

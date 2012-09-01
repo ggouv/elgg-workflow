@@ -224,8 +224,9 @@ function workflow_owner_block_menu($hook, $type, $return, $params) {
 	return $return;
 }
 
+
 /**
- * Add links/info to entity menu particular to workflow_list plugin
+ * Add links/info to list entity menu particular to workflow plugin
  */
 function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
@@ -241,19 +242,15 @@ function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
 	$workflow_list = $params['entity'];
 	$show_edit = elgg_extract('show_edit', $params, true);
 
-	//$container_guid = $tasklist->container_guid;
-	//$user = elgg_get_logged_in_user_entity();
-	//$can_edit = is_group_member($container_guid, $user->guid);
-	//if ($can_edit) {
-	if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $workflow_list->getOwnerGuid()) {
+	if ($workflow_list->canWritetoContainer()) {
 		$delete = array(
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete-alt'),
-			'title' => elgg_echo('workflow:list:delete', array($tasklist->title)),
-			'href' => "action/workflow/list/delete?list_guid=$workflow_list->guid",
+			'title' => elgg_echo('workflow:list:delete'),
+			'href' => "action/workflow/list/delete?list_guid={$workflow_list->guid}",
 			'is_action' => true,
 			'class' => 'workflow-list-delete-button',
-			'id' => "workflow-list-delete-button-$workflow_list->guid",
+			'id' => "workflow-list-delete-button-{$workflow_list->guid}",
 			'priority' => 900
 		);
 		$return[] = ElggMenuItem::factory($delete);
@@ -263,7 +260,7 @@ function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
 				'name' => 'settings',
 				'text' => elgg_view_icon('settings-alt'),
 				'title' => elgg_echo('workflow:list:edit'),
-				'href' => "#workflow-list-edit-$workflow_list->guid",
+				'href' => "#workflow-list-edit-{$workflow_list->guid}",
 				'class' => "workflow-list-edit-button",
 				'rel' => 'toggle',
 				'priority' => 800,

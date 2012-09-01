@@ -14,7 +14,12 @@ $board_guid = get_input('guid');
 
 $board = get_entity($board_guid);
 
-if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $board->getOwnerGuid()) {
+if (!$board) {
+	system_message(elgg_echo('workflow:board:delete:failed'));
+	forward(REFERRER);
+}
+
+if ($board->canWritetoContainer()) {
 
 	// delete all cards of this board
 	$cards = elgg_get_entities_from_metadata(array(

@@ -19,7 +19,14 @@ $container_guid = (int) get_input('container_guid', elgg_get_page_owner_guid());
 
 elgg_make_sticky_form('board');
 
-if (!$title) {
+if (!$title || !$container_guid) {
+	register_error(elgg_echo('workflow:board:save:failed'));
+	forward(REFERER);
+}
+
+$container = get_entity($container_guid);
+
+if ($container && !$container->canWritetoContainer()) {
 	register_error(elgg_echo('workflow:board:save:failed'));
 	forward(REFERER);
 }
@@ -31,7 +38,7 @@ if ($guid == 0) {
 	$new = true;
 } else {
 	$board = get_entity($guid);
-	if (!$board->canEdit()) {
+	if (!$board->canWritetoContainer()) {
 		system_message(elgg_echo('workflow:board:save:failed'));
 		forward(REFERRER);
 	}

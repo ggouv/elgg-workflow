@@ -17,6 +17,11 @@ $page_owner = elgg_get_page_owner_entity();
 $title = elgg_echo('workflow:board:add');
 elgg_push_breadcrumb($title);
 
+if (!$page_owner->canWritetoContainer()) {
+	register_error(elgg_echo('noaccess'));
+	forward(REFERER);
+}
+
 $vars = workflow_board_prepare_form_vars();
 $content = elgg_view_form('workflow/board/edit_board', array(), $vars);
 
