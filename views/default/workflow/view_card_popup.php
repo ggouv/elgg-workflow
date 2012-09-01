@@ -105,7 +105,7 @@ if (!elgg_instanceof($card, 'object', 'workflow_card')) {
 
 	<?php echo elgg_view('page/elements/comments', array(
 		'entity' => $card,
-		'show_add_form' => false,
+		//'show_add_form' => false, @todo make option ?
 	)); ?>
 
 </div>

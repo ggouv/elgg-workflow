@@ -467,7 +467,20 @@ elgg.workflow.card.popupForms = function(event) {
 		checklistItems.push($.trim($(this).text()));
 	});
 
+	var addCommentonCard = function(card_guid) {
+		if ( $('#workflow-card-'+card_guid+' .workflow-card-comment').length == 0 ) {
+			if ( $('#workflow-card-'+card_guid+' .workflow-card-description').length == 0 ) {
+				$('#workflow-card-'+card_guid+' .workflow-card-info').prepend('<div class="workflow-card-comment">0</div>');
+			} else {
+				$('#workflow-card-'+card_guid+' .workflow-card-description').after('<div class="workflow-card-comment">0</div>');
+			}
+		}
+		TxtComment = $('#workflow-card-'+card_guid+' .workflow-card-comment');
+		TxtComment.html('<span class="elgg-icon elgg-icon-workflow-speech-bubble"></span>'+(parseInt(TxtComment.text())+1));
+	}
+
 	if(form.attr('action').match('/comments/') && typeof elgg.galliComments.init == 'function') {
+		addCommentonCard(card_guid);
 		return true;
 	} else {
 		elgg.action(form.attr('action'), {
@@ -479,15 +492,7 @@ elgg.workflow.card.popupForms = function(event) {
 					$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
 					elgg.workflow.card.popup();
 				} else if (json.output == '' && json.status == 0) { // card commented
-					if ( $('#workflow-card-'+card_guid+' .workflow-card-comment').length == 0 ) {
-						if ( $('#workflow-card-'+card_guid+' .workflow-card-description').length == 0 ) {
-							$('#workflow-card-'+card_guid+' .workflow-card-info').prepend('<div class="workflow-card-comment">0</div>');
-						} else {
-							$('#workflow-card-'+card_guid+' .workflow-card-description').after('<div class="workflow-card-comment">0</div>');
-						}
-					}
-					TxtComment = $('#workflow-card-'+card_guid+' .workflow-card-comment');
-					TxtComment.html('<span class="elgg-icon elgg-icon-workflow-speech-bubble"></span>'+(parseInt(TxtComment.text())+1));
+					addCommentonCard(card_guid);
 				}
 			}
 		});
