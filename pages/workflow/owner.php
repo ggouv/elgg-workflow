@@ -10,20 +10,20 @@
  *
  */
 
-$owner = elgg_get_page_owner_entity();
+$container = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb($owner->name);
+elgg_push_breadcrumb($container->name);
 
-if ($owner->canWritetoContainer()) {
+if ($container->canEdit()) {
 	elgg_register_title_button();
 }
 
-$title = elgg_echo('workflow:board:owner', array($owner->name));
+$title = elgg_echo('workflow:board:owner', array($container->name));
 
 $content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtypes' => 'workflow_board',
-	'container_guid' => $owner->guid,
+	'container_guid' => $container->guid,
 	'limit' => 0
 ));
 

@@ -194,6 +194,12 @@
 		-moz-border-radius: 4px;
 		border-radius: 4px;
 }
+/* hack Chrome / Safari */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.workflow-card-info div {
+		padding-top: 3px;
+	}
+}
 .workflow-card-info span, #card-forms .elgg-input-checkboxes span {
 	vertical-align: middle;
 	background-size: 100% auto;

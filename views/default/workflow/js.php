@@ -384,6 +384,11 @@ elgg.workflow.card.popup = function() {
 			resizePopUp();
 			elgg.ui.initDatePicker();
 			elgg.userpicker.init();
+			
+			// compatibility for ggouv_template
+			if( $.isFunction(elgg.ggouv_template.ajaxified) ) {
+				$('#card-forms a').live('click', function(e) {elgg.ggouv_template.ajaxified($(this), e)});
+			}
 
 			$('.elgg-userpicker-remove, .ui-menu-item').live('click', function() {
 				$('#fancybox-content, #fancybox-content > div').css('height', $('#card-forms').height());

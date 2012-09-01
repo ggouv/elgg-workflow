@@ -14,6 +14,9 @@ elgg_load_library('workflow:utilities');
 
 $card_guid = get_input('card_guid');
 $card = get_entity($card_guid);
+$list = get_entity($card->list_guid);
+$board = get_entity($card->board_guid);
+$group = $card->getContainerEntity();
 
 if (!elgg_instanceof($card, 'object', 'workflow_card')) {
 	echo elgg_echo('workflow:unknown_card');
@@ -24,6 +27,30 @@ if (!elgg_instanceof($card, 'object', 'workflow_card')) {
 	<div class="elgg-form elgg-form-workflow-card-edit-card">
 
 		<h2><?php echo $card->title; ?></h2>
+		<label><?php 
+			$list_link = elgg_view('output/url', array(
+				'href' => $list->getURL(),
+				'text' => $list->title ? $list->title : $list->name,
+				'is_trusted' => true,
+			));
+			$list_string = elgg_echo('river:inlist', array($list_link));
+			
+			$board_link = elgg_view('output/url', array(
+				'href' => $board->getURL(),
+				'text' => $board->title ? $board->title : $board->name,
+				'is_trusted' => true,
+			));
+			$board_string = elgg_echo('river:inboard', array($board_link));
+
+			$group_link = elgg_view('output/url', array(
+				'href' => $group->getURL(),
+				'text' => $group->name,
+				'is_trusted' => true,
+			));
+			$group_string = elgg_echo('river:ingroup', array($group_link));
+	
+			echo ucfirst($list_string) . '&nbsp;' . $board_string . '&nbsp;' . $group_string;
+		?></label>
 
 		<?php if ($card->description) { ?>
 			<div class="mts"><?php echo $card->description; ?></div>
