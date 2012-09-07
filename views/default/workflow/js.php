@@ -210,7 +210,7 @@ elgg.ui.addListPopup = function(hook, type, params, options) {
 		options.at = 'right bottom';
 		return options;
 	}
-	return null;
+	return options;
 };
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
 
@@ -545,5 +545,22 @@ elgg.workflow.reload = function() {
 	elgg.workflow.card.popup();
 	elgg.workflow.list.resize();
 }
+
+
+/**
+ * Plugin hook for elgg-deck_river
+ */
+elgg.workflow.deck_river = function(hook, type, params, options) {
+	if (params.column_type == 'workflow') {
+		params.TheColumn.find('.elgg-river').html(params.activity);
+		params.TheColumn.find('.elgg-icon-refresh').css('background', 'url("' + elgg.config.wwwroot + '_graphics/elgg_sprites.png") no-repeat scroll 0 -792px transparent');
+		elgg.workflow.card.popup();
+		return false;
+	} else {
+		return params;
+	}
+}
+elgg.register_hook_handler('deck-river', 'column:workflow', elgg.workflow.deck_river);
+
 
 // End of js for elgg-workflow plugin

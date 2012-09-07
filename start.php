@@ -70,6 +70,9 @@ function workflow_init() {
 	// Register entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:workflow_list', 'workflow_list_entity_menu_setup');
 
+	// Register hook for elgg-deck_river
+	elgg_register_plugin_hook_handler('deck-river', 'column:workflow', 'workflow_deck_river_column');
+
 /*
 
 	// Register widget
@@ -270,4 +273,33 @@ function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	return $return;
+}
+
+
+/**
+ * Hooks for elgg-deck_river
+ */
+function workflow_deck_river_column($hook, $type, $return, $params) {
+	if ($params['query'] == 'activity') {
+		$assigned_cards = elgg_list_entities_from_relationship(array(
+				'type' => 'object',
+				'subtype' => 'workflow_card',
+				'relationship' => 'assignedto',
+				'relationship_guid' => $params['owner'],
+				'inverse_relationship' => true,
+				'view_type' => 'group',
+				'list_class' => 'river-workflow',
+				'limit' => 0,
+				'pagination' => false
+			));
+		return $assigned_cards;
+	} else if ($params['query'] == 'title') {
+		return array(
+			'column_title' => elgg_echo('river:workflow'),
+			'column_subtitle' => get_entity($params['owner'])->name,
+			'break' => true
+		);
+	} else {
+		return false;
+	}
 }

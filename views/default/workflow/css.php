@@ -185,11 +185,11 @@
 .workflow-card-info div {
 	color: #666;
 	float: left;
-	padding: 0 3px;
+	padding: 0 5px;
 	font-size: 0.9em;
 	height: 18px;
 	margin: 2px 2px 0 0;
-	background-color: #EEEEEE;
+	background-color: #F4F4F4;
 	-webkit-border-radius: 4px;
 		-moz-border-radius: 4px;
 		border-radius: 4px;
@@ -314,4 +314,20 @@
 #card-forms .elgg-foot .elgg-subtext {
 	float: right;
 	text-align: right;
+}
+
+/*
+ * Css for elgg-deck_river
+ */
+.elgg-list.river-workflow {
+	height: 100%;
+	background-color: #EEE;
+}
+.elgg-list.river-workflow > li {
+	float: left;
+	border: none;
+	padding: 0;
+}
+.elgg-list.river-workflow .workflow-card-handle {
+	cursor: default;
 }
