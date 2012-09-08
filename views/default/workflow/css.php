@@ -257,6 +257,19 @@
 	background-color: #EEE;
 	padding: 10px;
 }
+#card-forms .elgg-user-picker > label, #card-forms .elgg-user-picker > input[type=checkbox] { /* ugly hack, need to enhance userpicker */
+	display: none;
+}
+#card-forms .elgg-user-picker-list > li {
+	border-top: none;
+	border-bottom: 1px dotted #CCCCCC;
+	display: inline-table;
+	width: 185px;
+	margin-bottom: 5px;
+}
+#card-forms .elgg-user-picker-list > li:nth-child(2n+1) {
+	margin-right: 10px;
+}
 #card-forms .sortable .elgg-input-checkboxes {
 	cursor: move;
 }
@@ -316,6 +329,20 @@
 	text-align: right;
 }
 
+
+/*
+ * css for workflow_card and workflow_list in list view
+ */
+.workflow-card-list li.elgg-item {
+	border: none;
+	padding: 0px
+}
+.workflow-card-list .workflow-card {
+	border: 2px solid #DEDEDE;
+	padding: 5px;
+}
+
+
 /*
  * Css for elgg-deck_river
  */
@@ -327,6 +354,9 @@
 	float: left;
 	border: none;
 	padding: 0;
+}
+.elgg-list.river-workflow > li:first-child {
+	margin-top: -2px;
 }
 .elgg-list.river-workflow .workflow-card-handle {
 	cursor: default;

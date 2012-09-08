@@ -20,6 +20,10 @@ $english = array(
 	'my_workflow' => "My Workflow",
 	'workflow:owner' => "%s's workflow",
 	'workflow:board:all' => "All workflow boards",
+	'workflow:all' => "all",
+	'workflow:assigned-cards:all' => "All assigned cards",
+	'workflow:assigned-cards:owner' => "Your assigned cards",
+	'workflow:assigned-cards:friends' => "Assigned cards of your friends",
 
 	'item:object:workflow_board' => "Workflow boards",
 	'item:object:workflow_list' => "Workflow lists",
@@ -27,6 +31,7 @@ $english = array(
 
 	'workflow:add' => "Add board",
 	'workflow:add_list' => "Add list",
+	'workflow:refresh_board' => "Refresh the board",
 
 	'workflow:group' => "Group workflow",
 	'workflow:board:none' => "No board created yet",
@@ -43,10 +48,12 @@ $english = array(
 	'workflow:list:edit' => "Edit this list",
 	'workflow:list:delete:confirm' => "Are you sure to delete this list and all of his cards?",
 	'workflow:card:delete:confirm' => "Are you sure to delete this card?",
+	'workflow:card:none' => "No card created yet.",
 
 	/**
 	* River
 	**/
+	'river:workflow' => "Your workflow cards",
 	'river:inboard' => "in board %s",
 	'river:inlist' => "in list %s",
 	'river:create:object:workflow_list' => "%s added list %s %s %s",

@@ -154,7 +154,7 @@ function workflow_page_handler($page) {
 					include "$base_dir/assigned-cards/owner.php";
 					break;
 				case 'friends':
-					include "$base_dir/assigned-cards/owner.php";
+					include "$base_dir/assigned-cards/friends.php";
 					break;
 			}
 			break;

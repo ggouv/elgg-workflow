@@ -46,6 +46,13 @@ if ($container->canWritetoContainer()) {
 	));
 }
 
+elgg_register_menu_item('title', array(
+	'name' => 'refresh_board',
+	'href' => $board->getURL(),
+	'text' => elgg_echo('workflow:refresh_board'),
+	'link_class' => 'elgg-button elgg-button-action',
+));
+
 $title = elgg_echo('workflow:board', array($board->title));
 
 $lists = elgg_get_entities_from_metadata(array(
