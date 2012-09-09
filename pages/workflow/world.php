@@ -18,7 +18,7 @@ $title = elgg_echo('workflow:board:all');
 
 $content = elgg_list_entities(array(
 	'type' => 'object',
-	'subtypes' => 'workflow_board',
+	'subtype' => 'workflow_board',
 	'list_class' => 'workflow-card-list',
 	'limit' => 20
 ));

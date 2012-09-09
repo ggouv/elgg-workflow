@@ -25,7 +25,7 @@ if ($friends = get_user_friends($owmer->guid, "", 999999, 0)) {
 global $fb; $fb->info($friendguids);
 $cards = elgg_get_entities_from_relationship(array(
 	'type' => 'object',
-	'subtypes' => 'workflow_card',
+	'subtype' => 'workflow_card',
 	'relationship' => 'assignedto',
 	//'relationship_guids' => $friendguids, @todo don't work. Have to find another way...
 	'inverse_relationship' => true,

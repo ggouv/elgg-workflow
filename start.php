@@ -98,6 +98,7 @@ function workflow_init() {
  *  Add board:         workflow/add/<guid>
  *
  *  Board view:        workflow/board/<guid>/<title> (title is ignored)
+ *  Archive view:      workflow/archive/<guid>/<title> (title is ignored)
  *
  * card and list are viewed in board (simple object view doesn't make sense)
  *  View owner's card:            workflow/board/<guid>/card/<guid>/<title> (title is ignored)
@@ -143,6 +144,10 @@ function workflow_page_handler($page) {
 		case 'board':
 			set_input('board_guid', $page[1]);
 			include "$base_dir/board.php";
+			break;
+		case 'archive':
+			set_input('board_guid', $page[1]);
+			include "$base_dir/archive.php";
 			break;
 		case 'assigned-cards':
 			switch ($page[1]) {

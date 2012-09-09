@@ -31,7 +31,7 @@ $english = array(
 
 	'workflow:add' => "Add board",
 	'workflow:add_list' => "Add list",
-	'workflow:refresh_board' => "Refresh the board",
+	'workflow:refresh_board' => "Refresh",
 
 	'workflow:group' => "Group workflow",
 	'workflow:board:none' => "No board created yet",
@@ -49,6 +49,10 @@ $english = array(
 	'workflow:list:delete:confirm' => "Are you sure to delete this list and all of his cards?",
 	'workflow:card:delete:confirm' => "Are you sure to delete this card?",
 	'workflow:card:none' => "No card created yet.",
+	
+	'workflow:archive' => "Archives",
+	'workflow:board:archive' => "Archives of the board %s",
+	'workflow:board:back' => "Go back to the board",
 
 	/**
 	* River

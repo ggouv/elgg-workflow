@@ -379,6 +379,9 @@ elgg.workflow.card.popup = function() {
 			var resizePopUp = function() {
 				$('#fancybox-wrap').css('top', '20px');
 				$('#fancybox-content, #fancybox-content > div').css('height', $('#card-forms').height());
+				if ($('#fancybox-content .elgg-form-workflow-card-edit-card').height() < $('#fancybox-content .elgg-comments').height()) {
+					$('#fancybox-content .elgg-form-workflow-card-edit-card').height($('#fancybox-content .elgg-comments').height());
+				}
 			}
 
 			resizePopUp();

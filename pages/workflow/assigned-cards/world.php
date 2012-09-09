@@ -16,7 +16,7 @@ $title = elgg_echo('workflow:assigned-cards:all');
 
 $cards = elgg_get_entities_from_relationship(array(
 	'type' => 'object',
-	'subtypes' => 'workflow_card',
+	'subtype' => 'workflow_card',
 	'relationship' => 'assignedto',
 	'inverse_relationship' => true,
 	'limit' => 30,

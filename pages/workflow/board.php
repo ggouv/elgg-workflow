@@ -42,22 +42,29 @@ if ($container->canWritetoContainer()) {
 		'href' => '#add-list',
 		'rel' => 'popup',
 		'text' => elgg_echo('workflow:add_list'),
-		'link_class' => 'elgg-button elgg-button-action',
+		'link_class' => 'elgg-button elgg-button-submit',
 	));
 }
+
+elgg_register_menu_item('title', array(
+	'name' => 'archive',
+	'href' => "workflow/archive/{$board->guid}/{$board->title}",
+	'text' => elgg_echo('workflow:archive'),
+	'link_class' => 'elgg-button elgg-button-action',
+));
 
 elgg_register_menu_item('title', array(
 	'name' => 'refresh_board',
 	'href' => $board->getURL(),
 	'text' => elgg_echo('workflow:refresh_board'),
-	'link_class' => 'elgg-button elgg-button-action',
+	'link_class' => 'elgg-button elgg-button-action gwfb refresh-button',
 ));
 
 $title = elgg_echo('workflow:board', array($board->title));
 
 $lists = elgg_get_entities_from_metadata(array(
 	'type' => 'object',
-	'subtypes' => 'workflow_list',
+	'subtype' => 'workflow_list',
 	'metadata_name' => 'board_guid',
 	'metadata_value' => $board_guid,
 	'limit' => 0
