@@ -30,6 +30,7 @@ if ($list || $list->canWritetoContainer()) {
 		'metadata_name' => 'list_guid',
 		'metadata_value' => $list_guid,
 		'count' => true,
+		'limit' => 0
 	));
 
 	$card = new ElggObject;

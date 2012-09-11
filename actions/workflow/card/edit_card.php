@@ -48,6 +48,7 @@ if ($card && $list && $board && $card->canWritetoContainer()) {
 		$assigned_users = elgg_get_entities_from_relationship(array(
 			'relationship' => 'assignedto',
 			'relationship_guid'=> $card_guid,
+			'limit' => 0
 		));
 		foreach($assigned_users as $assigned_user) {
 			if (!in_array($assigned_user->guid, $assignedto)) remove_entity_relationship($card_guid, 'assignedto', $assigned_user->guid);

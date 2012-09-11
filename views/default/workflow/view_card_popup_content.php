@@ -54,7 +54,7 @@ if (!$card) {
 		?></label>
 
 		<?php if ($card->description) { ?>
-			<div class="mts"><?php echo $card->description; ?></div>
+			<div class="mts"><?php echo elgg_view('output/longtext', array('value' => $card->description)); ?></div>
 		<?php } ?>
 
 		<?php if ($card->assignedto) { ?>
@@ -115,7 +115,7 @@ if (!$card) {
 				<?php
 					echo elgg_view('output/url', array(
 						'href' => $card->getURL(),
-						'text' => elgg_echo('workflow:card:number', array($card_guid)),
+						'text' => elgg_echo('workflow:card:number', array($card->guid)),
 						'is_trusted' => true,
 					));
 					$creator = get_entity($card->owner_guid);
@@ -134,6 +134,7 @@ if (!$card) {
 	<?php echo elgg_view('page/elements/comments', array(
 		'entity' => $card,
 		'show_add_form' => $archive ? false : true, //@todo make option ?
+		'preview' => false,
 	)); ?>
 
 </div>

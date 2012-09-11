@@ -81,7 +81,7 @@
 }
 .workflow-list > .elgg-body {
 	background-color: #EEEEEE;
-	overflow: hidden;
+	overflow-y: auto;
 	width: 100%;
 }
 .workflow-list > .elgg-foot {
@@ -357,6 +357,9 @@
 }
 .elgg-list.river-workflow > li:first-child {
 	margin-top: -2px;
+}
+.elgg-river .elgg-module.workflow-card {
+	margin: 2px;
 }
 .elgg-list.river-workflow .workflow-card-handle {
 	cursor: default;

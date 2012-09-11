@@ -26,7 +26,7 @@ if ($view_type == 'group') {
 	$workflow_list_class = " workflow-list mls";
 
 	$edit_area = '';
-	if ($workflow_list->canWritetoContainer()) {
+	if ($container->canWritetoContainer()) {
 		$controls = elgg_view('object/workflow_list/elements/controls', array(
 			'workflow_list' => $workflow_list,
 			'show_edit' => $edit_area != '',

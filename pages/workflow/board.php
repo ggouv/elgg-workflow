@@ -50,7 +50,7 @@ elgg_register_menu_item('title', array(
 	'name' => 'archive',
 	'href' => "workflow/archive/{$board->guid}/{$board->title}",
 	'text' => elgg_echo('workflow:archive'),
-	'link_class' => 'elgg-button elgg-button-action',
+	'link_class' => 'elgg-button elgg-button-action gwfb archive-button',
 ));
 
 elgg_register_menu_item('title', array(

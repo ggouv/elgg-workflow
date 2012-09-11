@@ -30,7 +30,7 @@ if (!$card) {
 		return true;
 	}
 	
-	$vars = workflow_card_prepare_form_vars($card);
+	$vars = array_merge(workflow_card_prepare_form_vars($card), array('preview' => false));
 	
 	echo '<div id="card-forms">' .
 		elgg_view_form('workflow/card/edit_card', array(), $vars) .

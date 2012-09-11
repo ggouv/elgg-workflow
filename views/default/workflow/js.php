@@ -86,12 +86,12 @@ elgg.workflow.list.init = function() {
 		forcePlaceholderSize: true,
 		placeholder:          'workflow-list-placeholder',
 		opacity:              0.8,
-		revert:               500,
+		revert:               300,
 		update:                 elgg.workflow.list.move
 	});
 
 	// focus on list popup
-	$('.elgg-menu-item-add-list .elgg-button-action').live('click', function() {
+	$('.elgg-menu-item-add-list .elgg-button-action').die().live('click', function() {
 		$('.elgg-form-workflow-list-add-list-popup .elgg-input-plaintext').focus();
 	});
 	// add list popup
@@ -218,20 +218,22 @@ elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
  * Resize lists
  */
 elgg.workflow.list.resize = function() {
-
-	var WorkflowWidth = $('.workflow-lists-container').width();
-	var CountLists = $('.workflow-list').length;
-	var ListWidth = 0;
-	workflow_min_width_list = 200;
-	if ( (parseInt(workflow_min_width_list) + 5 + 4) * CountLists > (WorkflowWidth - 5) ) {
-		ListWidth = parseInt(workflow_min_width_list);
-		$('.workflow-lists').width( (ListWidth + 5 + 4) * CountLists - 5); // margin + border minus last margin doesn't displayed
-	} else {
-		ListWidth = (WorkflowWidth - (9*CountLists) + 5 ) / CountLists;
-		$('.workflow-lists').width(WorkflowWidth);
+	if ($(".workflow-lists-container").length != 0) {
+		var WorkflowWidth = $('.workflow-lists-container').width();
+		var CountLists = $('.workflow-list').length;
+		var ListWidth = 0;
+		workflow_min_width_list = 200;
+		if ( (parseInt(workflow_min_width_list) + 5 + 4) * CountLists > (WorkflowWidth - 5) ) {
+			ListWidth = parseInt(workflow_min_width_list);
+			$('.workflow-lists').width( (ListWidth + 5 + 4) * CountLists - 5); // margin + border minus last margin doesn't displayed
+		} else {
+			ListWidth = (WorkflowWidth - (9*CountLists) + 5 ) / CountLists;
+			$('.workflow-lists').width(WorkflowWidth);
+		}
+		$('.workflow-list, .workflow-list-placeholder').width(ListWidth);
+		
+		$('.workflow-list > .elgg-body').css('max-height', $(window).height() - $('.workflow-lists > div:first-child > .elgg-body').offset().top - $('.workflow-lists > div:first-child .elgg-foot').height() - 5);
 	}
-
-	$('.workflow-list, .workflow-list-placeholder').width(ListWidth);
 }
 
 /**
@@ -244,10 +246,12 @@ elgg.workflow.list.addCard = function() {
 			$(this).val('');
 		}
 		$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'block');
+		$(this).parents().find('.workflow-list > .elgg-body').css('max-height', '-=27');
 	}).focusout(function(){
 		if ( $(this).val() == '' ) {
 			$(this).val(elgg.echo("workflow:list:add_card"));
 			$(this).parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
+			$(this).parents().find('.workflow-list > .elgg-body').css('max-height', '+=27');
 		}
 	}).keydown(function(e){
 		if (e.keyCode == 13) {
@@ -255,9 +259,10 @@ elgg.workflow.list.addCard = function() {
 			if ($(this).val()) elgg.workflow.card.add($(this).closest('form'));
 		}
 	});
-	$('.elgg-form-workflow-list-add-card .elgg-icon-delete').live('click', function(){
+	$('.elgg-form-workflow-list-add-card .elgg-icon-delete').die().live('click', function(){
 		plaintext.val(elgg.echo("workflow:list:add_card"));
 		plaintext.parent().find('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
+		$(this).parents().find('.workflow-list > .elgg-body').css('max-height', '+=27');
 	});
 }
 
@@ -280,12 +285,12 @@ elgg.workflow.card.init = function() {
 		handle:               '.workflow-card-handle',
 		forcePlaceholderSize: true,
 		placeholder:          'workflow-card-placeholder',
-		revert:               500,
+		revert:               300,
 		dropOnEmpty:          true,
 		update:                 elgg.workflow.card.move
 	});
 
-	$('.elgg-form-workflow-list-add-card .elgg-button-submit').live('click', function(e){
+	$('.elgg-form-workflow-list-add-card .elgg-button-submit').die().live('click', function(e){
 		e.preventDefault();
 		elgg.workflow.card.add($(this).closest('form'));
 	});

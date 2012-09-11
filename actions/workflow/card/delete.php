@@ -24,6 +24,7 @@ if ($deleted_card && $deleted_card->canWritetoContainer()) {
 		'subtypes' => 'workflow_card',
 		'metadata_name' => 'list_guid',
 		'metadata_value' => $list_guid,
+		'limit' => 0
 	));
 
 	$sorted_cards = array();

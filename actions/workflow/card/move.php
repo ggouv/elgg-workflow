@@ -23,6 +23,7 @@ if ($moved_card && $moved_card->canWritetoContainer()) {
 		'subtypes' => 'workflow_card',
 		'metadata_name' => 'list_guid',
 		'metadata_value' => $moved_card->list_guid,
+		'limit' => 0
 	));
 
 	// sort the list and remove the list that's being moved from the array
@@ -72,6 +73,7 @@ if ($moved_card && $moved_card->canWritetoContainer()) {
 			'subtypes' => 'workflow_card',
 			'metadata_name' => 'list_guid',
 			'metadata_value' => $list_guid,
+			'limit' => 0
 		));
 
 		// sort the list and remove the list that's being moved from the array
