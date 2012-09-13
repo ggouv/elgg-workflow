@@ -28,6 +28,9 @@
 	width: <?php echo elgg_get_plugin_setting('min_width_list', 'elgg-workflow') .'px'; ?>;
 	max-width: <?php echo elgg_get_plugin_setting('max_width_list', 'elgg-workflow') .'px'; ?>;
 }
+.workflow-list.my-assigned-cards {
+	border: 2px solid #4690D6;
+}
 .workflow-list:hover {
 	background-color: #CCCCCC;
 }

@@ -21,19 +21,13 @@ if (!$board) {
 
 elgg_set_page_owner_guid($board->getContainerGUID());
 $container = elgg_get_page_owner_entity();
-
-if ($container->type != 'group') {
-	gatekeeper();
-} else {
-	group_gatekeeper();
-}
-
+global $fb; $fb->info($container->getType());
 if (elgg_instanceof($container, 'group')) {
+	group_gatekeeper();
 	elgg_push_breadcrumb($container->name, "workflow/group/$container->guid/all");
 } else {
-	elgg_push_breadcrumb($container->name, "workflow/owner/$container->username");
+	gatekeeper();
 }
-
 elgg_push_breadcrumb($board->title);
 
 if ($container->canWritetoContainer()) {
@@ -83,6 +77,26 @@ $addlist = '<div id="add-list" class="elgg-module elgg-module-popup hidden">' . 
 $content .= $addlist . "<div id='workflow-card-popup' class='elgg-module elgg-module-popup hidden mbl'></div>";
 
 $content .= "<div class='workflow-lists-container'><div class='workflow-lists'>";
+// show list of assigned card for user
+if (elgg_instanceof($container, 'user')) {
+	$content .= '<div class="elgg-module workflow-list mls my-assigned-cards"><div class="elgg-head"><div class="workflow-list-handle clearfix"><h3>' . elgg_view_icon('workflow-list') . elgg_echo('auie') . '</h3></div></div>' . 
+			'<div class="elgg-body"><div class="workflow-list-content">' . elgg_list_entities_from_relationship(array(
+				'type' => 'object',
+				'subtype' => 'workflow_card',
+				'relationship' => 'assignedto',
+				'relationship_guid' => $container->guid,
+				'inverse_relationship' => true,
+				'view_type' => 'group',
+				'list_class' => 'river-workflow',
+				'limit' => 0,
+				'pagination' => false
+			)) . '</div></div>' .
+			'</div>';
+	if (!$lists) {
+		$lists = true;
+	}
+}
+
 foreach ($sorted_lists as $sorted_list) {
 	$content .= elgg_view_entity($sorted_list, array('view_type' => 'group'));
 }
@@ -99,11 +113,7 @@ $params = array(
 	'title' => $title,
 	'sidebar' => $sidebar,
 );
-/*
-if (elgg_instanceof($owner, 'group')) {
-	$params['filter'] = '';
-}
-*/
+
 $body = elgg_view_layout('workflow', $params);
 
 echo elgg_view_page($title, $body);

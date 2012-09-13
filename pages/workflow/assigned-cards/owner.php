@@ -10,17 +10,24 @@
  *
  */
 
-$user = elgg_get_logged_in_user_entity();
+$page_owner = elgg_get_page_owner_entity();
+$user_guid = elgg_get_logged_in_user_guid();
 
-elgg_push_breadcrumb(elgg_echo('workflow:assigned-cards:owner'));
 
-$title = elgg_echo('workflow:assigned-cards:owner');
+elgg_push_breadcrumb(elgg_echo('workflow:assigned-cards'), "workflow/assigned-cards/all");
+elgg_push_breadcrumb($page_owner->name);
+
+if ($page_owner->guid == $user_guid) {
+	$title = elgg_echo('workflow:assigned-cards:title:mine', array($page_owner->name));
+} else {
+	$title = elgg_echo('workflow:assigned-cards:title:owner', array($page_owner->name));
+}
 
 $content = elgg_list_entities_from_relationship(array(
 	'type' => 'object',
 	'subtype' => 'workflow_card',
 	'relationship' => 'assignedto',
-	'relationship_guid' => $user->guid,
+	'relationship_guid' => $page_owner->guid,
 	'inverse_relationship' => true,
 	'view_type' => 'group',
 	'split_items' => 3,

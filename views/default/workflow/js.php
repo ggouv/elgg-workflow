@@ -218,7 +218,7 @@ elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
  * Resize lists
  */
 elgg.workflow.list.resize = function() {
-	if ($(".workflow-lists-container").length != 0) {
+	if ($(".workflow-lists-container .workflow-list").length != 0) {
 		var WorkflowWidth = $('.workflow-lists-container').width();
 		var CountLists = $('.workflow-list').length;
 		var ListWidth = 0;

@@ -17,13 +17,17 @@ $english = array(
 	 */
 
 	'workflow' => "Workflow",
-	'my_workflow' => "My Workflow",
+	'my_workflow' => "My Board",
 	'workflow:owner' => "%s's workflow",
 	'workflow:board:all' => "All workflow boards",
 	'workflow:all' => "all",
-	'workflow:assigned-cards:all' => "All assigned cards",
-	'workflow:assigned-cards:owner' => "Your assigned cards",
-	'workflow:assigned-cards:friends' => "Assigned cards of your friends",
+	'workflow:assigned-cards' => "Assigned cards",
+	'workflow:assigned-cards:all' => "All",
+	'workflow:assigned-cards:title:all' => "All assigned cards",
+	'workflow:assigned-cards:title:mine' => "My assigned cards",
+	'workflow:assigned-cards:title:owner' => "%s's assigned cards",
+	'workflow:assigned-cards:friends' => "Friends",
+	'workflow:assigned-cards:title:friends' => "Friends's Assigned cards",
 
 	'item:object:workflow_board' => "Workflow boards",
 	'item:object:workflow_list' => "Workflow lists",
@@ -33,7 +37,7 @@ $english = array(
 	'workflow:add_list' => "Add list",
 	'workflow:refresh_board' => "Refresh",
 
-	'workflow:group' => "Group workflow",
+	'workflow:group' => "Group workflows",
 	'workflow:board:none' => "No board created yet",
 	'workflow:board' => "Board %s",
 	'workflow:board:owner' => "%s's boards",
@@ -60,8 +64,9 @@ $english = array(
 	'river:workflow' => "Your workflow cards",
 	'river:inboard' => "in board %s",
 	'river:inlist' => "in list %s",
-	'river:create:object:workflow_list' => "%s added list %s %s %s",
-	'river:create:object:workflow_card' => "%s added card %s %s %s %s",
+	'river:create:object:workflow_card_list:summary' => "%s modified board %s %s",
+	'river:create:object:workflow_list:message' => "Added list %s",
+	'river:create:object:workflow_card:message' => "Added card %s %s",
 	'river:comment:object:workflow_card' => "%s commented the card %s",
 
 	/**
@@ -97,13 +102,16 @@ $english = array(
 	'workflow:list:add:failure' => "Error with server connexion. Add list doesn't saved.",
 	'workflow:list:add:cannotadd' => "You cannot add a list.",
 	'workflow:list:add:success' => "List successfully added.",
+	'workflow:list:delete:confirm' => "Do you really want delete this list ?",
 	'workflow:list:delete:failure' => "Delete list doesn't saved.",
 	'workflow:list:delete:success' => "List deleted.",
+
 
 	'workflow:card:move:failure' => "Error. Move card doesn't saved.",
 	'workflow:card:add:failure' => "Error with server connexion. Add card doesn't saved.",
 	'workflow:card:add:cannotadd' => "You cannot add a card.",
 	'workflow:card:add:success' => "Card successfully added.",
+	'workflow:card:delete:confirm' => "Do you really want delete this card ?",
 	'workflow:card:delete:success' => "Card deleted.",
 	'workflow:card:delete:failure' => "Delete card doesn't saved.",
 	'workflow:card:edit:success' => "Card changes successfully saved.",

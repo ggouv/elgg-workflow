@@ -12,6 +12,7 @@
 
 $owner = elgg_get_page_owner_entity();
 
+elgg_push_breadcrumb(elgg_echo('workflow:assigned-cards'), "workflow/assigned-cards/all");
 elgg_push_breadcrumb(elgg_echo('workflow:assigned-cards:friends'));
 
 $title = elgg_echo('workflow:assigned-cards:friends');

@@ -156,6 +156,7 @@ function workflow_page_handler($page) {
 					include "$base_dir/assigned-cards/world.php";
 					break;
 				case 'owner':
+					elgg_set_page_owner_guid(get_user_by_username($page[2])->guid);
 					include "$base_dir/assigned-cards/owner.php";
 					break;
 				case 'friends':

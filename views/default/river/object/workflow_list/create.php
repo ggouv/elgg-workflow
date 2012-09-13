@@ -40,7 +40,6 @@ if ($short) {
 			'class' => 'elgg-river-object',
 			'is_trusted' => true,
 		));
-		$board_string = elgg_echo('river:inboard', array($board_link));
 	}
 } else if ($board) {
 	$board_link = elgg_view('output/url', array(
@@ -59,10 +58,10 @@ if ($short) {
 	$group_string = elgg_echo('river:ingroup', array($group_link));
 }
 
-$summary = elgg_echo('river:create:object:workflow_list', array($subject_link, $object_link, $board_string, $group_string));
-
+$summary = elgg_echo('river:create:object:workflow_card_list:summary', array($subject_link, $board_link, $group_string));
+$message = elgg_echo('river:create:object:workflow_list:message', array($object_link));
 echo elgg_view('river/item', array(
 	'item' => $vars['item'],
 	'summary' => $summary,
-	'message' => '',
+	'message' => $message,
 ));

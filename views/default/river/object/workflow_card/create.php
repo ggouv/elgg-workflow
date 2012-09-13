@@ -10,7 +10,7 @@
  *
  */
 $short = elgg_extract('short', $vars, false);
-
+global $fb; $fb->info($vars['item']);
 $subject = $vars['item']->getSubjectEntity();
 $object = $vars['item']->getObjectEntity();
 $list = get_entity($object->list_guid);
@@ -31,8 +31,16 @@ $object_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
+$list_link = elgg_view('output/url', array(
+	'href' => $list->getURL(),
+	'text' => $list->title ? $list->title : $list->name,
+	'class' => 'elgg-river-object',
+	'is_trusted' => true,
+));
+$list_string = elgg_echo('river:inlist', array($list_link));
+
 if ($short) {
-	$list_string = $board_string = $group_string = '';
+	$board_string = $group_string = '';
 	
 	if ($board && $short === 'group') {
 		$board_link = elgg_view('output/url', array(
@@ -41,17 +49,8 @@ if ($short) {
 			'class' => 'elgg-river-object',
 			'is_trusted' => true,
 		));
-		$board_string = elgg_echo('river:inboard', array($board_link));
 	}
 } else if ($board && $list) {
-	$list_link = elgg_view('output/url', array(
-		'href' => $list->getURL(),
-		'text' => $list->title ? $list->title : $list->name,
-		'class' => 'elgg-river-object',
-		'is_trusted' => true,
-	));
-	$list_string = elgg_echo('river:inlist', array($list_link));
-	
 	$board_link = elgg_view('output/url', array(
 		'href' => $board->getURL(),
 		'text' => $board->title ? $board->title : $board->name,
@@ -68,11 +67,11 @@ if ($short) {
 	$group_string = elgg_echo('river:ingroup', array($group_link));
 }
 
-$summary = elgg_echo('river:create:object:workflow_card', array($subject_link, $object_link, $list_string, $board_string, $group_string));
+$summary = elgg_echo('river:create:object:workflow_card_list:summary', array($subject_link, $board_link, $group_string));
+$message = elgg_get_annotation_from_id($vars['item']->annotation_id)->value;//elgg_echo('river:create:object:workflow_card:message', array($object_link, $list_string));
 
 echo elgg_view('river/item', array(
 	'item' => $vars['item'],
 	'summary' => $summary,
-	'message' => '',
-	'responses' => ' ',
+	'message' => $message,
 ));

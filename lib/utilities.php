@@ -117,3 +117,20 @@ function workflow_get_board_participants($board_guid) {
 	
 	return $all_assignedto;
 }
+
+function workflow_create_annotation($board_guid, $message, $user_guid = 0, $access = 2) {
+	if (!$user_guid) $usre_guid = elgg_get_logged_in_user_guid();
+	$board = get_entity($board_guid);
+	
+	$annotations = $board->getAnnotations('workflow_river', 1, 0, 'desc');
+	$annotation = $annotations[0];
+	
+	if ($annotation->owner_guid == $user_guid && (time() - $annotation->time_created) <= 3600) { // less than one hour
+		$message = $annotation->value . '<br>' . $message;
+		update_annotation($annotation->id, 'workflow_river', $message, '', $user_guid, $access);		
+		return array('new' => false, 'id' => $annotation->id);
+	} else {
+		$annotation_id = create_annotation($board_guid, 'workflow_river', $message, '', $user_guid, $access);
+		return array('new' => true, 'id' => $annotation_id);
+	}
+}

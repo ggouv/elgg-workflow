@@ -10,6 +10,7 @@
  *
  */
 
+elgg_push_breadcrumb(elgg_echo('workflow:assigned-cards'), "workflow/assigned-cards/all");
 elgg_push_breadcrumb(elgg_echo('workflow:assigned-cards:all'));
 
 $title = elgg_echo('workflow:assigned-cards:all');
