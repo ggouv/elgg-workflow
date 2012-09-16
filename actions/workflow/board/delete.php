@@ -21,28 +21,16 @@ if (!$board) {
 
 if ($board->canWritetoContainer()) {
 
-	// delete all cards of this board
-	$cards = elgg_get_entities_from_metadata(array(
+	// delete all lists and cards of this board
+	$objects = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
-		'subtypes' => 'workflow_card',
+		'subtypes' => array('workflow_list', 'workflow_card'),
 		'metadata_name' => 'board_guid',
 		'metadata_value' => $board_guid,
 		'limit' => 0
 	));
-	foreach($cards as $card) {
-		delete_entity($card->guid);
-	}
-	
-	// delete all lists
-	$lists = elgg_get_entities_from_metadata(array(
-		'type' => 'object',
-		'subtypes' => 'workflow_list',
-		'metadata_name' => 'board_guid',
-		'metadata_value' => $board_guid,
-		'limit' => 0
-	));
-	foreach($lists as $list) {
-		delete_entity($list->guid);
+	foreach($objects as $object) {
+		delete_entity($object->guid);
 	}
 
 	// and delete board

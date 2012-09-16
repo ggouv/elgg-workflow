@@ -117,6 +117,7 @@ $english = array(
 	'workflow:card:edit:failure' => "Card changes don't saved.",
 	'workflow:card:edit:cannot_edit' => "You cannot edit this card.",
 
+	'workflow:list:archived:success' => "List now archived.",
 
 	/**
 	 * Widget

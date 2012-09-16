@@ -66,17 +66,22 @@ $board_info = elgg_echo('workflow:board:info', array(count($lists), $cards_count
 // get participants
 $all_assignedto = workflow_get_board_participants($board->guid);
 if ($all_assignedto) {
-	$participants = '<p>' . elgg_echo('workflow:sidebar:assignedto_user') . '</p>';
+	$participants = '<p class="mbs">' . elgg_echo('workflow:sidebar:assignedto_user') . '</p>';
 	foreach ($all_assignedto as $user) {
 		$participants .= elgg_view_entity_icon($user, 'small');
 	}
 } else {
-	$participants = '<p>' . elgg_echo('workflow:sidebar:assignedto_user:none') . '</p>';
+	$participants = '<p class="mbs">' . elgg_echo('workflow:sidebar:assignedto_user:none') . '</p>';
 }
 
 // last action
-$last_action = $board->workflow_last_action;
-if ($last_action) $last_action_string = '<p>' . elgg_echo('workflow:board:last_action') . '&nbsp;' . elgg_get_friendly_time($last_action) . '</p>';
+$annotation = $board->getAnnotations('workflow_river', 1, 0, 'desc');
+if ($annotation) {
+	$last_action_string = '<p class="mbs mtm">' . elgg_echo('workflow:board:last_action') . '</p>';
+	$item = elgg_get_river(array('annotation_id' => $annotation[0]['id']));
+	$last_action_string .= "<ul><li id='item-river-{$item[0]->id}' class='elgg-list-item' datetime='{$item[0]->posted}'>" .
+				elgg_view('river/item', array('item' => $item[0], 'size' => 'tiny', 'short' => true)) . '</li></ul>';
+}
 
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $vars['entity'],
@@ -106,9 +111,9 @@ if ($full && !elgg_in_context('gallery')) {
 <ul class="board row-fluid">
 	<li class="span8">$description</li>
 	<li class="elgg-heading-basic pam span4">
-		$last_action_string
 		<p>$board_info</p>
-		<div>$participants</div>
+		$participants
+		$last_action_string
 	</li>
 </ul>
 HTML;

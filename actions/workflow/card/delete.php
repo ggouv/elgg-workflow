@@ -40,9 +40,6 @@ if ($deleted_card && $deleted_card->canWritetoContainer()) {
 		$order += 1;
 	}
 
-	$board = get_entity($board_guid);
-	$board->set('workflow_last_action', time());
-
 	system_message(elgg_echo('workflow:card:delete:success'));
 	echo json_encode(array(
 		'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $board_guid)),
