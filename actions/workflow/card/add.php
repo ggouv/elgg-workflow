@@ -45,35 +45,18 @@ if ($list || $list->canWritetoContainer()) {
 	if ($card->save()) {
 		system_message(elgg_echo('workflow:card:add:success'));
 		
-		$object_link = elgg_view('output/url', array(
-			'href' => $card->getURL(),
-			'text' => $card->title,
-			'class' => 'elgg-river-object',
-			'is_trusted' => true,
-		));
-		$list_link = elgg_view('output/url', array(
-			'href' => $list->getURL(),
-			'text' => $list->title,
-			'class' => 'elgg-river-object',
-			'is_trusted' => true,
-		));
-		$list_string = elgg_echo('river:inlist', array($list_link));
-		$message = elgg_echo('river:create:object:workflow_card:message', array($object_link, $list_string));
-		
 		elgg_load_library('workflow:utilities');
-		$annotation_id = workflow_create_annotation($list->board_guid, $message, $user_guid, $list->access_id);
+		$annotation_id = workflow_create_annotation($list->board_guid, array($card->getGUID(), 'add', $list_guid), $user_guid, $list->access_id);
 		
 		if ($annotation_id['new'] == true) {
-			$id = add_to_river('river/object/workflow_card/create','create', $user_guid, $card->getGUID(), '', 0, $annotation_id['id']);
+			$id = add_to_river('river/object/workflow_river/create','create', $user_guid, $card->getGUID(), '', 0, $annotation_id['id']);
 			$item = elgg_get_river(array('id' => $id));
 		} else {
-			$item = elgg_get_river(array(
-				'annotation_id' => $annotation_id['id'],
-				));
+			$item = elgg_get_river(array('annotation_id' => $annotation_id['id']));
 		}
 
 		elgg_set_page_owner_guid($container_guid);
-		$echo['river'] = "<li id='item-river-{$item[0]->guid}' class='elgg-list-item' datetime=\"{$item[0]->posted}\">" . 
+		$echo['river'] = "<li id='item-river-{$item[0]->id}' class='elgg-list-item' datetime=\"{$item[0]->posted}\">" . 
 							elgg_view('river/item', array('item' => $item[0], 'size' => 'tiny', 'short' => true)) . '</li>';
 
 		$echo['card'] = elgg_view_entity($card, array('view_type' => 'group'));

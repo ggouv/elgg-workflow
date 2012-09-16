@@ -164,7 +164,12 @@ elgg.workflow.list.add = function(form) {
 			if ($('.elgg-sidebar .elgg-module-aside.river .elgg-head').length == 0) {
 				$('.elgg-sidebar .elgg-module-aside.river').prepend('<div class="elgg-head mbs"><h3>' + elgg.echo('workflow:sidebar:last_activity_on_this_board') + '</h3></div>');
 			}
-			$('.elgg-sidebar .elgg-module-aside.river > .elgg-body').prepend(json.output.river);
+			var riverItem = $(json.output.river).filter('.elgg-list-item').attr('id');
+			if ($('.elgg-module-aside.river #' + riverItem).length) {
+				$('.elgg-module-aside.river #' + riverItem).html(json.output.river);
+			} else {
+				$('.elgg-module-aside.river > .elgg-body').prepend(json.output.river);
+			}
 			elgg.workflow.list.addCard();
 			elgg.workflow.list.resize();
 			$('.workflow-lists-container').animate({ scrollLeft: $('.workflow-lists-container').width()});
@@ -354,7 +359,12 @@ elgg.workflow.card.add = function(form) {
 			data: form.serialize(),
 			success: function(json) {
 				$('#workflow-list-content-' + workflow_list + ' .workflow-cards').append(json.output.card);
-				$('.elgg-sidebar .elgg-module-aside.river > .elgg-body').prepend(json.output.river);
+				var riverItem = $(json.output.river).filter('.elgg-list-item').attr('id');
+				if ($('.elgg-module-aside.river #' + riverItem).length) {
+					$('.elgg-module-aside.river #' + riverItem).html(json.output.river);
+				} else {
+					$('.elgg-module-aside.river > .elgg-body').prepend(json.output.river);
+				}
 				elgg.workflow.card.popup();
 				elgg.workflow.list.resize();
 			}
@@ -392,11 +402,6 @@ elgg.workflow.card.popup = function() {
 			resizePopUp();
 			elgg.ui.initDatePicker();
 			elgg.userpicker.init();
-			
-			// compatibility for ggouv_template
-			if( $.isFunction(elgg.ggouv_template.ajaxified) ) {
-				$('#card-forms a').live('click', function(e) {elgg.ggouv_template.ajaxified($(this), e)});
-			}
 
 			$('.elgg-userpicker-remove, .ui-menu-item').live('click', function() {
 				$('#fancybox-content, #fancybox-content > div').css('height', $('#card-forms').height());

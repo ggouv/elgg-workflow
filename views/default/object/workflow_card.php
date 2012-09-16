@@ -11,6 +11,7 @@
  */
 
 $workflow_card = elgg_extract('entity', $vars, FALSE);
+$draggable = elgg_extract('draggable', $vars, true); // need to get that for assigned card in owner board.
 
 if (!$workflow_card) {
 	return TRUE;
@@ -26,7 +27,7 @@ if ($view_type == 'group') {
 	$workflow_card_class = "workflow-card mrs";
 
 	$edit_area = '';
-	if ($workflow_card->canWritetoContainer()) {/*
+	if ($workflow_card->canWritetoContainer() && $draggable) {/*
 		$controls = elgg_view('object/workflow_list/elements/controls', array(
 			'workflow_list' => $workflow_list,
 			'show_edit' => $edit_area != '',
@@ -47,7 +48,7 @@ if ($view_type == 'group') {
 
 $workflow_card_header = <<<HEADER
 	<div class="workflow-card-handle clearfix"><h3>$title</h3>
-	$controls
+		$controls
 	</div>
 HEADER;
 

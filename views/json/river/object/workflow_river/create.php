@@ -6,15 +6,17 @@
  *	@license GNU Affero General Public License, version 3 or late
  *	@link https://github.com/ManUtopiK/elgg-workflow
  *
- *	Elgg-workflow new list river entity
+ *	Elgg-workflow new card or list river entity JSON
  *
  */
+global $jsonexport;
+
 $short = elgg_extract('short', $vars, false);
 
 $subject = $vars['item']->getSubjectEntity();
-$object = $vars['item']->getObjectEntity();
-$board = get_entity($object->board_guid);
-$container = $object->getContainerEntity();
+$entity = $vars['item']->getObjectEntity();
+$board = get_entity($entity->board_guid);
+$container = $entity->getContainerEntity();
 
 $subject_link = elgg_view('output/url', array(
 	'href' => $subject->getURL(),
@@ -23,15 +25,8 @@ $subject_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
-$object_link = elgg_view('output/url', array(
-	'href' => $object->getURL(),
-	'text' => $object->title ? $object->title : $object->name,
-	'class' => 'elgg-river-object',
-	'is_trusted' => true,
-));
-
 if ($short) {
-	$board_string = $group_string = '';
+	$board_link = $group_string = '';
 	
 	if ($board && $short === 'group') {
 		$board_link = elgg_view('output/url', array(
@@ -48,7 +43,6 @@ if ($short) {
 		'class' => 'elgg-river-object',
 		'is_trusted' => true,
 	));
-	$board_string = elgg_echo('river:inboard', array($board_link));
 
 	$group_link = elgg_view('output/url', array(
 		'href' => $container->getURL(),
@@ -59,9 +53,10 @@ if ($short) {
 }
 
 $summary = elgg_echo('river:create:object:workflow_card_list:summary', array($subject_link, $board_link, $group_string));
-$message = elgg_echo('river:create:object:workflow_list:message', array($object_link));
-echo elgg_view('river/item', array(
-	'item' => $vars['item'],
-	'summary' => $summary,
-	'message' => $message,
-));
+elgg_load_library('workflow:utilities');
+$message = workflow_read_annotation($vars['item']->annotation_id);
+
+$vars['item']->summary = $summary;
+$vars['item']->message = $message;
+
+$jsonexport['activity'][] = $vars['item'];

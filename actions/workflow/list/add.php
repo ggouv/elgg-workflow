@@ -36,17 +36,23 @@ if ($board && $board->canWritetoContainer()) {
 	$list->access_id = $board->access_id;
 	$list->order = $nbr_lists;
 
+
 	if ($list->save()) {
 		system_message(elgg_echo('workflow:list:add:success'));
-		if ($id = add_to_river('river/object/workflow_list/create','create', $user_guid, $list->getGUID())) {
 		
-			$board->set('workflow_last_action', time());
+		elgg_load_library('workflow:utilities');
+		$annotation_id = workflow_create_annotation($board_guid, array($list->getGUID(), 'add', $board_guid), $user_guid, $board->access_id);
 		
+		if ($annotation_id['new'] == true) {
+			$id = add_to_river('river/object/workflow_river/create','create', $user_guid, $list->getGUID(), '', 0, $annotation_id['id']);
 			$item = elgg_get_river(array('id' => $id));
-			elgg_set_page_owner_guid($container_guid);
-			$echo['river'] = "<li id='item-river-{$item[0]->guid}' class='elgg-list-item' datetime=\"{$item[0]->posted}\">" . 
-								elgg_view('river/item', array('item' => $item[0], 'size' => 'tiny', 'short' => true)) . '</li>';
+		} else {
+			$item = elgg_get_river(array('annotation_id' => $annotation_id['id']));
 		}
+
+		elgg_set_page_owner_guid($container_guid);
+		$echo['river'] = "<li id='item-river-{$item[0]->id}' class='elgg-list-item' datetime=\"{$item[0]->posted}\">" . 
+							elgg_view('river/item', array('item' => $item[0], 'size' => 'tiny', 'short' => true)) . '</li>';
 
 		$echo['list'] = elgg_view_entity($list, array('view_type' => 'group'));
 		echo json_encode($echo);
@@ -57,4 +63,3 @@ if ($board && $board->canWritetoContainer()) {
 } else {
 	register_error(elgg_echo('workflow:list:add:cannotadd'));
 }
-

@@ -61,13 +61,12 @@ $english = array(
 	/**
 	* River
 	**/
-	'river:workflow' => "Your workflow cards",
-	'river:inboard' => "in board %s",
-	'river:inlist' => "in list %s",
+	'river:in:workflow_list' => "in list %s",
 	'river:create:object:workflow_card_list:summary' => "%s modified board %s %s",
 	'river:create:object:workflow_list:message' => "Added list %s",
 	'river:create:object:workflow_card:message' => "Added card %s %s",
 	'river:comment:object:workflow_card' => "%s commented the card %s",
+	'workflow:card:shorted:message' => "+%s actions",
 
 	/**
 	 * Form fields

@@ -79,19 +79,33 @@ $content .= $addlist . "<div id='workflow-card-popup' class='elgg-module elgg-mo
 $content .= "<div class='workflow-lists-container'><div class='workflow-lists'>";
 // show list of assigned card for user
 if (elgg_instanceof($container, 'user')) {
-	$content .= '<div class="elgg-module workflow-list mls my-assigned-cards"><div class="elgg-head"><div class="workflow-list-handle clearfix"><h3>' . elgg_view_icon('workflow-list') . elgg_echo('auie') . '</h3></div></div>' . 
-			'<div class="elgg-body"><div class="workflow-list-content">' . elgg_list_entities_from_relationship(array(
-				'type' => 'object',
-				'subtype' => 'workflow_card',
-				'relationship' => 'assignedto',
-				'relationship_guid' => $container->guid,
-				'inverse_relationship' => true,
-				'view_type' => 'group',
-				'list_class' => 'river-workflow',
-				'limit' => 0,
-				'pagination' => false
-			)) . '</div></div>' .
-			'</div>';
+	$h3 = elgg_view_icon('workflow-list') . elgg_echo('workflow:assigned-cards:title:mine');
+	$cards = elgg_list_entities_from_relationship(array(
+		'type' => 'object',
+		'subtype' => 'workflow_card',
+		'relationship' => 'assignedto',
+		'relationship_guid' => $container->guid,
+		'inverse_relationship' => true,
+		'view_type' => 'group',
+		'draggable' => false,
+		'list_class' => 'river-workflow',
+		'limit' => 0,
+		'pagination' => false
+	));
+	$content .= <<<HTML
+<div class="elgg-module workflow-list mls my-assigned-cards">
+	<div class="elgg-head">
+		<div class="workflow-list-handle clearfix">
+			<h3>$h3</h3>
+		</div>
+	</div>
+	<div class="elgg-body">
+		<div class="workflow-list-content">
+			$cards
+		</div>
+	</div>
+</div>
+HTML;
 	if (!$lists) {
 		$lists = true;
 	}

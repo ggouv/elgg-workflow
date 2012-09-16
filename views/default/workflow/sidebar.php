@@ -34,7 +34,7 @@ elgg_set_page_owner_guid($board->container_guid);
 
 $options['joins'][] = "JOIN {$dbprefix}entities e ON e.guid = rv.object_guid";
 $options['wheres'][] = "e.container_guid = " . elgg_get_page_owner_guid();
-$options['wheres'][] = "(rv.subtype IN ('workflow_list','workflow_card'))";
+$options['wheres'][] = "(rv.view IN ('river/object/workflow_river/create', 'river/object/workflow_river/modified'))";
 
 if ($board_guid) {
 	$metastring = get_metastring_id('board_guid');
@@ -44,6 +44,7 @@ if ($board_guid) {
 		$options['joins'][] = "LEFT JOIN {$dbprefix}metadata d ON d.entity_guid = e.guid";
 		$options['joins'][] = "LEFT JOIN {$dbprefix}metastrings m ON m.id = d.value_id";
 		$options['wheres'][] = "d.name_id = {$metastring} AND d.value_id = {$board_string}";
+		//$options['wheres'][] = "rv.object_guid = {$board_guid}";
 		
 		$defaults = array(
 			//'offset' => (int) get_input('offset', 0),

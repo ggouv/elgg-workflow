@@ -118,7 +118,7 @@ function workflow_get_board_participants($board_guid) {
 	return $all_assignedto;
 }
 
-function workflow_create_annotation($board_guid, $message, $user_guid = 0, $access = 2) {
+function workflow_create_annotation($board_guid, $action, $user_guid = 0, $access = 2) {
 	if (!$user_guid) $usre_guid = elgg_get_logged_in_user_guid();
 	$board = get_entity($board_guid);
 	
@@ -126,11 +126,55 @@ function workflow_create_annotation($board_guid, $message, $user_guid = 0, $acce
 	$annotation = $annotations[0];
 	
 	if ($annotation->owner_guid == $user_guid && (time() - $annotation->time_created) <= 3600) { // less than one hour
-		$message = $annotation->value . '<br>' . $message;
-		update_annotation($annotation->id, 'workflow_river', $message, '', $user_guid, $access);		
+		$annotation_array = unserialize($annotation->value);
+		$annotation_array[] = $action;
+		update_annotation($annotation->id, 'workflow_river', serialize($annotation_array), '', $user_guid, $access);		
 		return array('new' => false, 'id' => $annotation->id);
 	} else {
-		$annotation_id = create_annotation($board_guid, 'workflow_river', $message, '', $user_guid, $access);
+		$annotation_array[] = $action;
+		$annotation_id = create_annotation($board_guid, 'workflow_river', serialize($annotation_array), '', $user_guid, $access);
 		return array('new' => true, 'id' => $annotation_id);
 	}
+}
+
+function workflow_read_annotation($annotation_id) {	
+	$annotation_array = array_reverse(unserialize(elgg_get_annotation_from_id($annotation_id)->value));
+
+	$count = count($annotation_array);
+	if ($count > 2) {
+		$message = workflow_convert_action($annotation_array[0]) . '<br><a rel="toggle" href="#workflow-shorted-message-' . $annotation_id . '">' . elgg_echo('workflow:card:shorted:message', array($count - 1)) . '</a>';
+		unset($annotation_array[0]);
+		$message .= '<div id="workflow-shorted-message-' . $annotation_id . '" class="hidden">';
+		foreach($annotation_array as $annotation_item) {
+			$message .= workflow_convert_action($annotation_item) . '<br>';
+		}
+		$message .= '</div>';
+	} else if ($count > 1) {
+		$message = workflow_convert_action($annotation_array[0]) . '<br>' . workflow_convert_action($annotation_array[1]);
+	} else {
+		$message = workflow_convert_action($annotation_array[0]);
+	}
+	
+	return $message;
+}
+
+function workflow_convert_action($action) {
+	$object = get_entity($action[0]);
+	$object_link = elgg_view('output/url', array(
+		'href' => $object->getURL(),
+		'text' => $object->title,
+		'class' => 'elgg-river-object',
+		'is_trusted' => true,
+	));
+	
+	$container = get_entity($action[2]);
+	$container_link = elgg_view('output/url', array(
+		'href' => $container->getURL(),
+		'text' => $container->title,
+		'class' => 'elgg-river-object',
+		'is_trusted' => true,
+	));
+	
+	$in_string = elgg_echo('river:in:' . $container->getSubtype(), array($container_link));
+	return elgg_echo('river:create:object:' . $object->getSubtype() . ':message', array($object_link, $in_string));
 }

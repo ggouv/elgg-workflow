@@ -301,7 +301,7 @@ function workflow_deck_river_column($hook, $type, $return, $params) {
 		return $assigned_cards;
 	} else if ($params['query'] == 'title') {
 		return array(
-			'column_title' => elgg_echo('river:workflow'),
+			'column_title' => elgg_echo('workflow:assigned-cards:title:mine'),
 			'column_subtitle' => get_entity($params['owner'])->name,
 			'break' => true
 		);
