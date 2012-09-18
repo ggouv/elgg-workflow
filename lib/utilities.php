@@ -139,12 +139,13 @@ function workflow_create_annotation($board_guid, $action, $user_guid = 0, $acces
 
 function workflow_read_annotation($annotation_id) {	
 	$annotation_array = array_reverse(unserialize(elgg_get_annotation_from_id($annotation_id)->value));
-
+	
+	$rand = rand(); // make this for elgg-deck-column
 	$count = count($annotation_array);
 	if ($count > 2) {
-		$message = workflow_convert_action($annotation_array[0]) . '<br><a rel="toggle" href="#workflow-shorted-message-' . $annotation_id . '">' . elgg_echo('workflow:card:shorted:message', array($count - 1)) . '</a>';
+		$message = workflow_convert_action($annotation_array[0]) . '<br><a rel="toggle" href="#workflow-shorted-message-' . $annotation_id . '-' . $rand .'">' . elgg_echo('workflow:card:shorted:message', array($count - 1)) . '</a>';
 		unset($annotation_array[0]);
-		$message .= '<div id="workflow-shorted-message-' . $annotation_id . '" class="hidden">';
+		$message .= '<div id="workflow-shorted-message-' . $annotation_id . '-' . $rand .'" class="hidden">';
 		foreach($annotation_array as $annotation_item) {
 			$message .= workflow_convert_action($annotation_item) . '<br>';
 		}
@@ -159,22 +160,51 @@ function workflow_read_annotation($annotation_id) {
 }
 
 function workflow_convert_action($action) {
-	$object = get_entity($action[0]);
-	$object_link = elgg_view('output/url', array(
-		'href' => $object->getURL(),
-		'text' => $object->title,
-		'class' => 'elgg-river-object',
-		'is_trusted' => true,
-	));
-	
-	$container = get_entity($action[2]);
-	$container_link = elgg_view('output/url', array(
-		'href' => $container->getURL(),
-		'text' => $container->title,
-		'class' => 'elgg-river-object',
-		'is_trusted' => true,
-	));
-	
-	$in_string = elgg_echo('river:in:' . $container->getSubtype(), array($container_link));
-	return elgg_echo('river:create:object:' . $object->getSubtype() . ':message', array($object_link, $in_string));
+	if ($action[1] == 'add') {
+		$object = get_entity($action[0]);
+		$object_link = elgg_view('output/url', array(
+			'href' => $object->getURL(),
+			'text' => $object->title,
+			'class' => 'elgg-river-object',
+			'is_trusted' => true,
+		));
+		
+		$container = get_entity($action[2]);
+		$container_link = elgg_view('output/url', array(
+			'href' => $container->getURL(),
+			'text' => $container->title,
+			'class' => 'elgg-river-object',
+			'is_trusted' => true,
+		));
+		
+		$in_string = elgg_echo('river:in:' . $container->getSubtype(), array($container_link));
+		return elgg_echo('river:create:object:' . $object->getSubtype() . ':message', array($object_link, $in_string));
+	}
+	if ($action[1] == 'move') {
+		$object = get_entity($action[0]);
+		$object_link = elgg_view('output/url', array(
+			'href' => $object->getURL(),
+			'text' => $object->title,
+			'class' => 'elgg-river-object',
+			'is_trusted' => true,
+		));
+		
+		$list_origin = get_entity($action[2]);
+		$list_origin_link = elgg_view('output/url', array(
+			'href' => $list_origin->getURL(),
+			'text' => $list_origin->title,
+			'class' => 'elgg-river-object',
+			'is_trusted' => true,
+		));
+		
+		$list_dest = get_entity($action[3]);
+		$list_dest_link = elgg_view('output/url', array(
+			'href' => $list_dest->getURL(),
+			'text' => $list_dest->title,
+			'class' => 'elgg-river-object',
+			'is_trusted' => true,
+		));
+		
+		return elgg_echo('river:create:object:' . $object->getSubtype() . ':move:message', array($object_link, $list_origin_link, $list_dest_link));
+	}
 }

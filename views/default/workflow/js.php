@@ -51,6 +51,18 @@ elgg.workflow.init = function() {
 
 		elgg.workflow.list.resize();
 		elgg.workflow.list.resize(); //do it again cause scrollbar. @todo find another way to fix that.
+		
+		// refresh board by ajax for all ajaxified website with History.js
+/*		$('.elgg-menu-item-refresh-board').die().live('click', function(e) {
+			if (History.enabled) {
+				var title = $(document).attr('title') || null;
+				History.pushState(null, title, $(this).attr('rel'));
+				e.preventDefault();
+				return false;
+			} else {
+				window.location = window.location.href;
+			}
+		});*/
 
 	});
 
@@ -333,6 +345,16 @@ elgg.workflow.card.move = function(event, ui) {
 			card_guid: card_guidString,
 			list_guid: list_guidString,
 			position: pos
+		},
+		success: function(json) {
+			var riverItem = $(json.output.river).filter('.elgg-list-item').attr('id');
+			if ($('.elgg-module-aside.river #' + riverItem).length) {
+				$('.elgg-module-aside.river #' + riverItem).html(json.output.river);
+			} else {
+				$('.elgg-module-aside.river > .elgg-body').prepend(json.output.river);
+			}
+			elgg.workflow.card.popup();
+			elgg.workflow.list.resize();
 		}
 	});
 

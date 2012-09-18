@@ -67,6 +67,8 @@ $english = array(
 	'river:create:object:workflow_card:message' => "Added card %s %s",
 	'river:comment:object:workflow_card' => "%s commented the card %s",
 	'workflow:card:shorted:message' => "+%s actions",
+	'river:create:object:workflow_board' => "%s added board %s",
+	'river:create:object:workflow_card:move:message' => "Moved card %s form %s to %s",
 
 	/**
 	 * Form fields
@@ -105,7 +107,7 @@ $english = array(
 	'workflow:list:delete:failure' => "Delete list doesn't saved.",
 	'workflow:list:delete:success' => "List deleted.",
 
-
+	'workflow:card:move:success' => "Card successfully moved.",
 	'workflow:card:move:failure' => "Error. Move card doesn't saved.",
 	'workflow:card:add:failure' => "Error with server connexion. Add card doesn't saved.",
 	'workflow:card:add:cannotadd' => "You cannot add a card.",
@@ -123,15 +125,6 @@ $english = array(
 	 * Widget
 	 **/
 
-	/**
-	 * Submenu items
-	 */
-/*
-	'tasks:label:view' => "View task",
-	'tasks:label:edit' => "Edit task",
-	
-	'tasks:lists:label:view' => "View task list",
-	'tasks:lists:label:edit' => "Edit task list",
 	
 	/**
 	 * Sidebar items

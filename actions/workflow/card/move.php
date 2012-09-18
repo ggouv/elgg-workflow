@@ -14,6 +14,7 @@ $list_guid = get_input('list_guid');
 $position = get_input('position');
 
 $moved_card = get_entity($card_guid);
+$user_guid = elgg_get_logged_in_user_guid();
 
 if ($moved_card && $moved_card->canWritetoContainer()) {
 
@@ -51,6 +52,8 @@ if ($moved_card && $moved_card->canWritetoContainer()) {
 			$card->order = $order; // @todo don't work with $card->save(); for just member of group 
 			$order += 1;
 		}
+
+		system_message(elgg_echo('workflow:card:move:success'));
 
 	} else { // not in the same list
 
@@ -94,8 +97,29 @@ if ($moved_card && $moved_card->canWritetoContainer()) {
 		}
 
 		// define list_guid's card to destination list
+		$original_list = $moved_card->list_guid;
 		$moved_card->list_guid = $list_guid;
-		$moved_card->save();
+		
+		if ($moved_card->save()) {
+			system_message(elgg_echo('workflow:card:move:success'));
+		
+			$list = get_entity($list_guid);
+			elgg_load_library('workflow:utilities');
+			$annotation_id = workflow_create_annotation($list->board_guid, array($card_guid, 'move', $original_list, $list_guid), $user_guid, $list->access_id);
+		
+			if ($annotation_id['new'] == true) {
+				$id = add_to_river('river/object/workflow_river/create','update', $user_guid, $card->getGUID(), '', 0, $annotation_id['id']);
+				$item = elgg_get_river(array('id' => $id));
+			} else {
+				$item = elgg_get_river(array('annotation_id' => $annotation_id['id']));
+			}
+		
+			elgg_set_page_owner_guid($container_guid);
+			$echo['river'] = "<li id='item-river-{$item[0]->id}' class='elgg-list-item' datetime=\"{$item[0]->posted}\">" .
+								elgg_view('river/item', array('item' => $item[0], 'size' => 'tiny', 'short' => true)) . '</li>';
+		
+			echo json_encode($echo);
+		}
 
 	}
 	forward(REFERER);
