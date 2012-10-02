@@ -21,7 +21,7 @@ if (!$board) {
 
 elgg_set_page_owner_guid($board->getContainerGUID());
 $container = elgg_get_page_owner_entity();
-global $fb; $fb->info($container->getType());
+
 if (elgg_instanceof($container, 'group')) {
 	group_gatekeeper();
 	elgg_push_breadcrumb($container->name, "workflow/group/$container->guid/all");
@@ -49,7 +49,7 @@ elgg_register_menu_item('title', array(
 
 elgg_register_menu_item('title', array(
 	'name' => 'refresh_board',
-	'href' => $board->getURL(),
+	'href' =>$board->getURL(),
 	'text' => elgg_echo('workflow:refresh_board'),
 	'link_class' => 'elgg-button elgg-button-action gwfb refresh-button',
 ));

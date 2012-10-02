@@ -36,7 +36,7 @@ $user_guid = elgg_get_logged_in_user_guid();
 		'text' => $list->title ? $list->title : $list->name,
 		'is_trusted' => true,
 	));
-	$list_string = elgg_echo('river:inlist', array($list_link));
+	$list_string = elgg_echo('river:in:workflow_list', array($list_link));
 	
 	$board_link = elgg_view('output/url', array(
 		'href' => $board->getURL(),

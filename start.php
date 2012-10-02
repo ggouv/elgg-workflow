@@ -258,7 +258,7 @@ function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
 			'title' => elgg_echo('workflow:list:delete'),
 			'href' => "action/workflow/list/delete?list_guid={$workflow_list->guid}",
 			'is_action' => true,
-			'class' => 'workflow-list-delete-button',
+			'class' => 'workflow-list-delete-button tooltip s',
 			'id' => "workflow-list-delete-button-{$workflow_list->guid}",
 			'priority' => 900
 		);
@@ -270,7 +270,7 @@ function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
 				'text' => elgg_view_icon('settings-alt'),
 				'title' => elgg_echo('workflow:list:edit'),
 				'href' => "#workflow-list-edit-{$workflow_list->guid}",
-				'class' => "workflow-list-edit-button",
+				'class' => 'workflow-list-edit-button tooltip s',
 				'rel' => 'toggle',
 				'priority' => 800,
 			);

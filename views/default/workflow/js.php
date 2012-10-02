@@ -51,18 +51,6 @@ elgg.workflow.init = function() {
 
 		elgg.workflow.list.resize();
 		elgg.workflow.list.resize(); //do it again cause scrollbar. @todo find another way to fix that.
-		
-		// refresh board by ajax for all ajaxified website with History.js
-/*		$('.elgg-menu-item-refresh-board').die().live('click', function(e) {
-			if (History.enabled) {
-				var title = $(document).attr('title') || null;
-				History.pushState(null, title, $(this).attr('rel'));
-				e.preventDefault();
-				return false;
-			} else {
-				window.location = window.location.href;
-			}
-		});*/
 
 	});
 

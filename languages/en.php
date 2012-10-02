@@ -61,6 +61,7 @@ $english = array(
 	/**
 	* River
 	**/
+	'river:inboard' => "in board %s",
 	'river:in:workflow_list' => "in list %s",
 	'river:create:object:workflow_card_list:summary' => "%s modified board %s %s",
 	'river:create:object:workflow_list:message' => "Added list %s",
