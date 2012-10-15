@@ -61,7 +61,7 @@ $user_guid = elgg_get_logged_in_user_guid();
 		
 <div>
 	<label><?php echo elgg_echo('description'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'preview' => false)); ?>
+	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'preview' => 'toggle')); ?>
 </div>
 
 <?php if($user_guid != $card->container_guid) { ?>

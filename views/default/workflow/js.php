@@ -412,6 +412,7 @@ elgg.workflow.card.popup = function() {
 			resizePopUp();
 			elgg.ui.initDatePicker();
 			elgg.userpicker.init();
+			elgg.ggouv_template.reloadTemplateFunctions();
 
 			$('.elgg-userpicker-remove, .ui-menu-item').live('click', function() {
 				$('#fancybox-content, #fancybox-content > div').css('height', $('#card-forms').height());
