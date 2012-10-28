@@ -160,8 +160,7 @@ function workflow_read_annotation($annotation_id) {
 }
 
 function workflow_convert_action($action) {
-	if ($action[1] == 'add') {
-		$object = get_entity($action[0]);
+	if ($action[1] == 'add' && $object = get_entity($action[0])) { // object should be deleted @todo see when archived item
 		$object_link = elgg_view('output/url', array(
 			'href' => $object->getURL(),
 			'text' => $object->title,
@@ -180,8 +179,7 @@ function workflow_convert_action($action) {
 		$in_string = elgg_echo('river:in:' . $container->getSubtype(), array($container_link));
 		return elgg_echo('river:create:object:' . $object->getSubtype() . ':message', array($object_link, $in_string));
 	}
-	if ($action[1] == 'move') {
-		$object = get_entity($action[0]);
+	if ($action[1] == 'move' && $object = get_entity($action[0])) {
 		$object_link = elgg_view('output/url', array(
 			'href' => $object->getURL(),
 			'text' => $object->title,
