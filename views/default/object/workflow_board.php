@@ -76,9 +76,8 @@ if ($all_assignedto) {
 
 // last action
 $annotation = $board->getAnnotations('workflow_river', 1, 0, 'desc');
-if ($annotation) {
+if ( $annotation && $item = elgg_get_river(array('annotation_id' => $annotation[0]['id'])) ) { // annotation could be deleted
 	$last_action_string = '<p class="mbs mtm">' . elgg_echo('workflow:board:last_action') . '</p>';
-	$item = elgg_get_river(array('annotation_id' => $annotation[0]['id']));
 	$last_action_string .= "<ul><li id='item-river-{$item[0]->id}' class='elgg-list-item' datetime='{$item[0]->posted}'>" .
 				elgg_view('river/item', array('item' => $item[0], 'size' => 'tiny', 'short' => true)) . '</li></ul>';
 }
