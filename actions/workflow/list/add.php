@@ -17,7 +17,7 @@ $list_title = get_input('list_title', elgg_echo('workflow:list:title:default'));
 $board = get_entity($board_guid);
 $container_guid = $board->container_guid;
 
-if ($board && $board->canWritetoContainer()) {
+if ($board && $board->canEdit()) {
 
 	$nbr_lists = elgg_get_entities_from_metadata(array(
 		'type' => 'object',

@@ -62,6 +62,9 @@ function workflow_init() {
 	elgg_register_action('workflow/card/delete', "$action_base/delete.php");
 	elgg_register_action('workflow/card/edit_card', "$action_base/edit_card.php");
 
+	// Register plugin hook for permission
+	elgg_register_plugin_hook_handler('permissions_check', 'object', 'workflow_card_permissions_check');
+
 	// Register entity type
 	elgg_register_entity_type('object', 'workflow_board');
 	elgg_register_entity_type('object', 'workflow_list');
@@ -210,6 +213,16 @@ function workflow_list_url_handler($entity) {
 function workflow_card_url_handler($entity) {
 	$title = elgg_get_friendly_title($entity->title);
 	return "workflow/board/{$entity->board_guid}/card/{$entity->guid}/$title";
+}
+
+
+/**
+
+**/
+function workflow_card_permissions_check($hook, $type, $return, $params) {
+	if ($params['entity']->getSubtype() == 'workflow_card') {
+		if (check_entity_relationship($params['entity']->guid, 'assignedto', $params['user']->guid)) return true;
+	}
 }
 
 

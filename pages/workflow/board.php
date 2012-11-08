@@ -30,7 +30,7 @@ if (elgg_instanceof($container, 'group')) {
 }
 elgg_push_breadcrumb($board->title);
 
-if ($container->canWritetoContainer()) {
+if ($board->canEdit()) {
 	elgg_register_menu_item('title', array(
 		'name' => 'add_list',
 		'href' => '#add-list',

@@ -247,7 +247,8 @@
 }
 #card-forms textarea {
 	resize: vertical;
-	height: 80px
+	height: 80px;
+	margin-bottom: 0;
 }
 #card-forms .elgg-comments {
 	float: right;

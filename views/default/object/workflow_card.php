@@ -19,7 +19,6 @@ if (!$workflow_card) {
 
 $view_type = elgg_extract('view_type', $vars, FALSE);
 $container = $workflow_card->getContainerEntity();
-$user = elgg_get_logged_in_user_entity();
 
 if ($view_type == 'group') {
 
@@ -27,7 +26,7 @@ if ($view_type == 'group') {
 	$workflow_card_class = "workflow-card mrs";
 
 	$edit_area = '';
-	if ($draggable && ( $workflow_card->canWritetoContainer() || check_entity_relationship($workflow_card->guid, 'assignedto', $user->guid))) {/*
+	if ($draggable && $workflow_card->canEdit()) {/*
 		$controls = elgg_view('object/workflow_list/elements/controls', array(
 			'workflow_list' => $workflow_list,
 			'show_edit' => $edit_area != '',

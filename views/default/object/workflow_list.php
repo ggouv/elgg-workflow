@@ -18,7 +18,6 @@ if (!$workflow_list) {
 
 $view_type = elgg_extract('view_type', $vars, FALSE);
 $container = $workflow_list->getContainerEntity();
-$user = elgg_get_logged_in_user_entity();
 
 if ($view_type == 'group') {
 
