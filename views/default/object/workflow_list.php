@@ -26,7 +26,7 @@ if ($view_type == 'group') {
 	$workflow_list_class = " workflow-list mls";
 
 	$edit_area = '';
-	if ($container->canWritetoContainer()) {
+	if ($workflow_list->canWritetoContainer()) {
 		$controls = elgg_view('object/workflow_list/elements/controls', array(
 			'workflow_list' => $workflow_list,
 			'show_edit' => $edit_area != '',
@@ -34,13 +34,15 @@ if ($view_type == 'group') {
 		$edit_area = elgg_view('object/workflow_list/elements/settings', array(
 			'workflow_list' => $workflow_list,
 		));
-		$workflow_list_footer = elgg_view('object/workflow_list/elements/footer', array(
-			'workflow_list' => $workflow_list,
-		));
 
 		$workflow_list_class .= " elgg-state-draggable";
 	} else {
 		$workflow_list_class .= " elgg-state-fixed";
+	}
+	if (elgg_is_logged_in()) {
+		$workflow_list_footer = elgg_view('object/workflow_list/elements/footer', array(
+			'workflow_list' => $workflow_list,
+		));
 	}
 
 	// get cards of this list
