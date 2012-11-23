@@ -221,7 +221,12 @@ function workflow_card_url_handler($entity) {
 **/
 function workflow_card_permissions_check($hook, $type, $return, $params) {
 	if ($params['entity']->getSubtype() == 'workflow_card') {
-		if (check_entity_relationship($params['entity']->guid, 'assignedto', $params['user']->guid)) return true;
+		elgg_load_library('workflow:utilities');
+		$participants = workflow_get_board_participants($params['entity']->board_guid);
+		foreach ($participants as $user) {
+			//if (check_entity_relationship($params['entity']->guid, 'assignedto', $params['user']->guid)) return true;
+			if ($user->guid == $params['user']->guid) return true;
+		}
 	}
 }
 
