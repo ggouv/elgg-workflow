@@ -21,4 +21,7 @@
 	'value' => (int)get_input('board_guid')
 )); ?>
 
-<?php echo elgg_view('input/submit', array('value' => elgg_echo("save"))); ?>
+<?php echo elgg_view('input/submit', array(
+	'value' => elgg_echo("save"),
+	'id' => 'workflow-list-submit',
+)); ?>

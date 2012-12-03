@@ -119,12 +119,12 @@ function workflow_get_board_participants($board_guid) {
 }
 
 function workflow_create_annotation($board_guid, $action, $user_guid = 0, $access = 2) {
-	if (!$user_guid) $usre_guid = elgg_get_logged_in_user_guid();
+	if (!$user_guid) $user_guid = elgg_get_logged_in_user_guid();
 	$board = get_entity($board_guid);
-	
+
 	$annotations = $board->getAnnotations('workflow_river', 1, 0, 'desc');
 	$annotation = $annotations[0];
-	
+
 	if ($annotation->owner_guid == $user_guid && (time() - $annotation->time_created) <= 3600) { // less than one hour
 		$annotation_array = unserialize($annotation->value);
 		$annotation_array[] = $action;

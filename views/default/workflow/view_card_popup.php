@@ -13,6 +13,7 @@
 
 $card_guid = get_input('card_guid');
 $card = get_entity($card_guid);
+elgg_set_page_owner_guid($card->getContainerGUID());
 
 if (!$card) {
 	access_show_hidden_entities(true);

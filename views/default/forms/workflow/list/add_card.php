@@ -25,7 +25,7 @@ echo elgg_view('input/plaintext', array(
 
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo('workflow:list:add_card'),
-	'class' => 'elgg-button-submit hidden float',
+	'class' => 'elgg-button-submit workflow-card-submit hidden float',
 ));
 echo elgg_view_icon('delete', 'hidden float');
 

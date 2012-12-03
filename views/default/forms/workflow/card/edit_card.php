@@ -124,7 +124,10 @@ $user_guid = elgg_get_logged_in_user_guid();
 	
 	echo elgg_view('input/hidden', array('name' => 'entity_guid', 'value' => $card_guid));
 	
-	echo elgg_view('input/submit', array('value' => elgg_echo("save")));
+	echo elgg_view('input/submit', array(
+		'value' => elgg_echo("save"),
+		'id' => 'workflow-edit-card-submit'
+	));
 	
 	echo elgg_view('input/button', array('value' => elgg_echo("delete"), 'class' => 'elgg-button-delete'));
 	
