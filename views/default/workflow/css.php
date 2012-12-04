@@ -120,6 +120,9 @@
 .elgg-form-workflow-list-add-card .elgg-button-submit {
 	margin: 0 5px 5px 1px;
 }
+.workflow-sidebar .river > .elgg-body {
+	overflow: auto;
+}
 .workflow-sidebar .elgg-module.river .elgg-body > li {
 	list-style: none;
 }
@@ -242,23 +245,62 @@
 	height: 25px;
 }
 /* CSS for card popup */
+#card-info-popup {
+	width: 920px;
+	height: 600px;
+	left: 20%;
+	position: fixed !important;
+	top: 15%;
+	z-index: 9990;
+	padding: 0;
+}
+#card-info-popup .elgg-head {
+	background-color: #EEE;
+	padding-bottom: 5px;
+	cursor: move;
+	margin: 0;
+}
+#card-info-popup .elgg-head h3 {
+	color: #666666;
+	float: left;
+	padding: 4px 30px 0 5px;
+}
+#card-info-popup .elgg-head a {
+	display: inline-block;
+	height: 18px;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	width: 18px;
+	cursor: pointer;
+}
+#card-info-popup > .elgg-body {
+	height: 573px;
+	overflow: auto;
+}
 #card-forms {
 	float: left;
+	width: 100%;
 }
 #card-forms textarea {
 	resize: vertical;
 	height: 80px;
 	margin-bottom: 0;
 }
-#card-forms .elgg-comments {
+#card-forms .comments-part {
 	float: right;
-	width: 380px;
-	margin: 0 0 0 20px;
+	width: 50%;
+}
+#card-forms .elgg-comments {
+	margin: 10px;
 }
 #card-forms .elgg-form-workflow-card-edit-card {
 	float: left;
-	width: 380px;
+	width: 50%;
 	background-color: #EEE;
+	min-height: 573px;
+}
+#card-forms .elgg-form-workflow-card-edit-card fieldset {
 	padding: 10px;
 }
 #card-forms .elgg-user-picker > label, #card-forms .elgg-user-picker > input[type=checkbox] { /* ugly hack, need to enhance userpicker */

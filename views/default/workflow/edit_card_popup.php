@@ -14,7 +14,6 @@ elgg_load_library('workflow:utilities');
 
 $card_guid = get_input('card_guid');
 $card = get_entity($card_guid);
-$user = elgg_get_logged_in_user_guid();
 elgg_set_page_owner_guid($card->getContainerGUID());
 
 if (!$card) {
@@ -22,21 +21,21 @@ if (!$card) {
 	$card = get_entity($card_guid);
 	
 	if ($card) { // this is an archived card. Cannot edit.
-		echo elgg_view('workflow/view_card_popup_content', array('card' => $card, 'archive' => true));
+		echo elgg_view('workflow/view_card_popup', array('card' => $card, 'archive' => true));
 	} else {
 		echo elgg_echo('workflow:unknown_card');
 	}
 	
 } else {
 
-	if ($card->canEdit() || check_entity_relationship($card_guid, 'assignedto', $user)) {
-		$vars = array_merge(workflow_card_prepare_form_vars($card), array('preview' => false));
+	if ($card->canEdit()) {
+		$vars = array_merge(workflow_card_prepare_form_vars($card), array('preview' => 'toggle'));
 		echo '<div id="card-forms">' .
 			elgg_view_form('workflow/card/edit_card', array(), $vars) .
-			elgg_view('page/elements/comments', $vars) .
+			'<div class="comments-part">' . elgg_view('page/elements/comments', $vars) . '</div>' .
 		'</div>';
-	} else { // there is a mistake. Back to view card.
-		echo elgg_view('workflow/view_card_popup_content', array('card' => $card));
+	} else { // Cannot edit. Back to view card.
+		echo elgg_view('workflow/view_card_popup', array('card' => $card));
 		return true;
 	}
 }

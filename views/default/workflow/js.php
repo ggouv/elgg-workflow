@@ -23,29 +23,17 @@ elgg.workflow.init = function() {
 		// highlight object
 		var url = elgg.parse_url(elgg.normalize_url(decodeURIComponent(window.location.href)), 'path');
 		if (url.match('/card/(.*)/') !== null) {
-			$(window).scrollTo($('#workflow-card-'+url.match('/card/(.*)/')[1]), 'slow', function() {
-				$('#workflow-card-'+url.match('/card/(.*)/')[1]).delay(300).animate({opacity: 0}, 100, function() {
-					$(this).delay(100).animate({opacity: 1}, 100, function() {
-						$(this).delay(100).animate({opacity: 0}, 100, function() {
-							$(this).delay(100).animate({opacity: 1}, 100, function() {
-								$(this).css('border','1px solid #00FF00');
-							});
-						});
-					});
+			var card = $('#workflow-card-'+url.match('/card/(.*)/')[1]);
+			card.parents('.elgg-body').scrollTo(card, function() {
+				card.effect("pulsate", function() {
+					card.css('border','1px solid #00FF00');
 				});
 			});
 		}
 		if (url.match('/list/(.*)/') !== null) {
-			$(window).scrollTo($('#workflow-list-'+url.match('/list/(.*)/')[1]), 'slow', function() {
-				$('#workflow-list-'+url.match('/list/(.*)/')[1]).delay(300).animate({opacity: 0}, 100, function() {
-					$(this).delay(100).animate({opacity: 1}, 100, function() {
-						$(this).delay(100).animate({opacity: 0}, 100, function() {
-							$(this).delay(100).animate({opacity: 1}, 100, function() {
-								$(this).css('border','2px solid #00FF00');
-							});
-						});
-					});
-				});
+			var wlist = $('#workflow-list-'+url.match('/list/(.*)/')[1]);
+			wlist.effect("pulsate", function() {
+				wlist.css('border','2px solid #00FF00');
 			});
 		}
 
@@ -127,8 +115,7 @@ elgg.register_hook_handler('init', 'system', elgg.workflow.list.init);
  */
 elgg.workflow.list.move = function(event, ui) {
 	// workflow-list-<guid>
-	var guidString = ui.item.attr('id');
-	guidString = guidString.substr(guidString.indexOf('workflow-list-') + "workflow-list-".length);
+	var guidString = ui.item.attr('id').replace(/workflow-list-/, '');
 
 	elgg.action('workflow/list/move', {
 		data: {
@@ -238,6 +225,18 @@ elgg.workflow.list.resize = function() {
 		$('.workflow-list, .workflow-list-placeholder').width(ListWidth);
 		
 		$('.workflow-list > .elgg-body').css('max-height', $(window).height() - $('.workflow-lists > div:first-child > .elgg-body').offset().top - $('.workflow-lists > div:first-child .elgg-foot').height() - 5);
+		
+		//sidebar
+		var maxHeight = 0,
+		river = $('.workflow-sidebar .river > .elgg-body').height(0)
+		$('.elgg-sidebar > *:not(script)').each(function() {
+			maxHeight += $(this).outerHeight(true);
+		});
+		river.height($(window).height()- maxHeight - 48 +10);
+		$('body').addClass('fixed');
+
+	} else {
+		$('body').removeClass('fixed');
 	}
 }
 
@@ -314,12 +313,8 @@ elgg.register_hook_handler('init', 'system', elgg.workflow.card.init);
  * @return void
  */
 elgg.workflow.card.move = function(event, ui) {
-	// workflow-card-<guid>
-	var card_guidString = ui.item.attr('id');
-	card_guidString = card_guidString.substr(card_guidString.indexOf('workflow-card-') + "workflow-card-".length);
-	// workflow-list-<guid>
-	var list_guidString = ui.item.parents('.workflow-list').attr('id');
-	list_guidString = list_guidString.substr(list_guidString.indexOf('workflow-list-') + "workflow-list-".length);
+	var card_guidString = ui.item.attr('id').replace(/workflow-card-/, ''),
+		list_guidString = ui.item.parents('.workflow-list').attr('id').replace(/workflow-list-/, '');
 
 	// hack for empty list and sortable jquery.ui (dropOnEmpty doesn't work cause multiple div)
 	pos = 0;
@@ -375,7 +370,6 @@ elgg.workflow.card.add = function(form) {
 				} else {
 					$('.elgg-module-aside.river > .elgg-body').prepend(json.output.river);
 				}
-				elgg.workflow.card.popup();
 				elgg.workflow.list.resize();
 			}
 		});
@@ -390,89 +384,94 @@ elgg.workflow.card.add = function(form) {
 };
 
 /**
- * Prepare fancybox for edit card
+ * Prepare edit card
  *
  * @return void
  */
 elgg.workflow.card.popup = function() {
-	$('.workflow-edit-card').fancybox({
-		'autoDimensions': false,
-		'autoScale': true,
-		'width': 810,
-		'scrolling': 'no',
-		'onComplete': function() {
-			var resizePopUp = function() {
-				$('#fancybox-wrap').css('top', '20px');
-				$('#fancybox-content, #fancybox-content > div').css('height', $('#card-forms').height());
-				if ($('#fancybox-content .elgg-form-workflow-card-edit-card').height() < $('#fancybox-content .elgg-comments').height()) {
-					$('#fancybox-content .elgg-form-workflow-card-edit-card').height($('#fancybox-content .elgg-comments').height());
-				}
-			}
-
-			resizePopUp();
-			elgg.ui.initDatePicker();
-			elgg.userpicker.init();
-			elgg.ggouv_template.reloadTemplateFunctions();
-
-			$('.elgg-userpicker-remove, .ui-menu-item').live('click', function() {
-				$('#fancybox-content, #fancybox-content > div').css('height', $('#card-forms').height());
-			});
-			$('#fancybox-content .elgg-foot .elgg-button-submit').die().live('click', elgg.workflow.card.popupForms);
-			$('#fancybox-content .elgg-foot .elgg-button-delete').die().live('click', elgg.workflow.card.remove);
-
-			// checklist
-			$("#card-forms .card-checklist.sortable").sortable({
-				items:                '.elgg-input-checkboxes > li',
-				//connectWith:          '.elgg-input-checkboxes',
-				//handle:               '.elgg-input-checkboxes > li span',
-				forcePlaceholderSize: true,
-				placeholder:          'elgg-input-checkboxes-placeholder',
-				revert:               500,
-			});
-			var plaintext = $('#card-forms .card-checklist .elgg-input-plaintext');
-			var addChecklistItem = function() {
-				plaintext.parent().find('.elgg-input-checkboxes').append('<li><label><input type="checkbox" class="elgg-input-checkbox" name="checklist_checked[]" value="">&nbsp;' + plaintext.val() + '</label><span class="elgg-icon elgg-icon-delete float-alt"></span></li>');
-				plaintext.val('');
-				resizePopUp();
-			};
-			plaintext.focusin(function(){
-				if ( $(this).val() == elgg.echo("workflow:checklist:add_item") ) {
-					$(this).val('');
-				}
-				$(this).parent().children('.elgg-button-submit, .elgg-icon-delete').css('display', 'block');
-				resizePopUp();
-			}).focusout(function(){
-				if ( $(this).val() == '' ) {
-					$(this).val(elgg.echo("workflow:checklist:add_item"));
-					$(this).parent().children('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
-					resizePopUp();
-				}
-			}).keydown(function(e){
-				if (e.keyCode == 13) {
-					e.preventDefault();
-					if ($(this).val()) addChecklistItem();
-				}
-			});
-			$('#card-forms .elgg-input-checkboxes .elgg-icon-delete').live('click', function(){
-				$(this).parents('li').remove();
-			});
-			$('#card-forms .card-checklist > .elgg-icon-delete').live('click', function(){
-				plaintext.val(elgg.echo("workflow:checklist:add_item"));
-				$(this).parent().children('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
-				resizePopUp();
-			});
-			$('#card-forms .card-checklist .elgg-button-submit').live('click', function() {
-				addChecklistItem();
-				plaintext.val(elgg.echo("workflow:checklist:add_item"));
-				plaintext.parent().children('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
-			});
-
-		},
-		'onCleanup': function() {
-			$('#fancybox-content .elgg-button-submit, #fancybox-content .elgg-button-delete').die();
+	$('.workflow-edit-card').die().live('click', function() {
+		if (!$('#card-info-popup').length) {
+			//var method = 'append';
+			//$('.elgg-page-body')[method](
+			$('.elgg-page-body').append(
+				$('<div>', {id: 'card-info-popup', class: 'elgg-module-popup'}).draggable({ handle: ".elgg-head" }).append(
+					$('<div>', {class: 'elgg-head'}).append(
+						$('<h3>').html(elgg.echo('workflow:card-info-header')).after(
+						$('<a>').append(
+							$('<span>', {class: 'elgg-icon elgg-icon-delete-alt'})
+						).click(function() {
+							$('#card-info-popup').remove();
+						})
+					)).after(
+						$('<div>', {class: 'elgg-body'}).append(
+							$('<div>', {class: 'elgg-ajax-loader'})
+			))));
+		} else {
+			$('#card-info-popup > .elgg-body').html($('<div>', {class: 'elgg-ajax-loader'}));
 		}
+		elgg.post('ajax/view/workflow/edit_card_popup', {
+			dataType: "html",
+			data: {
+				card_guid: $(this).parents('.workflow-card').attr('id').replace(/workflow-card-/, ''),
+			},
+			success: function(response) {
+				$('#card-info-popup > .elgg-body').html(response);
+				elgg.markdown_wiki.view.init();
+				elgg.markdown_wiki.edit.init();
+				elgg.ui.initDatePicker();
+				elgg.userpicker.init();
+				//elgg.ggouv_template.reloadTemplateFunctions();
+	
+				$('#card-info-popup .elgg-foot .elgg-button-submit').die().live('click', elgg.workflow.card.popupForms);
+				$('#card-info-popup .elgg-foot .elgg-button-delete').die().live('click', elgg.workflow.card.remove);
+				
+				// checklist
+				$("#card-forms .card-checklist.sortable").sortable({
+					items:						'.elgg-input-checkboxes > li',
+					forcePlaceholderSize:		true,
+					placeholder:				'elgg-input-checkboxes-placeholder',
+					revert:						500,
+				});
+				var plaintext = $('#card-forms .card-checklist .elgg-input-plaintext');
+				var addChecklistItem = function() {
+					plaintext.parent().find('.elgg-input-checkboxes').append('<li><label><input type="checkbox" class="elgg-input-checkbox" name="checklist_checked[]" value="">&nbsp;' + plaintext.val() + '</label><span class="elgg-icon elgg-icon-delete float-alt"></span></li>');
+					plaintext.val('');
+				};
+				plaintext.focusin(function(){
+					if ( $(this).val() == elgg.echo("workflow:checklist:add_item") ) {
+						$(this).val('');
+					}
+					$(this).parent().children('.elgg-button-submit, .elgg-icon-delete').css('display', 'block');
+				}).focusout(function(){
+					if ( $(this).val() == '' ) {
+						$(this).val(elgg.echo("workflow:checklist:add_item"));
+						$(this).parent().children('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
+					}
+				}).keydown(function(e){
+					if (e.keyCode == 13) {
+						e.preventDefault();
+						if ($(this).val()) addChecklistItem();
+					}
+				});
+				$('#card-forms .elgg-input-checkboxes .elgg-icon-delete').live('click', function(){
+					$(this).parents('li').remove();
+				});
+				$('#card-forms .card-checklist > .elgg-icon-delete').live('click', function(){
+					plaintext.val(elgg.echo("workflow:checklist:add_item"));
+					$(this).parent().children('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
+				});
+				$('#card-forms .card-checklist .elgg-button-submit').live('click', function() {
+					addChecklistItem();
+					plaintext.val(elgg.echo("workflow:checklist:add_item"));
+					plaintext.parent().children('.elgg-button-submit, .elgg-icon-delete').css('display', 'none');
+				});
+			},
+			error: function() {
+				$('#card-info-popup > .elgg-body').html(elgg.echo('workflow:ajax:erreur'));
+			}
+		});
 	});
-};
+}
 
 /**
  * Save data of card or new comment
@@ -496,39 +495,55 @@ elgg.workflow.card.popupForms = function(event) {
 		checklistItems.push($.trim($(this).text()));
 	});
 
-	var addCommentonCard = function(card_guid) {
-		if ( $('#workflow-card-'+card_guid+' .workflow-card-comment').length == 0 ) {
-			if ( $('#workflow-card-'+card_guid+' .workflow-card-description').length == 0 ) {
-				$('#workflow-card-'+card_guid+' .workflow-card-info').prepend('<div class="workflow-card-comment">0</div>');
-			} else {
-				$('#workflow-card-'+card_guid+' .workflow-card-description').after('<div class="workflow-card-comment">0</div>');
-			}
-		}
-		TxtComment = $('#workflow-card-'+card_guid+' .workflow-card-comment');
-		TxtComment.html('<span class="elgg-icon elgg-icon-workflow-speech-bubble"></span>'+(parseInt(TxtComment.text())+1));
-	}
-
-	if(form.attr('action').match('/comments/') && typeof elgg.galliComments.init == 'function') {
-		addCommentonCard(card_guid);
+	if (form.attr('action').match('/comments/')) {
+		elgg.workflow.addCommentonCard(card_guid, 1);
 		return true;
-	} else {
+	} else if (form.attr('action').match('/edit_card')) {
 		elgg.action(form.attr('action'), {
 			data: form.serialize() + '&' + $.param({checklist: checklistItems}),
 			success: function(json) {
-				$.fancybox.close();
-				if (card_guid && json.output && json.status == 0) { // card modified
-					$('#workflow-card-'+card_guid).replaceWith(json.output.card);
-					$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
-					elgg.workflow.card.popup();
-				} else if (json.output == '' && json.status == 0) { // card commented
-					addCommentonCard(card_guid);
-				}
+				$('#card-info-popup').remove();
+				$('#workflow-card-'+card_guid).replaceWith(json.output.card);
+				$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
 			}
 		});
 	}
 
 	event.preventDefault();
 };
+
+
+
+/**
+ * Increment or decrement number of comments a card from the layout
+ *
+ * Event callback the uses Ajax to delete the list and removes its HTML
+ *
+ * @param integer the guid of the card
+ * @param integer add or remove 1
+ * @return void
+ */
+elgg.workflow.addCommentonCard = function(card_guid, valueToAdd) {
+		var card = $('#workflow-card-'+card_guid),
+			desc = card.find('.workflow-card-description'),
+			comm = card.find('.workflow-card-comment');
+		
+		if (comm.length == 0) {
+			if (desc.length == 0) {
+				card.find('.workflow-card-info').prepend('<div class="workflow-card-comment">0</div>');
+			} else {
+				desc.after('<div class="workflow-card-comment">0</div>');
+			}
+		}
+		comm = card.find('.workflow-card-comment');
+		var val = parseInt(comm.text())+valueToAdd;
+		if (val <= 0) {
+			comm.remove();
+		} else {
+			comm.html('<span class="elgg-icon elgg-icon-workflow-speech-bubble"></span>'+ val );
+		}
+	}
+
 
 /**
  * Removes a card from the layout
@@ -549,7 +564,8 @@ elgg.workflow.card.remove = function(event) {
 			success: function(json) {
 				$('#workflow-card-'+card).remove();
 				$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
-				$.fancybox.close();
+				$('#card-info-popup').remove();
+				elgg.workflow.list.resize();
 			}
 		});
 	}

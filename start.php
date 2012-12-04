@@ -21,7 +21,6 @@ function workflow_init() {
 	elgg_load_js('jquery.scrollTo');
 
 	elgg_register_ajax_view('workflow/edit_card_popup');
-	elgg_register_ajax_view('workflow/view_card_popup');
 
 	// register global menu
 	$item = new ElggMenuItem('workflow', elgg_echo('workflow'), 'workflow/all');
