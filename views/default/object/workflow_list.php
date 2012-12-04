@@ -22,7 +22,7 @@ $container = $workflow_list->getContainerEntity();
 if ($view_type == 'group') {
 
 	$workflow_list_id = "workflow-list-$workflow_list->guid";
-	$workflow_list_class = " workflow-list mls";
+	$workflow_list_class = " workflow-list mls mbs";
 
 	$edit_area = '';
 	if ($workflow_list->canWritetoContainer()) {

@@ -211,20 +211,49 @@ elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.addListPopup);
  */
 elgg.workflow.list.resize = function() {
 	if ($(".workflow-lists-container .workflow-list").length != 0) {
-		var WorkflowWidth = $('.workflow-lists-container').width();
-		var CountLists = $('.workflow-list').length;
-		var ListWidth = 0;
-		workflow_min_width_list = 200;
-		if ( (parseInt(workflow_min_width_list) + 5 + 4) * CountLists > (WorkflowWidth - 5) ) {
+		var WorkflowWidth = $('.workflow-lists-container'),
+			CountLists = $('.workflow-list').length,
+			ListWidth = 0,
+			offset = 0;
+		workflow_min_width_list = 200; // @todo ? Plugins options ?
+		
+		if ( (parseInt(workflow_min_width_list) + 5 + 4) * CountLists > (WorkflowWidth.width() - 5) ) {
 			ListWidth = parseInt(workflow_min_width_list);
 			$('.workflow-lists').width( (ListWidth + 5 + 4) * CountLists - 5); // margin + border minus last margin doesn't displayed
+			function scrollbarWidth() {
+				if (!$._scrollbarWidth) {
+					var $body = $('body');
+					var w = $body.css('overflow', 'hidden').width();
+					$body.css('overflow','scroll');
+					w -= $body.width();
+					if (!w) w=$body.width()-$body[0].clientWidth; // IE in standards mode
+					$body.css('overflow','');
+					$._scrollbarWidth = w+1;
+				}
+				return $._scrollbarWidth;
+			}
+			offset = scrollbarWidth();
 		} else {
-			ListWidth = (WorkflowWidth - (9*CountLists) + 5 ) / CountLists;
-			$('.workflow-lists').width(WorkflowWidth);
+			ListWidth = Math.floor((WorkflowWidth.width() - (9*CountLists) + 5 ) / CountLists);
+			$('.workflow-lists').width(WorkflowWidth.width());
 		}
 		$('.workflow-list, .workflow-list-placeholder').width(ListWidth);
 		
-		$('.workflow-list > .elgg-body').css('max-height', $(window).height() - $('.workflow-lists > div:first-child > .elgg-body').offset().top - $('.workflow-lists > div:first-child .elgg-foot').height() - 5);
+		var b = $('.workflow-list > .elgg-body'),
+			h = Math.floor(
+				$(window).height()
+					- $('.workflow-lists > div:first-child > .elgg-body').offset().top
+					- $('.workflow-lists > div:first-child .elgg-foot').height()
+					- 5 - offset
+			);
+		
+		if (WorkflowWidth.height() + WorkflowWidth.offset().top < h) {
+			WorkflowWidth.height($(window).height() - WorkflowWidth.offset().top);
+			b.css('max-height', 'none');
+		} else {
+			WorkflowWidth.height('auto');
+			b.css('max-height', h);
+		}
 		
 		//sidebar
 		var maxHeight = 0,
