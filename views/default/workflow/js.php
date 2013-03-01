@@ -262,10 +262,10 @@ elgg.workflow.list.resize = function() {
 			maxHeight += $(this).outerHeight(true);
 		});
 		river.height($(window).height()- maxHeight - 48 +10);
-		$('body').addClass('fixed');
+		$('body').addClass('fixed-workflow');
 
 	} else {
-		$('body').removeClass('fixed');
+		$('body').removeClass('fixed-workflow');
 	}
 }
 

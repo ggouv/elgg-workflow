@@ -1,3 +1,7 @@
+body.fixed-workflow {
+	position: fixed;
+}
+
 /* CSS for list boards view */
 .board .elgg-heading-basic {
 	background-color: #F4F4F4;

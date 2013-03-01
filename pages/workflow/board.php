@@ -74,7 +74,7 @@ $num_lists = count($lists);
 
 // add the card popup and add-list popup
 $addlist = '<div id="add-list" class="elgg-module elgg-module-popup hidden">' . elgg_view_form('workflow/list/add_list_popup') . '</div>';
-$content .= $addlist . "<div id='workflow-card-popup' class='elgg-module elgg-module-popup hidden mbl'></div>";
+$content = $addlist . "<div id='workflow-card-popup' class='elgg-module elgg-module-popup hidden mbl'></div>";
 
 $content .= "<div class='workflow-lists-container'><div class='workflow-lists'>";
 // show list of assigned card for user
