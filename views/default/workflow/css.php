@@ -273,7 +273,6 @@ body.fixed-workflow {
 	display: inline-block;
 	height: 18px;
 	position: absolute;
-	right: 5px;
 	top: 5px;
 	width: 18px;
 	cursor: pointer;

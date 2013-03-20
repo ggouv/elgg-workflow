@@ -19,13 +19,13 @@ elgg_set_page_owner_guid($card->getContainerGUID());
 if (!$card) {
 	access_show_hidden_entities(true);
 	$card = get_entity($card_guid);
-	
+
 	if ($card) { // this is an archived card. Cannot edit.
 		echo elgg_view('workflow/view_card_popup', array('card' => $card, 'archive' => true));
 	} else {
 		echo elgg_echo('workflow:unknown_card');
 	}
-	
+
 } else {
 
 	if ($card->canEdit()) {

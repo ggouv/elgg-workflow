@@ -29,14 +29,14 @@ if (!$card) {
 		<fieldset>
 
 		<h2><?php echo $card->title; ?></h2>
-		<label><?php 
+		<label><?php
 			$list_link = elgg_view('output/url', array(
 				'href' => $list->getURL(),
 				'text' => $list->title ? $list->title : $list->name,
 				'is_trusted' => true,
 			));
 			$list_string = elgg_echo('river:in:workflow_list', array($list_link));
-			
+
 			$board_link = elgg_view('output/url', array(
 				'href' => $board->getURL(),
 				'text' => $board->title ? $board->title : $board->name,
@@ -50,7 +50,7 @@ if (!$card) {
 				'is_trusted' => true,
 			));
 			$group_string = elgg_echo('river:ingroup', array($group_link));
-	
+
 			echo ucfirst($list_string) . '&nbsp;' . $board_string . '&nbsp;' . $group_string;
 		?></label>
 

@@ -176,7 +176,7 @@ function workflow_page_handler($page) {
 
 /**
  * Override the workflow board url
- * 
+ *
  * @param ElggObject $entity workflow_board
  * @return string
  */
@@ -193,7 +193,7 @@ function workflow_board_url_handler($entity) {
 
 /**
  * Override the workflow list url
- * 
+ *
  * @param ElggObject $entity workflow_list
  * @return string
  */
@@ -205,7 +205,7 @@ function workflow_list_url_handler($entity) {
 
 /**
  * Override the workflow card url
- * 
+ *
  * @param ElggObject $entity workflow_card
  * @return string
  */
@@ -216,8 +216,8 @@ function workflow_card_url_handler($entity) {
 
 
 /**
-
-**/
+ * Check permission for card
+ */
 function workflow_card_permissions_check($hook, $type, $return, $params) {
 	if ($params['entity']->getSubtype() == 'workflow_card') {
 		elgg_load_library('workflow:utilities');
@@ -304,7 +304,7 @@ function workflow_list_entity_menu_setup($hook, $type, $return, $params) {
  */
 function workflow_deck_river_column($hook, $type, $return, $params) {
 	if ($params['query'] == 'activity') {
-		$assigned_cards = elgg_list_entities_from_relationship(array(
+		$assigned_cards['activity'] = elgg_list_entities_from_relationship(array(
 				'type' => 'object',
 				'subtype' => 'workflow_card',
 				'relationship' => 'assignedto',
@@ -316,11 +316,10 @@ function workflow_deck_river_column($hook, $type, $return, $params) {
 				'pagination' => false
 			));
 		return $assigned_cards;
-	} else if ($params['query'] == 'title') {
+	} else if ($params['query'] == 'settings') {
 		return array(
-			'column_title' => elgg_echo('workflow:assigned-cards:title:mine'),
-			'column_subtitle' => get_entity($params['owner'])->name,
-			'break' => true
+			'title' => 'workflow:assigned-cards:title:mine',
+			'subtitle' => get_entity($params['owner'])->name
 		);
 	} else {
 		return false;
