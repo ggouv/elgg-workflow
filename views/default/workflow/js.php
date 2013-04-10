@@ -454,7 +454,6 @@ elgg.workflow.card.popup = function() {
 				elgg.markdown_wiki.edit.init();
 				elgg.ui.initDatePicker();
 				elgg.userpicker.init();
-				//elgg.ggouv_template.reloadTemplateFunctions();
 
 				$('#card-info-popup .elgg-foot .elgg-button-submit').die().live('click', elgg.workflow.card.popupForms);
 				$('#card-info-popup .elgg-foot .elgg-button-delete').die().live('click', elgg.workflow.card.remove);
