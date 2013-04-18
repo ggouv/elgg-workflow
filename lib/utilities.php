@@ -12,7 +12,7 @@
 
 function workflow_board_prepare_form_vars($board = null) {
 	$user = elgg_get_logged_in_user_guid();
-	
+
 	$values = array(
 		'title' => get_input('title', ''),
 		'description' => '',
@@ -48,7 +48,7 @@ function workflow_board_prepare_form_vars($board = null) {
 
 function workflow_card_prepare_form_vars($card = null) {
 	$user = elgg_get_logged_in_user_guid();
-	
+
 	$values = array(
 		'title' => get_input('title', ''),
 		'description' => '',
@@ -96,7 +96,7 @@ function workflow_get_board_participants($board_guid) {
 		'metadata_value' => $board_guid,
 		'limit' => 0
 	));
-	
+
 	// get all users assignedto
 	$all_assignedto = array();
 	$all_assignedto_guid = array();
@@ -114,7 +114,7 @@ function workflow_get_board_participants($board_guid) {
 			}
 		}
 	}
-	
+
 	return $all_assignedto;
 }
 
@@ -128,7 +128,7 @@ function workflow_create_annotation($board_guid, $action, $user_guid = 0, $acces
 	if ($annotation->owner_guid == $user_guid && (time() - $annotation->time_created) <= 3600) { // less than one hour
 		$annotation_array = unserialize($annotation->value);
 		$annotation_array[] = $action;
-		update_annotation($annotation->id, 'workflow_river', serialize($annotation_array), '', $user_guid, $access);		
+		update_annotation($annotation->id, 'workflow_river', serialize($annotation_array), '', $user_guid, $access);
 		return array('new' => false, 'id' => $annotation->id);
 	} else {
 		$annotation_array[] = $action;
@@ -137,9 +137,9 @@ function workflow_create_annotation($board_guid, $action, $user_guid = 0, $acces
 	}
 }
 
-function workflow_read_annotation($annotation_id) {	
+function workflow_read_annotation($annotation_id) {
 	$annotation_array = array_reverse(unserialize(elgg_get_annotation_from_id($annotation_id)->value));
-	
+
 	$rand = rand(); // make this for elgg-deck-column
 	$count = count($annotation_array);
 	if ($count > 2) {
@@ -155,7 +155,7 @@ function workflow_read_annotation($annotation_id) {
 	} else {
 		$message = workflow_convert_action($annotation_array[0]);
 	}
-	
+
 	return $message;
 }
 
@@ -167,7 +167,7 @@ function workflow_convert_action($action) {
 			'class' => 'elgg-river-object',
 			'is_trusted' => true,
 		));
-		
+
 		$container = get_entity($action[2]);
 		$container_link = elgg_view('output/url', array(
 			'href' => $container->getURL(),
@@ -175,7 +175,7 @@ function workflow_convert_action($action) {
 			'class' => 'elgg-river-object',
 			'is_trusted' => true,
 		));
-		
+
 		$in_string = elgg_echo('river:in:' . $container->getSubtype(), array($container_link));
 		return elgg_echo('river:create:object:' . $object->getSubtype() . ':message', array($object_link, $in_string));
 	}
@@ -186,7 +186,7 @@ function workflow_convert_action($action) {
 			'class' => 'elgg-river-object',
 			'is_trusted' => true,
 		));
-		
+
 		$list_origin = get_entity($action[2]);
 		$list_origin_link = elgg_view('output/url', array(
 			'href' => $list_origin->getURL(),
@@ -194,7 +194,7 @@ function workflow_convert_action($action) {
 			'class' => 'elgg-river-object',
 			'is_trusted' => true,
 		));
-		
+
 		$list_dest = get_entity($action[3]);
 		$list_dest_link = elgg_view('output/url', array(
 			'href' => $list_dest->getURL(),
@@ -202,7 +202,38 @@ function workflow_convert_action($action) {
 			'class' => 'elgg-river-object',
 			'is_trusted' => true,
 		));
-		
+
 		return elgg_echo('river:create:object:' . $object->getSubtype() . ':move:message', array($object_link, $list_origin_link, $list_dest_link));
 	}
+}
+
+/**
+ * Return personal board of a user, create it if doesn't exist
+ * @param  ElggUser          $owner_guid
+ * @return ElggObject        board entity
+ */
+function workflow_get_user_board($owner_guid = false) {
+	if (!$owner_guid) $owner_guid = elgg_get_page_owner_guid();
+
+	$board = elgg_get_entities(array(
+		'type' => 'object',
+		'subtypes' => 'workflow_board',
+		'owner_guid' => $owner_guid,
+		'container_guid' => $owner_guid,
+		'limit' => 1
+	));
+
+	if (!$board) {
+		$board = new ElggObject;
+		$board->subtype = "workflow_board";
+		$board->container_guid = $owner_guid;
+		$board->title = elgg_echo('my_workflow');
+		$board->description = elgg_echo('my_workflow');
+		$board->access_id = 0;
+		$board->save();
+	} else {
+		$board= $board[0];
+	}
+
+	return $board;
 }
