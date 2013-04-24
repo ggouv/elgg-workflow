@@ -17,22 +17,23 @@ elgg_push_breadcrumb(elgg_echo('workflow:assigned-cards:friends'));
 
 $title = elgg_echo('workflow:assigned-cards:friends');
 
-if ($friends = get_user_friends($owmer->guid, "", 999999, 0)) {
+if ($friends = get_user_friends($owner->guid, "", 999999, 0)) {
 	$friendguids = array();
 	foreach ($friends as $friend) {
 		$friendguids[] = $friend->getGUID();
 	}
 }
-global $fb; $fb->info($friendguids);
+
 $cards = elgg_get_entities_from_relationship(array(
 	'type' => 'object',
 	'subtype' => 'workflow_card',
 	'relationship' => 'assignedto',
-	//'relationship_guids' => $friendguids, @todo don't work. Have to find another way...
 	'inverse_relationship' => true,
 	'limit' => 30,
-));
+	'wheres' => 'e.owner_guid <> e.container_guid AND r.guid_two IN (' . implode($friendguids, ',') . ')'
+)); // e.owner_guid <> e.container_guid = this is not personnal cards
 
+// Make unique
 $all_assignedto = array();
 $all_assignedto_guid = array();
 if ($cards) {

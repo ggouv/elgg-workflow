@@ -13,7 +13,7 @@
 $board_guid = get_input('board_guid');
 $board = get_entity($board_guid);
 
-//$user_guid = elgg_get_logged_in_user_guid(); @todo
+$user_guid = elgg_get_logged_in_user_guid();
 
 if (!$board) {
 	forward(REFERER);
@@ -25,8 +25,12 @@ $container = elgg_get_page_owner_entity();
 if (elgg_instanceof($container, 'group')) {
 	group_gatekeeper();
 	elgg_push_breadcrumb($container->name, "workflow/group/$container->guid/all");
-} else {
+} else if ($board->getOwnerGUID() == $user_guid) {
 	gatekeeper();
+} else {
+	$board = workflow_get_user_board($user_guid);
+	register_error(elgg_echo('workflow:not_owner_board'));
+	forward($board->getURL());
 }
 elgg_push_breadcrumb($board->title);
 

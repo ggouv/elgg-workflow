@@ -45,14 +45,14 @@ if ($owner->type == 'group') {
 
 	echo elgg_view_page($title, $body);
 
-} else if ($owner->canEdit()) {
-
-	gatekeeper();
+} else {
 
 	$board = workflow_get_user_board($owner->getGUID());
 
-	forward($board->getURL());
-
-} else {
-	forward(REFERER);
+	if ($board) {
+		gatekeeper();
+		forward($board->getURL());
+	} else {
+		forward(REFERER);
+	}
 }

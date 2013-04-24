@@ -13,7 +13,6 @@
 $page_owner = elgg_get_page_owner_entity();
 $user_guid = elgg_get_logged_in_user_guid();
 
-
 elgg_push_breadcrumb(elgg_echo('workflow:assigned-cards'), "workflow/assigned-cards/all");
 elgg_push_breadcrumb($page_owner->name);
 
@@ -33,7 +32,8 @@ $content = elgg_list_entities_from_relationship(array(
 	'split_items' => 3,
 	'list_class' => 'workflow-card-list',
 	'limit' => 30,
-	'pagination' => true
+	'pagination' => true,
+	'wheres' => 'e.owner_guid <> e.container_guid' // personnal card are same owner and container, so we doesn't want personnal card
 ));
 
 if (!$content) {

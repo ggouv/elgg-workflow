@@ -93,6 +93,7 @@ $english = array(
 	 */
 
 	'workflow:unknown_card' => "Unknown card",
+	'workflow:not_owner_board' => "Personal board are private. You have been redirect to your own board.",
 	
 	'workflow:board:add:success' => "Board saved.",
 	'workflow:board:save:failed' => "Board cannot be saved.",

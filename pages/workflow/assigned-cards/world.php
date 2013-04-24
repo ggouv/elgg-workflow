@@ -21,6 +21,7 @@ $cards = elgg_get_entities_from_relationship(array(
 	'relationship' => 'assignedto',
 	'inverse_relationship' => true,
 	'limit' => 30,
+	'wheres' => 'e.owner_guid <> e.container_guid' // personnal card are same owner and container, so we doesn't want personnal card
 ));
 
 $all_assignedto = array();

@@ -94,6 +94,7 @@ $french = array(
 	 */
 
 	'workflow:unknown_card' => "Fiche inconnue.",
+	'workflow:not_owner_board' => "Les tableaux personnels sont privés. Vous avez été redirigé sur votre tableau.",
 
 	'workflow:board:add:success' => "Tableau enregistré.",
 	'workflow:board:save:failed' => "Le tableau ne peut pas être enrigstré.",

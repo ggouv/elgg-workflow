@@ -20,7 +20,8 @@ $content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'workflow_board',
 	'list_class' => 'workflow-card-list',
-	'limit' => 20
+	'limit' => 20,
+	'wheres' => 'e.owner_guid <> e.container_guid' // personnal board are same owner and container, so we doesn't want personnal board
 ));
 
 if (!$content) {
