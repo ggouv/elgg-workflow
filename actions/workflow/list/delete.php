@@ -17,6 +17,14 @@ $board_guid = $deleted_list->board_guid;
 
 if ($deleted_list && $deleted_list->canWritetoContainer()) {
 
+	elgg_load_library('workflow:utilities');
+	$user_guid = elgg_get_logged_in_user_guid();
+
+	$message = elgg_echo('river:delete:object:workflow_list:message', array($deleted_list->title));
+	$annotation_id = workflow_create_annotation($board_guid, $message, $user_guid, $deleted_list->access_id);
+
+	if ($annotation_id['new'] == true) add_to_river('river/object/workflow_river/create','create', $user_guid, $deleted_list_guid, '', 0, $annotation_id['id']);
+
 	// delete cards of this list
 	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
@@ -28,7 +36,7 @@ if ($deleted_list && $deleted_list->canWritetoContainer()) {
 	foreach($cards as $card) {
 		delete_entity($card->guid);
 	}
-	
+
 	// delete list
 	delete_entity($deleted_list_guid);
 	$lists = elgg_get_entities_from_metadata(array(

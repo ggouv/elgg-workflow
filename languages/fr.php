@@ -71,6 +71,8 @@ $french = array(
 	'workflow:card:shorted:message' => "+%s actions",
 	'river:create:object:workflow_board' => "%s a ajouté le tableau %s",
 	'river:create:object:workflow_card:move:message' => "A déplacé la fiche %s : %s > %s",
+	'river:delete:object:workflow_card:message' => "A supprimé la fiche \"%s\" %s",
+	'river:delete:object:workflow_list:message' => "A supprimé la list \"%s\"",
 
 	/**
 	 * Form fields

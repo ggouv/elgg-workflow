@@ -53,7 +53,7 @@ $english = array(
 	'workflow:list:delete:confirm' => "Are you sure to delete this list and all of his cards?",
 	'workflow:card:delete:confirm' => "Are you sure to delete this card?",
 	'workflow:card:none' => "No card created yet.",
-	
+
 	'workflow:archive' => "Archives",
 	'workflow:board:archive' => "Archives of the board %s",
 	'workflow:board:back' => "Go back to the board",
@@ -70,12 +70,14 @@ $english = array(
 	'workflow:card:shorted:message' => "+%s actions",
 	'river:create:object:workflow_board' => "%s added board %s",
 	'river:create:object:workflow_card:move:message' => "Moved card %s form %s to %s",
+	'river:delete:object:workflow_card:message' => "Deleted card \"%s\" %s",
+	'river:delete:object:workflow_list:message' => "Deleted list \"%s\"",
 
 	/**
 	 * Form fields
 	 */
 	'groups:enableworkflow' => "Enable group workflow",
-	
+
 	'workflow:list:add_list' => "Add list",
 	'workflow:list:add_card' => "Add card",
 
@@ -94,7 +96,7 @@ $english = array(
 
 	'workflow:unknown_card' => "Unknown card",
 	'workflow:not_owner_board' => "Personal board are private. You have been redirect to your own board.",
-	
+
 	'workflow:board:add:success' => "Board saved.",
 	'workflow:board:save:failed' => "Board cannot be saved.",
 	'workflow:board:delete:success' => "Board successfully moved.",
@@ -127,7 +129,7 @@ $english = array(
 	 * Widget
 	 **/
 
-	
+
 	/**
 	 * Sidebar items
 	 */
