@@ -49,7 +49,7 @@ if ($moved_card && $moved_card->canEdit()) {
 		// redefine order for each card
 		$order = 0;
 		foreach ($cards as $card) {
-			$card->order = $order; // @todo don't work with $card->save(); for just member of group 
+			$card->order = $order; // @todo don't work with $card->save(); for just member of group
 			$order += 1;
 		}
 
@@ -97,27 +97,48 @@ if ($moved_card && $moved_card->canEdit()) {
 		}
 
 		// define list_guid's card to destination list
-		$original_list = $moved_card->list_guid;
+		$original_list = get_entity($moved_card->list_guid);
 		$moved_card->list_guid = $list_guid;
-		
+		$list_dest = get_entity($list_guid);
+
 		if ($moved_card->save()) {
 			system_message(elgg_echo('workflow:card:move:success'));
-		
+
+			// write annotation
 			$list = get_entity($list_guid);
 			elgg_load_library('workflow:utilities');
-			$annotation_id = workflow_create_annotation($list->board_guid, array($card_guid, 'move', $original_list, $list_guid), $user_guid, $list->access_id);
-		
+			$moved_card_link = elgg_view('output/url', array(
+				'href' => $moved_card->getURL(),
+				'text' => $moved_card->title,
+				'class' => 'elgg-river-object',
+				'is_trusted' => true,
+			));
+			$original_list_link = elgg_view('output/url', array(
+				'href' => $original_list->getURL(),
+				'text' => $original_list->title,
+				'class' => 'elgg-river-object',
+				'is_trusted' => true,
+			));
+			$list_dest_link = elgg_view('output/url', array(
+				'href' => $list_dest->getURL(),
+				'text' => $list_dest->title,
+				'class' => 'elgg-river-object',
+				'is_trusted' => true,
+			));
+			$message = elgg_echo('river:create:object:workflow_card:move:message', array($moved_card_link, $original_list_link, $list_dest_link));
+			$annotation_id = workflow_create_annotation($list->board_guid, $message, $user_guid, $list->access_id);
+
 			if ($annotation_id['new'] == true) {
 				$id = add_to_river('river/object/workflow_river/create','update', $user_guid, $card->getGUID(), '', 0, $annotation_id['id']);
 				$item = elgg_get_river(array('id' => $id));
 			} else {
 				$item = elgg_get_river(array('annotation_id' => $annotation_id['id']));
 			}
-		
+
 			elgg_set_page_owner_guid($container_guid);
 			$echo['river'] = "<li id='item-river-{$item[0]->id}' class='elgg-list-item' datetime=\"{$item[0]->posted}\">" .
 								elgg_view('river/item', array('item' => $item[0], 'size' => 'tiny', 'short' => true)) . '</li>';
-		
+
 			echo json_encode($echo);
 		}
 
