@@ -143,69 +143,22 @@ function workflow_read_annotation($annotation_id) {
 	$rand = rand(); // make this for elgg-deck-column
 	$count = count($annotation_array);
 	if ($count > 2) {
-		$message = workflow_convert_action($annotation_array[0]) . '<br><a rel="toggle" href="#workflow-shorted-message-' . $annotation_id . '-' . $rand .'">' . elgg_echo('workflow:card:shorted:message', array($count - 1)) . '</a>';
+		$message = $annotation_array[0] . '<br><a rel="toggle" href="#workflow-shorted-message-' . $annotation_id . '-' . $rand .'">' . elgg_echo('workflow:card:shorted:message', array($count - 1)) . '</a>';
 		unset($annotation_array[0]);
 		$message .= '<div id="workflow-shorted-message-' . $annotation_id . '-' . $rand .'" class="hidden">';
 		foreach($annotation_array as $annotation_item) {
-			$message .= workflow_convert_action($annotation_item) . '<br>';
+			$message .= $annotation_item . '<br>';
 		}
 		$message .= '</div>';
 	} else if ($count > 1) {
-		$message = workflow_convert_action($annotation_array[0]) . '<br>' . workflow_convert_action($annotation_array[1]);
+		$message = $annotation_array[0] . '<br>' . $annotation_array[1];
 	} else {
-		$message = workflow_convert_action($annotation_array[0]);
+		$message = $annotation_array[0];
 	}
 
 	return $message;
 }
 
-function workflow_convert_action($action) {
-	if ($action[1] == 'add' && $object = get_entity($action[0])) { // object should be deleted @todo see when archived item
-		$object_link = elgg_view('output/url', array(
-			'href' => $object->getURL(),
-			'text' => $object->title,
-			'class' => 'elgg-river-object',
-			'is_trusted' => true,
-		));
-
-		$container = get_entity($action[2]);
-		$container_link = elgg_view('output/url', array(
-			'href' => $container->getURL(),
-			'text' => $container->title,
-			'class' => 'elgg-river-object',
-			'is_trusted' => true,
-		));
-
-		$in_string = elgg_echo('river:in:' . $container->getSubtype(), array($container_link));
-		return elgg_echo('river:create:object:' . $object->getSubtype() . ':message', array($object_link, $in_string));
-	}
-	if ($action[1] == 'move' && $object = get_entity($action[0])) {
-		$object_link = elgg_view('output/url', array(
-			'href' => $object->getURL(),
-			'text' => $object->title,
-			'class' => 'elgg-river-object',
-			'is_trusted' => true,
-		));
-
-		$list_origin = get_entity($action[2]);
-		$list_origin_link = elgg_view('output/url', array(
-			'href' => $list_origin->getURL(),
-			'text' => $list_origin->title,
-			'class' => 'elgg-river-object',
-			'is_trusted' => true,
-		));
-
-		$list_dest = get_entity($action[3]);
-		$list_dest_link = elgg_view('output/url', array(
-			'href' => $list_dest->getURL(),
-			'text' => $list_dest->title,
-			'class' => 'elgg-river-object',
-			'is_trusted' => true,
-		));
-
-		return elgg_echo('river:create:object:' . $object->getSubtype() . ':move:message', array($object_link, $list_origin_link, $list_dest_link));
-	}
-}
 
 /**
  * Return personal board of a user, create it if doesn't exist

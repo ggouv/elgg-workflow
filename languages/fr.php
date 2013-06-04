@@ -63,7 +63,7 @@ $french = array(
 	* River
 	**/
 	'river:inboard' => "dans le tableau %s",
-	'river:in:workflow_list' => "dans la liste %s",
+	'river:in:workflow_list' => "dans %s",
 	'river:create:object:workflow_card_list:summary' => "%s a modifié le tableau %s %s",
 	'river:create:object:workflow_list:message' => "A ajouté la liste %s",
 	'river:create:object:workflow_card:message' => "A ajouté la fiche %s %s",
