@@ -37,9 +37,9 @@ if ($card && $list && $board && $card->canEdit()) {
 			'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $board->guid)),
 		));
 	} else {
-		register_error(elgg_echo('workflow:card:assign:failure'));
+		register_error(elgg_echo('workflow:card:assign:failure', array($assignedto_user->name)));
 	}
 
 } else {
-	register_error(elgg_echo('workflow:card:edit:cannot_edit'));
+	register_error(elgg_echo('workflow:card:edit:cannot_edit', array($assignedto_user->name)));
 }

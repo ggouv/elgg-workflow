@@ -121,6 +121,8 @@ $french = array(
 	'workflow:card:edit:success' => "Les changements de la fiche ont été enregistrés.",
 	'workflow:card:edit:failure' => "Les changements de la fiche n'ont pas été enregistrés.",
 	'workflow:card:edit:cannot_edit' => "Vous ne pouvez pas modifier une fiche.",
+	'workflow:card:assign:success' => "%s a bien été assigné à la fiche.",
+	'workflow:card:assign:failure' => "%s n'a pas pu être assigné.",
 
 	'workflow:list:archived:success' => "La liste est maintenant archivée.",
 

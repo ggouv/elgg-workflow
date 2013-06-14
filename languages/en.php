@@ -122,6 +122,8 @@ $english = array(
 	'workflow:card:edit:success' => "Card changes successfully saved.",
 	'workflow:card:edit:failure' => "Card changes don't saved.",
 	'workflow:card:edit:cannot_edit' => "You cannot edit this card.",
+	'workflow:card:assign:success' => "%s have been assigned.",
+	'workflow:card:assign:failure' => "%s cannot be assigned.",
 
 	'workflow:list:archived:success' => "List now archived.",
 
