@@ -57,7 +57,9 @@ if ($list || $list->canWritetoContainer()) {
 					elgg_view('output/url', array(
 						'href' => $card->getURL(),
 						'text' => $card->title,
-						'class' => 'elgg-river-object',
+						'class' => 'elgg-river-object workflow-edit-card',
+						'rel' => 'popup',
+						'data-guid' => $card->getGUID(),
 						'is_trusted' => true,
 					)), $in_string));
 		$annotation_id = workflow_create_annotation($list->board_guid, $message, $user_guid, $list->access_id);

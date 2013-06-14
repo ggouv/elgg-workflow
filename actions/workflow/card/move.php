@@ -110,7 +110,9 @@ if ($moved_card && $moved_card->canEdit()) {
 			$moved_card_link = elgg_view('output/url', array(
 				'href' => $moved_card->getURL(),
 				'text' => $moved_card->title,
-				'class' => 'elgg-river-object',
+				'class' => 'elgg-river-object workflow-edit-card',
+				'rel' => 'popup',
+				'data-guid' => $card->getGUID(),
 				'is_trusted' => true,
 			));
 			$original_list_link = elgg_view('output/url', array(

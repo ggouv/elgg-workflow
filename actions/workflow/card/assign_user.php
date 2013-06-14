@@ -30,7 +30,7 @@ if ($card && $list && $board && $card->canEdit()) {
 		// Assign to users
 		add_entity_relationship($card_guid, 'assignedto', $assignedto_user->getGUID());
 
-		system_message(elgg_echo('workflow:card:assign:success'));
+		system_message(elgg_echo('workflow:card:assign:success', array($assignedto_user->name)));
 
 		echo json_encode(array(
 			'card' => elgg_view_entity($card, array('view_type' => 'group')),
@@ -41,5 +41,5 @@ if ($card && $list && $board && $card->canEdit()) {
 	}
 
 } else {
-	register_error(elgg_echo('workflow:card:edit:cannot_edit', array($assignedto_user->name)));
+	register_error(elgg_echo('workflow:card:edit:cannot_edit'));
 }

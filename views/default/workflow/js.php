@@ -446,7 +446,7 @@ elgg.workflow.card.popup = function() {
 		elgg.post('ajax/view/workflow/edit_card_popup', {
 			dataType: "html",
 			data: {
-				card_guid: $(this).closest('.workflow-card').attr('id').replace(/workflow-card-/, '')
+				card_guid: $(this).data('guid') || $(this).closest('.workflow-card').attr('id').replace(/workflow-card-/, '')
 			},
 			success: function(response) {
 				$('#card-info-popup > .elgg-body').html(response);
@@ -503,7 +503,8 @@ elgg.workflow.card.popup = function() {
 				$('#card-info-popup > .elgg-body').html(elgg.echo('workflow:ajax:erreur'));
 			}
 		});
-	}).closest('.workflow-card').droppable({
+		return false;
+	}).closest('.workflow-card').not('.elgg-river-object').droppable({
 		accept: '.user-info-popup',
 		drop: function(e, ui) {
 			var card_guid = $(this).attr('id').replace(/workflow-card-/, '');
@@ -517,7 +518,8 @@ elgg.workflow.card.popup = function() {
 					$('#workflow-card-'+card_guid).replaceWith(json.output.card);
 					$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
 					elgg.workflow.card.popup();
-				}
+				},
+				error: function() {}
 			});
 		},
 		over: function(e, ui) {
