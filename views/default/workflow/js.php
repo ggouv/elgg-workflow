@@ -503,6 +503,29 @@ elgg.workflow.card.popup = function() {
 				$('#card-info-popup > .elgg-body').html(elgg.echo('workflow:ajax:erreur'));
 			}
 		});
+	}).closest('.workflow-card').droppable({
+		accept: '.user-info-popup',
+		drop: function(e, ui) {
+			var card_guid = $(this).attr('id').replace(/workflow-card-/, '');
+
+			elgg.action('workflow/card/assign_user', {
+				data: {
+					card_guid: card_guid,
+					member: ui.helper.attr('title')
+				},
+				success: function(json) {
+					$('#workflow-card-'+card_guid).replaceWith(json.output.card);
+					$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
+					elgg.workflow.card.popup();
+				}
+			});
+		},
+		over: function(e, ui) {
+			ui.helper.addClass('canDrop');
+		},
+		out: function(e, ui) {
+			ui.helper.removeClass('canDrop');
+		}
 	});
 }
 
