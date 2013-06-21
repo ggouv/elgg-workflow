@@ -450,8 +450,10 @@ elgg.workflow.card.popup = function() {
 			},
 			success: function(response) {
 				$('#card-info-popup > .elgg-body').html(response);
-				elgg.markdown_wiki.view.init();
-				elgg.markdown_wiki.edit.init();
+				if ($.isFunction(elgg.markdown_wiki.view.init)) {
+					elgg.markdown_wiki.view.init();
+					elgg.markdown_wiki.edit.init();
+				}
 				elgg.ui.initDatePicker();
 				elgg.userpicker.init();
 
@@ -563,6 +565,7 @@ elgg.workflow.card.popupForms = function(event) {
 				$('#card-info-popup').remove();
 				$('#workflow-card-'+card_guid).replaceWith(json.output.card);
 				$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
+				elgg.workflow.card.popup();
 			}
 		});
 	}
