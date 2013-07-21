@@ -82,6 +82,8 @@ $english = array(
 	'workflow:list:add_card' => "Add card",
 
 	'workflow:assignedto' => "Assigned to",
+	'workflow:assignedtome' => "Assign me this card",
+	'workflow:assignedtome:help' => "Assign this card to me will be shown in the hub.",
 	'workflow:checklist' => "Check list",
 	'workflow:checklist:add_item' => "Add item",
 	'workflow:duedate' => "Due date",

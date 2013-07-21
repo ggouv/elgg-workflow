@@ -13,7 +13,8 @@
 $card_guid = (int) get_input('entity_guid');
 $title = get_input('title');
 $desc = get_input('description');
-$assignedto = (array)get_input('members');
+$assignedto = (array)get_input('members'); // ui autocomplete result
+$assignedtome = get_input('assignedtome', false);
 $checklist = get_input('checklist');
 $checklist_checked = get_input('checklist_checked');
 $duedate = get_input('duedate');
@@ -43,7 +44,11 @@ if ($card && $list && $board && $card->canEdit()) {
 	$card->access_id = $board->access_id;
 
 	if ($card->save()) {
-		
+
+		// add assignedtome in assigned user
+		if ($assignedtome) {
+			$assignedto = array_unique(array_merge($assignedto, array($user)));
+		}
 		// Remove unassigned user
 		$assigned_users = elgg_get_entities_from_relationship(array(
 			'relationship' => 'assignedto',
@@ -57,10 +62,10 @@ if ($card && $list && $board && $card->canEdit()) {
 		foreach ($assignedto as $assignedto_user) {
 			add_entity_relationship($card_guid, 'assignedto', $assignedto_user);
 		}
-		
+
 		elgg_clear_sticky_form('card');
 		system_message(elgg_echo('workflow:card:edit:success'));
-			
+
 		echo json_encode(array(
 			'card' => elgg_view_entity($card, array('view_type' => 'group')),
 			'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $board->guid)),

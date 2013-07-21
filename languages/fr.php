@@ -83,6 +83,8 @@ $french = array(
 	'workflow:list:add_card' => "Ajouter une fiche",
 
 	'workflow:assignedto' => "Assigner à",
+	'workflow:assignedtome' => "M'assigner cette fiche",
+	'workflow:assignedtome:help' => "Vous assigner cette fiche permet de la faire apparaître dans la colonne de vos fiches assignées dans le hub.",
 	'workflow:checklist' => "Liste à cocher",
 	'workflow:checklist:add_item' => "Ajouter un élément",
 	'workflow:duedate' => "Date limite",

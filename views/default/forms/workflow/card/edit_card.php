@@ -30,14 +30,14 @@ $user_guid = elgg_get_logged_in_user_guid();
 
 ?>
 
-<label><?php 
+<label><?php
 	$list_link = elgg_view('output/url', array(
 		'href' => $list->getURL(),
 		'text' => $list->title ? $list->title : $list->name,
 		'is_trusted' => true,
 	));
 	$list_string = elgg_echo('river:in:workflow_list', array($list_link));
-	
+
 	$board_link = elgg_view('output/url', array(
 		'href' => $board->getURL(),
 		'text' => $board->title ? $board->title : $board->name,
@@ -58,26 +58,42 @@ $user_guid = elgg_get_logged_in_user_guid();
 	<label><?php echo elgg_echo('title'); ?></label><br />
 	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
 </div>
-		
+
 <div>
 	<label><?php echo elgg_echo('description'); ?></label>
 	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'preview' => 'toggle')); ?>
 </div>
 
-<?php if($user_guid != $card->container_guid) { ?>
 <div>
-	<label><?php echo elgg_echo('workflow:assignedto'); ?></label>
-	<?php $assignedto = elgg_get_entities_from_relationship(array(
+<?php $assignedto = elgg_get_entities_from_relationship(array(
 			'relationship' => 'assignedto',
 			'relationship_guid'=> $card_guid
 		));
 		foreach ($assignedto as $user) {
 			$users[] = $user->guid;
 		}
-		echo elgg_view('input/userpicker', array('name' => 'assignedto', 'value' => $users));
-	?>
+
+	if ($user_guid != $card->container_guid) { ?>
+		<label><?php echo elgg_echo('workflow:assignedto'); ?></label>
+		<?php echo elgg_view('input/userpicker', array(
+			'name' => 'assignedto',
+			'value' => $users
+		));
+	} else { // this card is on a prigvate board ?>
+		<label><?php echo elgg_echo('workflow:assignedtome'); ?></label>
+		<?php
+		if ($users[0] == $user_guid) {
+			$checked = true;
+		} else {
+			$checked = false;
+		}
+		echo elgg_view('input/checkbox', array(
+			'name' => 'assignedtome',
+			'checked' => $checked
+			));
+		echo '<br/>' . elgg_echo('workflow:assignedtome:help');
+	} ?>
 </div>
-<?php } ?>
 
 <div class="duedate">
 	<label><?php echo elgg_echo('workflow:duedate'); ?></label>
@@ -121,16 +137,16 @@ $user_guid = elgg_get_logged_in_user_guid();
 
 <div class="elgg-foot">
 	<?php
-	
+
 	echo elgg_view('input/hidden', array('name' => 'entity_guid', 'value' => $card_guid));
-	
+
 	echo elgg_view('input/submit', array(
 		'value' => elgg_echo("save"),
 		'id' => 'workflow-edit-card-submit'
 	));
-	
+
 	echo elgg_view('input/button', array('value' => elgg_echo("delete"), 'class' => 'elgg-button-delete'));
-	
+
 	?>
 	<div class="elgg-subtext">
 		<?php
