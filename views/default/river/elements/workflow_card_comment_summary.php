@@ -21,12 +21,10 @@ $subject_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
-$hash = ($vars['hash'] && $vars['hash'] != false) ? $vars['hash'] : '';
 $object_link = elgg_view('output/url', array(
-	'href' => $object->getURL() . $hash,
+	'href' => $object->getURL() . '#',
 	'text' => $object->title ? $object->title : $object->name,
 	'class' => 'elgg-river-object workflow-edit-card',
-	'rel' => 'popup',
 	'data-guid' => $object->getGUID(),
 	'is_trusted' => true,
 ));
