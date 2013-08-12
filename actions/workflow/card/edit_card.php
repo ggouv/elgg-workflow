@@ -20,17 +20,19 @@ $checklist_checked = get_input('checklist_checked');
 $duedate = get_input('duedate');
 $tags = get_input('tags');
 
-$user = elgg_get_logged_in_user_guid();
 
 // start a new sticky form session in case of failure
 elgg_make_sticky_form('card');
 
-if (!$card_guid) {
+$card = get_entity($card_guid);
+
+if (!$card) {
 	register_error(elgg_echo('workflow:unknown_card'));
 	forward(REFERER);
 }
 
-$card = get_entity($card_guid);
+$user = elgg_get_logged_in_user_guid();
+
 $list = get_entity($card->list_guid);
 $board = get_entity($list->board_guid);
 

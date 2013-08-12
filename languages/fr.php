@@ -83,13 +83,13 @@ $french = array(
 	'workflow:list:add_card' => "Ajouter une fiche",
 
 	'workflow:assignedto' => "Assigner à",
-	'workflow:assignedtome' => "M'assigner cette fiche",
+	'workflow:assignedtome' => "M'assigner à cette fiche",
 	'workflow:assignedtome:help' => "Vous assigner cette fiche permet de la faire apparaître dans la colonne de vos fiches assignées dans le hub.",
 	'workflow:checklist' => "Liste à cocher",
 	'workflow:checklist:add_item' => "Ajouter un élément",
 	'workflow:duedate' => "Date limite",
-	'workflow:card:view:duedate' => "d M",
-	'workflow:card:view_popup:duedate' => "l j F y",
+	'workflow:card:view:duedate' => "%d %b",
+	'workflow:card:view_popup:duedate' => "%A %d %B %Y",
 	'workflow:card:number' => "Fiche numéro %d",
 	'workflow:card:added' => "Ajouté %s par %s",
 
@@ -122,7 +122,7 @@ $french = array(
 	'workflow:card:delete:failure' => "La suppression de la fiche n'a pas été enregistrée.",
 	'workflow:card:edit:success' => "Les changements de la fiche ont été enregistrés.",
 	'workflow:card:edit:failure' => "Les changements de la fiche n'ont pas été enregistrés.",
-	'workflow:card:edit:cannot_edit' => "Vous ne pouvez pas modifier une fiche.",
+	'workflow:card:edit:cannot_edit' => "Vous ne pouvez pas modifier cette fiche.",
 	'workflow:card:assign:success' => "%s a bien été assigné à la fiche.",
 	'workflow:card:assign:failure' => "%s n'a pas pu être assigné.",
 

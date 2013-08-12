@@ -79,7 +79,7 @@ $user_guid = elgg_get_logged_in_user_guid();
 			'name' => 'assignedto',
 			'value' => $users
 		));
-	} else { // this card is on a prigvate board ?>
+	} else { // this card is on a private board ?>
 		<label><?php echo elgg_echo('workflow:assignedtome'); ?></label>
 		<?php
 		if ($users[0] == $user_guid) {
