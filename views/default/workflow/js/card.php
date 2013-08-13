@@ -110,9 +110,8 @@ elgg.workflow.card.add = function(form) {
 		elgg.action(form.attr('action'), {
 			data: form.serialize(),
 			success: function(json) {
-				var riverItem = $(json.output.river).filter('.elgg-list-item').attr('id');
-
-				if (!form.find('.elgg-input-plaintext').is(':focus')) form.find('div').addClass('hidden');
+				var riverItem = $(json.output.river).filter('.elgg-list-item').attr('id'),
+					$bodyList = $('#workflow-list-' + workflow_list+' > .elgg-body');
 
 				$('#workflow-list-content-' + workflow_list + ' .workflow-cards').append(json.output.card);
 
@@ -121,7 +120,11 @@ elgg.workflow.card.add = function(form) {
 				} else {
 					river.children('.elgg-body').prepend(json.output.river);
 				}
-				elgg.workflow.list.resize();
+				if (!form.find('.elgg-input-plaintext').is(':focus')) {
+					elgg.workflow.list.resize();
+					form.find('div').addClass('hidden');
+				}
+				$bodyList.scrollTo($bodyList.height())
 			}
 		});
 	}
