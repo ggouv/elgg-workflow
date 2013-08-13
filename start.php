@@ -38,7 +38,9 @@ function workflow_init() {
 
 	// Extend view
 	elgg_extend_view('css/elgg', 'workflow/css');
-	elgg_extend_view('js/elgg', 'workflow/js');
+	elgg_extend_view('js/elgg', 'workflow/js/init');
+	elgg_extend_view('js/elgg', 'workflow/js/list');
+	elgg_extend_view('js/elgg', 'workflow/js/card');
 
 	// add to groups
 	add_group_tool_option('workflow', elgg_echo('groups:enableworkflow'), true);
