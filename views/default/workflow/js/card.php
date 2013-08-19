@@ -253,9 +253,13 @@ elgg.workflow.card.popupForms = function() {
 					$('#card-info-popup').remove();
 				}
 				$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
-				$('#workflow-card-'+card_guid).replaceWith(json.output.card);
+				if ($('#workflow-card-'+card_guid).closest('.river-workflow').length == 1
+						&& $(json.output.card).find('img[alt="'+elgg.get_logged_in_user_entity().name+'"]').length == 0) {
+					$('#workflow-card-'+card_guid).remove();
+				} else {
+					$('#workflow-card-'+card_guid).replaceWith(json.output.card);
+				}
 				elgg.workflow.card.popup();
-				if ($(json.output.card).find('img[alt="'+elgg.get_logged_in_user_entity().name+'"]').length == 0) $('#workflow-card-'+card_guid).remove();
 			}
 		});
 	}
