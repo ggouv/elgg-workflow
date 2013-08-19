@@ -182,7 +182,7 @@ elgg.workflow.list.remove = function() {
  * Resize lists
  */
 elgg.workflow.list.resize = function() {
-	if ($(".workflow-lists-container .workflow-list").length) {
+	if ($('.workflow-lists-container .workflow-list').length) {
 		var WorkflowWidth = $('.workflow-lists-container'),
 			CountLists = $('.workflow-list').length,
 			ListWidth = 0,
@@ -235,10 +235,6 @@ elgg.workflow.list.resize = function() {
 			maxHeight += $(this).outerHeight(true);
 		});
 		river.height($(window).height()- maxHeight - 48 +10);
-		$('body').addClass('fixed-workflow');
-
-	} else {
-		$('body').removeClass('fixed-workflow');
 	}
 };
 

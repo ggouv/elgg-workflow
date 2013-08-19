@@ -39,7 +39,9 @@ elgg.register_hook_handler('init', 'system', elgg.workflow.init);
  */
 elgg.workflow.reload = function() {
 	// workflow layout?
-	if ($(".workflow-lists-container").length) {
+	if ($('.workflow-lists-container').length) {
+
+		$('body').addClass('fixed-workflow');
 
 		// highlight object
 		var url = elgg.parse_url(elgg.normalize_url(decodeURIComponent(window.location.href)), 'path');
@@ -56,7 +58,7 @@ elgg.workflow.reload = function() {
 		if (url.match('/list/(.*)/') !== null) {
 			var wlist = $('#workflow-list-'+url.match('/list/(.*)/')[1]);
 
-			wlist.effect("pulsate", function() {
+			wlist.effect('pulsate', function() {
 				wlist.css('border','2px solid #00FF00');
 			});
 		}
@@ -66,6 +68,8 @@ elgg.workflow.reload = function() {
 		elgg.workflow.list.resize();
 		elgg.workflow.list.resize(); //do it again cause scrollbar. @todo find another way to fix that.
 
+	} else {
+		$('body').removeClass('fixed-workflow');
 	}
 };
 
