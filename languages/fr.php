@@ -125,6 +125,7 @@ $french = array(
 	'workflow:card:edit:cannot_edit' => "Vous ne pouvez pas modifier cette fiche.",
 	'workflow:card:assign:success' => "%s a bien été assigné à la fiche.",
 	'workflow:card:assign:failure' => "%s n'a pas pu être assigné.",
+	'workflow:card:assign:notingroup' => "%s ne peut pas être assigné, il n'est pas membre du groupe.",
 
 	'workflow:list:archived:success' => "La liste est maintenant archivée.",
 

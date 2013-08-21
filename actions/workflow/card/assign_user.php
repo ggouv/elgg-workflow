@@ -27,18 +27,22 @@ $board = get_entity($list->board_guid);
 if ($card && $list && $board && $card->canEdit()) {
 
 	if ($assignedto_user = get_user_by_username($assignedto)) {
-		// Assign to users
-		add_entity_relationship($card_guid, 'assignedto', $assignedto_user->getGUID());
+		if (can_write_to_container($assignedto_user->getGUID(), $board->container_guid)) {
+			// Assign to users
+			add_entity_relationship($card_guid, 'assignedto', $assignedto_user->getGUID());
 
-		system_message(elgg_echo('workflow:card:assign:success', array($assignedto_user->name)));
+			system_message(elgg_echo('workflow:card:assign:success', array($assignedto_user->name)));
 
-		elgg_load_library('workflow:utilities');
-		notify_assigned_user($user, $assignedto_user, $card, $list, $board);
+			elgg_load_library('workflow:utilities');
+			notify_assigned_user($user, $assignedto_user, $card, $list, $board);
 
-		echo json_encode(array(
-			'card' => elgg_view_entity($card, array('view_type' => 'group')),
-			'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $board->guid)),
-		));
+			echo json_encode(array(
+				'card' => elgg_view_entity($card, array('view_type' => 'group')),
+				'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $board->guid)),
+			));
+		} else {
+			register_error('workflow:card:assign:notingroup', array($assignedto_user->name));
+		}
 	} else {
 		register_error(elgg_echo('workflow:card:assign:failure', array($assignedto_user->name)));
 	}

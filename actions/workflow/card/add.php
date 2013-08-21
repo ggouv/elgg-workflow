@@ -14,15 +14,15 @@ $list_guid = (int) get_input('workflow_list', null);
 $card_title = get_input('title', 'Card');
 
 $list = get_entity($list_guid);
-$container_guid = $list->container_guid;
+$container = get_entity($list->container_guid);
 $user_guid = elgg_get_logged_in_user_guid();
 
-if (!$container_guid || !$list_guid || !$card_title) {
+if (!$container || !$list_guid || !$card_title) {
 	register_error(elgg_echo('workflow:card:add:cannotadd'));
 	forward(REFERER);
 }
 
-if ($list || $list->canWritetoContainer()) {
+if ($list && $container && $container->canWritetoContainer()) {
 
 	$nbr_cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
@@ -35,7 +35,7 @@ if ($list || $list->canWritetoContainer()) {
 
 	$card = new ElggObject;
 	$card->subtype = "workflow_card";
-	$card->container_guid = $container_guid;
+	$card->container_guid = $container->getGUID();
 	$card->board_guid = $list->board_guid;
 	$card->list_guid = $list_guid;
 	$card->title = $card_title;
@@ -72,7 +72,7 @@ if ($list || $list->canWritetoContainer()) {
 		}
 
 		if ($item) {
-			elgg_set_page_owner_guid($container_guid);
+			elgg_set_page_owner_guid($container->getGUID());
 			$echo['river'] = "<li id='item-river-{$item[0]->id}' class='elgg-list-item' datetime=\"{$item[0]->posted}\">" .
 								elgg_view('river/item', array('item' => $item[0], 'size' => 'tiny', 'short' => true)) . '</li>';
 

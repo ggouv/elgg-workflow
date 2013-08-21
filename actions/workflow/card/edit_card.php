@@ -64,9 +64,13 @@ if ($card && $list && $board && $card->canEdit()) {
 		}
 		// Assign to users
 		foreach ($assignedto as $assignedto_user) {
-			if (add_entity_relationship($card_guid, 'assignedto', $assignedto_user)) {
-				$assignedto_user_entity = get_entity($assignedto_user);
-				notify_assigned_user($user, $assignedto_user_entity, $card, $list, $board);
+			$assignedto_user_entity = get_entity($assignedto_user);
+			if (can_write_to_container($assignedto_user, $board->container_guid)) {
+				if (add_entity_relationship($card_guid, 'assignedto', $assignedto_user)) {
+					notify_assigned_user($user, $assignedto_user_entity, $card, $list, $board);
+				}
+			} else {
+				register_error('workflow:card:assign:notingroup', array($assignedto_user_entity->name));
 			}
 		}
 
