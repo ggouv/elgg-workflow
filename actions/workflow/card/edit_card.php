@@ -31,7 +31,7 @@ if (!$card) {
 	forward(REFERER);
 }
 
-$user = elgg_get_logged_in_user_guid();
+$user = elgg_get_logged_in_user_entity();
 
 $list = get_entity($card->list_guid);
 $board = get_entity($list->board_guid);
@@ -49,9 +49,11 @@ if ($card && $list && $board && $card->canEdit()) {
 
 		// add assignedtome in assigned user
 		if ($assignedtome) {
-			$assignedto = array_unique(array_merge($assignedto, array($user)));
+			$assignedto = array_unique(array_merge($assignedto, array($user->getGUID())));
 		}
+
 		// Remove unassigned user
+		elgg_load_library('workflow:utilities');
 		$assigned_users = elgg_get_entities_from_relationship(array(
 			'relationship' => 'assignedto',
 			'relationship_guid'=> $card_guid,
@@ -62,7 +64,10 @@ if ($card && $list && $board && $card->canEdit()) {
 		}
 		// Assign to users
 		foreach ($assignedto as $assignedto_user) {
-			add_entity_relationship($card_guid, 'assignedto', $assignedto_user);
+			if (add_entity_relationship($card_guid, 'assignedto', $assignedto_user)) {
+				$assignedto_user_entity = get_entity($assignedto_user);
+				notify_assigned_user($user, $assignedto_user_entity, $card, $list, $board);
+			}
 		}
 
 		elgg_clear_sticky_form('card');

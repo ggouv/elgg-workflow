@@ -190,3 +190,40 @@ function workflow_get_user_board($owner_guid = false) {
 
 	return $board;
 }
+
+
+/**
+ * Send mail to assigned user
+ * @param  [ElggUser] $user             Entity of the user who assigned
+ * @param  [ElggUser] $assignedto_user  Entity of the assigned user
+ * @param  [ElggObject] $card           Entity of the card
+ * @param  [ElggObject] $list           Entity of the list
+ * @param  [ElggObject] $board          Entity of the board
+ */
+function notify_assigned_user($user, $assignedto_user, $card, $list, $board) {
+	// Send mail. A user can assignto a card himself. Don't send mail in this case.
+	if ($user->getGUID() != $assignedto_user->getGUID()) {
+		$user_view = elgg_view('output/link', array(
+			'href' => $user->getURL(),
+			'text' => $user->name
+		));
+		$card_view = elgg_view('output/link', array(
+			'href' => $card->getURL(),
+			'text' => $card->title
+		));
+		notify_user(
+			$assignedto_user->getGUID(),
+			$user->getGUID(),
+			elgg_echo('workflow:notify:assigned:subject', array($user->name, $card->title)),
+			elgg_echo('workflow:notify:assigned:body', array(
+					$user_view,
+					$card->title,
+					$list->title,
+					$board->title,
+					$board->getContainerEntity()->title,
+					"\n\n" . '<div style="background-color: #FAFAFA;font-size: 1.4em;padding: 10px;">' . $card->description . '</div>' . "\n")
+			),
+			array('method' => "email")
+		);
+	}
+}

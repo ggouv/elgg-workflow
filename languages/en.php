@@ -135,6 +135,13 @@ $english = array(
 
 
 	/**
+	 * Notifications
+	 */
+	'workflow:notify:assigned:subject' => "%s assign you to the card %s",
+	'workflow:notify:assigned:body' => "%s assign you to the card %s in the list %s of the board %s of group %s :%s",
+
+
+	/**
 	 * Sidebar items
 	 */
 	 'workflow:sidebar:assignedto_user' => "Participants",

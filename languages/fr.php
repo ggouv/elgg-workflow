@@ -132,6 +132,11 @@ $french = array(
 	 * Widget
 	 **/
 
+	/**
+	 * Notifications
+	 */
+	'workflow:notify:assigned:subject' => "%s vous a assigné à la fiche %s",
+	'workflow:notify:assigned:body' => "%s vous a assigné à la fiche %s dans la liste %s du tableau %s du groupe %s :%s",
 
 	/**
 	 * Sidebar items

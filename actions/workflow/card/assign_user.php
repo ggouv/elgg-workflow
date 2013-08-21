@@ -13,7 +13,7 @@
 $card_guid = (int) get_input('card_guid');
 $assignedto = (string) get_input('member');
 
-$user = elgg_get_logged_in_user_guid();
+$user = elgg_get_logged_in_user_entity();
 
 if (!$card_guid) {
 	register_error(elgg_echo('workflow:unknown_card'));
@@ -31,6 +31,9 @@ if ($card && $list && $board && $card->canEdit()) {
 		add_entity_relationship($card_guid, 'assignedto', $assignedto_user->getGUID());
 
 		system_message(elgg_echo('workflow:card:assign:success', array($assignedto_user->name)));
+
+		elgg_load_library('workflow:utilities');
+		notify_assigned_user($user, $assignedto_user, $card, $list, $board);
 
 		echo json_encode(array(
 			'card' => elgg_view_entity($card, array('view_type' => 'group')),
