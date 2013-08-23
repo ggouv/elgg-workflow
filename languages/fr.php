@@ -58,6 +58,7 @@ $french = array(
 	'workflow:archive' => "Archives",
 	'workflow:board:archive' => "Archives du tableau %s",
 	'workflow:board:back' => "Retourner au tableau",
+	'workflow:action:archive' => "Archiver",
 
 	/**
 	* River

@@ -51,20 +51,17 @@ if ($view_type == 'group') {
 		'metadata_name' => 'list_guid',
 		'metadata_value' => $workflow_list->guid,
 		'limit' => 0
-	));			
-			
+	));
+
 	$sorted_cards = array();
 	foreach ($cards as $card) {
 		$sorted_cards[$card->order] = $card;
 	}
 	ksort($sorted_cards);
 
-	$num_cards = count($cards);
-
 	$content = "<div class='workflow-cards'>";
-	for ($card_index = 1; $card_index <= $num_cards; $card_index++) {
-		$cardguid = $sorted_cards[$card_index-1]->guid;
-		$content .= elgg_view_entity($sorted_cards[$card_index-1], array('view_type' => 'group'));
+	foreach ($sorted_cards as $card) {
+		$content .= elgg_view_entity($card, array('view_type' => 'group'));
 	}
 	$content .= '<div class="workflow-card-none elgg-module workflow-card elgg-state-draggable"><div class="elgg-body"></div></div>'; // hack for empty list and sortable jquery.ui
 	$content .= "</div>";

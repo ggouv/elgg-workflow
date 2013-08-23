@@ -70,7 +70,7 @@ if ($card && $list && $board && $card->canEdit()) {
 					notify_assigned_user($user, $assignedto_user_entity, $card, $list, $board);
 				}
 			} else {
-				register_error('workflow:card:assign:notingroup', array($assignedto_user_entity->name));
+				register_error(elgg_echo('workflow:card:assign:notingroup', array($assignedto_user_entity->name)));
 			}
 		}
 

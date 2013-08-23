@@ -15,26 +15,25 @@ elgg_load_library('workflow:utilities');
 $card_guid = get_input('card_guid');
 $card = get_entity($card_guid);
 
-if (!$card) {
-	access_show_hidden_entities(true);
-	$card = get_entity($card_guid);
-
-	if ($card) { // this is an archived card. Cannot edit.
-		echo elgg_view('workflow/view_card_popup', array('card' => $card, 'archive' => true));
-	} else {
-		echo elgg_echo('workflow:unknown_card');
-	}
-
-} else {
+if ($card) {
 
 	elgg_set_page_owner_guid($card->getContainerGUID());
 
+	// If this is an archived card, we cannot edit.
+	$archive = false;
+	if ($card->getSubtype() == 'workflow_card_archived') $archive = true;
+
 	echo '<div id="card-forms">';
-	if ($card->canEdit()) {
+	if ($card->canEdit() && !$archive) {
 		$vars = array_merge(workflow_card_prepare_form_vars($card), array('preview' => 'toggle'));
 		echo elgg_view_form('workflow/card/edit_card', array(), $vars);
 	} else { // Cannot edit. Back to view card.
-		echo elgg_view_form('workflow/card/view_card', array('class' => 'elgg-form-workflow-card-edit-card'), array('card' => $card));
+
+		echo elgg_view_form(
+			'workflow/card/view_card',
+			array('class' => 'elgg-form-workflow-card-edit-card'),
+			array('card' => $card, 'archive' => $archive)
+		);
 
 		$vars = array(
 			'entity' => $card,
@@ -57,7 +56,6 @@ if (!$card) {
 		elgg.userpicker.init();
 
 		$('#card-info-popup .elgg-foot .elgg-button-submit').click(elgg.workflow.card.popupForms);
-		$('#card-info-popup .elgg-foot .elgg-button-delete').click(elgg.workflow.card.remove);
 
 		// checklist
 		$("#card-forms .card-checklist.sortable").sortable({
@@ -105,4 +103,6 @@ if (!$card) {
 </script>
 
 <?php
+} else {
+	echo elgg_echo('workflow:unknown_card');
 }

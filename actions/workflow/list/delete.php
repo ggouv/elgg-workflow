@@ -25,7 +25,7 @@ if ($deleted_list && $deleted_list->canWritetoContainer()) {
 
 	if ($annotation_id['new'] == true) add_to_river('river/object/workflow_river/create','create', $user_guid, $deleted_list_guid, '', 0, $annotation_id['id']);
 
-	// delete cards of this list
+	// delete cards of this list. We doesn't delete archived card
 	$cards = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_card',

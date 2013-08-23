@@ -115,10 +115,18 @@ $group = $card->getContainerEntity();
 		echo elgg_view('input/hidden', array('name' => 'entity_guid', 'value' => $card->getGUID()));
 
 		if ($card->getContainerEntity()->canWriteToContainer()) {
-			echo elgg_view('input/submit', array(
-				'value' => elgg_echo('workflow:assignedtome'),
-				'id' => 'workflow-edit-card-submit'
-			));
+			if ($archive) {
+				echo elgg_view('output/url', array(
+					'href' => elgg_add_action_tokens_to_url('action/workflow/card/archive?card_guid=' . $card->getGUID()),
+					'text' => elgg_echo('workflow:dearchive'),
+					'class' => 'elgg-button elgg-button-action'
+				));
+			} else {
+				echo elgg_view('input/submit', array(
+					'value' => elgg_echo('workflow:assignedtome'),
+					'id' => 'workflow-edit-card-submit'
+				));
+			}
 		}
 	?>
 	<div class="elgg-subtext">

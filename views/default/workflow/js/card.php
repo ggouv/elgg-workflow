@@ -308,10 +308,8 @@ elgg.workflow.addCommentonCard = function(card_guid, valueToAdd) {
  * @param {Object} event
  * @return void
  */
-elgg.workflow.card.remove = function() {
+elgg.workflow.card.remove = function(card) {
 	if (confirm(elgg.echo('workflow:card:delete:confirm'))) {
-		card = $(this).parent().find('input[name=entity_guid]').val();
-		// delete the card through ajax
 		elgg.action('workflow/card/delete', {
 			data: {
 				card_guid: card

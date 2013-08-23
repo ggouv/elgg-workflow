@@ -41,7 +41,7 @@ if ($card && $list && $board && $card->canEdit()) {
 				'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $board->guid)),
 			));
 		} else {
-			register_error('workflow:card:assign:notingroup', array($assignedto_user->name));
+			register_error(elgg_echo('workflow:card:assign:notingroup', array($assignedto_user->name)));
 		}
 	} else {
 		register_error(elgg_echo('workflow:card:assign:failure', array($assignedto_user->name)));

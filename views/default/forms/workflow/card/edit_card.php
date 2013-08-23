@@ -142,10 +142,29 @@ $user_guid = elgg_get_logged_in_user_guid();
 
 	echo elgg_view('input/submit', array(
 		'value' => elgg_echo("save"),
-		'id' => 'workflow-edit-card-submit'
+		'id' => 'workflow-edit-card-submit',
+		'class' => 'elgg-button elgg-button-submit float mrm'
 	));
 
-	echo elgg_view('input/button', array('value' => elgg_echo("delete"), 'class' => 'elgg-button-delete'));
+	echo elgg_view('output/group', array(
+		'class' => 'output-group float mlm',
+		'group' => array(
+			elgg_view('output/url', array(
+				'text' => elgg_echo('workflow:action:archive'),
+				'class' => 'elgg-button elgg-button-action float prm',
+				'href' => elgg_add_action_tokens_to_url('action/workflow/card/archive?card_guid=' . $card->getGUID())
+			)),
+			elgg_view('output/dropdown_menu', array(
+				'class' => 'invert',
+				'menu' => array(
+					elgg_view('output/url', array(
+						'text' => '<span class="elgg-icon elgg-icon-delete"></span>' . elgg_echo("delete"),
+						'href' => '#',
+						'onclick' => "elgg.workflow.card.remove($(this).closest('.elgg-foot').find('input[name=entity_guid]').val());"
+					))
+				)
+			))
+	)));
 
 	?>
 	<div class="elgg-subtext">

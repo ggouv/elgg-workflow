@@ -57,6 +57,7 @@ $english = array(
 	'workflow:archive' => "Archives",
 	'workflow:board:archive' => "Archives of the board %s",
 	'workflow:board:back' => "Go back to the board",
+	'workflow:action:archive' => "Archive card",
 
 	/**
 	* River
@@ -126,6 +127,7 @@ $english = array(
 	'workflow:card:edit:cannot_edit' => "You cannot edit this card.",
 	'workflow:card:assign:success' => "%s have been assigned.",
 	'workflow:card:assign:failure' => "%s cannot be assigned.",
+	'workflow:card:assign:notingroup' => "%s cannot be assigned, he isn't member of the group.",
 
 	'workflow:list:archived:success' => "List now archived.",
 

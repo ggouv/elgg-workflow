@@ -19,8 +19,8 @@ if (!$board) {
 	forward(REFERER);
 }
 
-if (!$subtype || !in_array($subtype, array('workflow_list', 'workflow_card'))) {
-	$subtype = 'workflow_list';
+if (!$subtype || !in_array($subtype, array('workflow_list_archived', 'workflow_card_archived'))) {
+	$subtype = 'workflow_list_archived';
 }
 
 elgg_set_page_owner_guid($board->getContainerGUID());
@@ -45,14 +45,12 @@ elgg_register_menu_item('title', array(
 
 $title = elgg_echo('workflow:board:archive', array($board->title));
 
-// show disable entities
-access_show_hidden_entities(true);
+// show archived entities
 $content = elgg_list_entities_from_metadata(array(
 	'type' => 'object',
-	'subtypes' => $subtype,
+	'subtype' => $subtype,
 	'metadata_name' => 'board_guid',
 	'metadata_value' => $board_guid,
-	'wheres' => "e.enabled='no'",
 	'view_type' => 'group',
 	'split_items' => 3,
 	'list_class' => 'workflow-card-list',
