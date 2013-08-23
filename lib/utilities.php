@@ -227,3 +227,143 @@ function notify_assigned_user($user, $assignedto_user, $card, $list, $board) {
 		);
 	}
 }
+
+
+/**
+ * Move card in same liste or between list
+ * @param  [ElggObject]    $moved_card   The card moved
+ * @param  [GUID]          $list_guid    GUID of the destination list
+ * @param  [integer]       $position     Position in the list, default first
+ * @return [bool]                        Return treu/false depend on success
+ */
+function workflow_move_card($moved_card, $list_guid, $position = 0) {
+	// get cards from orginal list
+	$cards = elgg_get_entities_from_metadata(array(
+		'type' => 'object',
+		'subtypes' => 'workflow_card',
+		'metadata_name' => 'list_guid',
+		'metadata_value' => $moved_card->list_guid,
+		'limit' => 0
+	));
+
+	// sort the card and remove the card that's being moved from the array
+	$sorted_cards = array();
+	foreach ($cards as $card) {
+		if ($card->guid != $moved_card->getGUID()) {
+			$sorted_cards[$card->order] = $card;
+		}
+	}
+	ksort($sorted_cards);
+
+	// check if the card ordered in the same list
+	if ( $moved_card->list_guid == $list_guid ) {
+
+		// split the array in two and recombine with the moved card in middle
+		$before = array_slice($sorted_cards, 0, $position);
+		array_push($before, $moved_card);
+		$after = array_slice($sorted_cards, $position);
+		$cards = array_merge($before, $after);
+		ksort($cards);
+
+		// redefine order for each card
+		$order = 0;
+		foreach ($cards as $card) {
+			$card->order = $order; // @todo don't work with $card->save(); for just member of group
+			$order += 1;
+		}
+
+	} else { // not in the same list
+
+	// order orginal list
+		$cards = array_merge(array(),$sorted_cards);
+		$order = 0;
+		foreach ($cards as $card) {
+			$card->order = $order;
+			$order += 1;
+		}
+
+	// order destination list
+		// get cards from destination list
+		$cards = elgg_get_entities_from_metadata(array(
+			'type' => 'object',
+			'subtypes' => 'workflow_card',
+			'metadata_name' => 'list_guid',
+			'metadata_value' => $list_guid,
+			'limit' => 0
+		));
+
+		// sort the list and remove the list that's being moved from the array
+		$sorted_cards = array();
+		foreach ($cards as $index => $card) {
+			$sorted_cards[$card->order] = $card;
+		}
+		ksort($sorted_cards);
+
+		// split the array in two and recombine with the moved card in middle
+		$before = array_slice($sorted_cards, 0, $position);
+		array_push($before, $moved_card);
+		$after = array_slice($sorted_cards, $position);
+		$cards = array_merge($before, $after);
+		ksort($cards);
+
+		// redefine order for each card
+		$order = 0;
+		foreach ($cards as $card) {
+			$card->order = $order;
+			$order += 1;
+		}
+
+		// define list_guid's card to destination list
+		$moved_card->list_guid = $list_guid;
+
+	}
+	return true;
+}
+
+
+
+/**
+ * Archive board, list or card
+ *
+ * @param [ElggObject] ElggObject of the board, the list or the card
+ *
+ * @return true|false Depending on success
+ */
+function workflow_archive($entity) {
+	// Check if it's a board, a list or a card. Security.
+	if ($entity && in_array($entity->getSubtype(), array('workflow_board', 'workflow_list', 'workflow_card'))) {
+		global $CONFIG;
+		$archive_subtype = $entity->getSubtype() . '_archived';
+		$archive_subtype = add_subtype('object', $archive_subtype); // create subtype if doesn't exist
+		return update_data("UPDATE {$CONFIG->dbprefix}entities
+								SET subtype = '$archive_subtype'
+								WHERE {$CONFIG->dbprefix}entities.guid = {$entity->getGUID()}");
+	}
+
+	// error
+	return false;
+}
+
+
+
+/**
+ * De-archive board, list or card
+ *
+ * @param [ElggObject] ElggObject of the board, the list or the card
+ *
+ * @return true|false Depending on success
+ */
+function workflow_dearchive($entity) {
+	// Check if it's an archived board, list or card. Security.
+	if ($entity && in_array($entity->getSubtype(), array('workflow_board_archived', 'workflow_list_archived', 'workflow_card_archived'))) {
+		global $CONFIG;
+		// Note: subtype exist because it was already created when object was created before been archived
+		$subtype = get_subtype_id('object', str_replace('_archived', '', $entity->getSubtype()));
+		return update_data("UPDATE {$CONFIG->dbprefix}entities
+								SET subtype = '$subtype'
+								WHERE {$CONFIG->dbprefix}entities.guid = {$entity->getGUID()}");
+	}
+
+	// error
+	return false;
+}

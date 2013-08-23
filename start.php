@@ -56,6 +56,7 @@ function workflow_init() {
 	elgg_register_action('workflow/list/move', "$action_base/move.php");
 	elgg_register_action('workflow/list/add_list_popup', "$action_base/add.php");
 	elgg_register_action('workflow/list/delete', "$action_base/delete.php");
+	elgg_register_action('workflow/list/archive', "$action_base/archive.php");
 	// actions for card
 	$action_base = "$root/actions/workflow/card";
 	elgg_register_action('workflow/list/add_card', "$action_base/add.php");
@@ -64,6 +65,7 @@ function workflow_init() {
 	elgg_register_action('workflow/card/assign_user', "$action_base/assign_user.php");
 	elgg_register_action('workflow/card/edit_card', "$action_base/edit_card.php");
 	elgg_register_action('workflow/card/view_card', "$action_base/view_card.php");
+	elgg_register_action('workflow/card/archive', "$action_base/archive.php");
 
 	// Register plugin hook for permission
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'workflow_card_permissions_check');
