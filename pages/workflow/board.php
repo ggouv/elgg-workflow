@@ -124,7 +124,7 @@ if (!$lists) {
 	$content = $addlist . '<div class="workflow-lists-container"><p>' . elgg_echo('workflow:list:none') . '</p></div>';
 }
 
-$sidebar .= elgg_view('workflow/sidebar', array('board_guid' => $board_guid));
+$sidebar = elgg_view('workflow/sidebar', array('board_guid' => $board_guid));
 
 $params = array(
 	'content' => $content,

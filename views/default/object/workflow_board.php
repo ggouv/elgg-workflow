@@ -107,19 +107,19 @@ if ($full && !elgg_in_context('gallery')) {
 	$summary = elgg_view('object/elements/summary', $params);
 
 	$body = <<<HTML
-<ul class="board row-fluid">
-	<li class="span8">$description</li>
-	<li class="elgg-heading-basic pam span4">
+<div class="board row-fluid">
+	<div class="span6">$summary $description</div>
+	<div class="elgg-heading-basic pam span6">
 		<p>$board_info</p>
 		$participants
 		$last_action_string
-	</li>
-</ul>
+	</div>
+</div>
 HTML;
 
 	echo elgg_view('object/elements/full', array(
 		'entity' => $board,
-		'summary' => $summary,
+		'summary' => '',
 		'body' => $body,
 	));
 

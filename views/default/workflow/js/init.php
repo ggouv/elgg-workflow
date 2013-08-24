@@ -47,7 +47,7 @@ elgg.workflow.reload = function() {
 		var url = elgg.parse_url(elgg.normalize_url(decodeURIComponent(window.location.href)), 'path');
 
 		if (url.match('/card/(.*)/') !== null) {
-			var card = $('#workflow-card-'+url.match('/card/(.*)/')[1]);
+			var card = $('.workflow-list').not('.my-assigned-cards').find('#workflow-card-'+url.match('/card/(.*)/')[1]);
 
 			card.parents('.elgg-body').scrollTo(card, function() {
 				card.effect("pulsate", function() {

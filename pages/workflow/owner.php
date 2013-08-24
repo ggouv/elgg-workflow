@@ -33,15 +33,22 @@ if ($owner->type == 'group') {
 		$content = elgg_echo('workflow:board:none');
 	}
 
-	$sidebar .= elgg_view('workflow/sidebar');
+	$sidebar = elgg_view('workflow/sidebar');
 
-	$params = array(
-		'content' => $content,
-		'title' => $title,
-		'sidebar' => $sidebar,
-	);
-
-	$body = elgg_view_layout('workflow', $params);
+	if (elgg_view_exists('page/layouts/content_two_right_sidebars')) {
+		$body = elgg_view_layout('content_two_right_sidebars', array(
+			'content' => $content,
+			'title' => $title,
+			'sidebar_2' => $sidebar,
+			'class' => 'sidebar-2-fixed'
+		));
+	} else {
+		$body = elgg_view_layout('content', array(
+			'content' => $content,
+			'title' => $title,
+			'sidebar' => $sidebar,
+		));
+	}
 
 	echo elgg_view_page($title, $body);
 

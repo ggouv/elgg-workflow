@@ -58,7 +58,7 @@ if ($archived_card && can_write_to_container($user_guid, $archived_card->contain
 			workflow_move_card($archived_card, $archived_card->list_guid, $archived_card->order);
 			system_message(elgg_echo('workflow:card:dearchived:success'));
 			// we cannot use $archived_card->getURL() because $arcived_card is in cache with subtype workflow_card_archived
-			forward("workflow/board/{$board->getGUID()}/card/{$archived_card->getGUID()}/$$archived_card->title");
+			forward("workflow/board/{$board->getGUID()}/card/{$archived_card->getGUID()}/$archived_card->title");
 		}
 	}
 }
