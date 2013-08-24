@@ -68,6 +68,7 @@ $french = array(
 	'river:create:object:workflow_card_list:summary' => "%s a modifié le tableau %s %s",
 	'river:create:object:workflow_list:message' => "A ajouté la liste %s",
 	'river:create:object:workflow_card:message' => "A ajouté la fiche %s %s",
+	'river:archive:object:workflow_card:message' => "A archivé la fiche %s",
 	'river:comment:object:workflow_card' => "%s a commenté la fiche %s",
 	'workflow:card:shorted:message' => "+%s actions",
 	'river:create:object:workflow_board' => "%s a ajouté le tableau %s",
@@ -128,6 +129,8 @@ $french = array(
 	'workflow:card:assign:failure' => "%s n'a pas pu être assigné.",
 	'workflow:card:assign:notingroup' => "%s ne peut pas être assigné, il n'est pas membre du groupe.",
 
+	'workflow:card:archived:success' => "La fiche est maintenant archivée.",
+	'workflow:card:dearchived:success' => "La fiche a été remise à sa place.",
 	'workflow:list:archived:success' => "La liste est maintenant archivée.",
 
 	/**

@@ -67,6 +67,7 @@ $english = array(
 	'river:create:object:workflow_card_list:summary' => "%s modified board %s %s",
 	'river:create:object:workflow_list:message' => "Added list %s",
 	'river:create:object:workflow_card:message' => "Added card %s %s",
+	'river:archive:object:workflow_card:message' => "Archived card %s",
 	'river:comment:object:workflow_card' => "%s commented the card %s",
 	'workflow:card:shorted:message' => "+%s actions",
 	'river:create:object:workflow_board' => "%s added board %s",
@@ -129,6 +130,8 @@ $english = array(
 	'workflow:card:assign:failure' => "%s cannot be assigned.",
 	'workflow:card:assign:notingroup' => "%s cannot be assigned, he isn't member of the group.",
 
+	'workflow:card:archived:success' => "Card now archived.",
+	'workflow:card:dearchived:success' => "Card now dearchived.",
 	'workflow:list:archived:success' => "List now archived.",
 
 	/**
