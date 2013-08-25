@@ -230,11 +230,9 @@ elgg.workflow.list.resize = function() {
 
 		//sidebar
 		var maxHeight = 0,
-		river = $('.workflow-sidebar .river > .elgg-body').height(0)
-		$('.elgg-sidebar > *:not(script)').each(function() {
-			maxHeight += $(this).outerHeight(true);
-		});
-		river.height($(window).height()- maxHeight - 48 +10);
+			river = $('.workflow-sidebar .river .elgg-river');
+
+		river.height($(window).height()- river.offset().top);
 	}
 };
 

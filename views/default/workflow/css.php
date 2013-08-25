@@ -118,8 +118,9 @@ body.fixed-workflow {
 .elgg-form-workflow-list-add-card .elgg-button-submit {
 	margin: 0 5px 5px 1px;
 }
-.workflow-sidebar .river > .elgg-body {
+.elgg-sidebar .river > .elgg-body {
 	overflow: auto;
+	border-top: 1px solid #CCCCCC;
 }
 .workflow-sidebar .elgg-module.river .elgg-body > li {
 	list-style: none;
@@ -393,6 +394,10 @@ body.fixed-workflow {
  */
 .elgg-list.river-workflow {
 	height: 100%;
+	overflow: auto;
+}
+.column-river .river-workflow {
+	background: #EEE;
 }
 .elgg-list.river-workflow > li {
 	padding: 5px 0;

@@ -42,6 +42,6 @@ $content .= '</ul>';
 $content .= '<ul class="elgg-river elgg-list river-workflow">';
 $content .= '</ul></div>';
 
-echo elgg_view_module('aside', $title, $content, array('class' => 'river'));
+echo elgg_view_module('', $title, $content, array('class' => 'river'));
 
 echo '</div>';
