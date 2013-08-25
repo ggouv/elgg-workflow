@@ -71,6 +71,22 @@ elgg.workflow.reload = function() {
 	} else {
 		$('body').removeClass('fixed-workflow');
 	}
+
+	// workflow river ?
+	if ($('.workflow-river').length) {
+		elgg.post('ajax/view/workflow/ajax_river/', {
+			dataType: 'html',
+			data: {
+				entity_guid: $('.workflow-river .column-header').data('board_guid')
+			},
+			success: function(response) {
+				$('.workflow-river .elgg-river').html(response);
+			},
+			error: function() {
+
+			}
+		});
+	}
 };
 
 

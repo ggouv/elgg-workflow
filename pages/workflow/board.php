@@ -19,8 +19,7 @@ if (!$board) {
 	forward(REFERER);
 }
 
-elgg_set_page_owner_guid($board->getContainerGUID());
-$container = elgg_get_page_owner_entity();
+$container = $board->getContainerEntity();
 
 if (elgg_instanceof($container, 'group')) {
 	group_gatekeeper();

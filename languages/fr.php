@@ -148,7 +148,7 @@ $french = array(
 	 */
 	 'workflow:sidebar:assignedto_user' => "Participants",
 	 'workflow:sidebar:assignedto_user:none' => "Pas de participant",
-	 'workflow:sidebar:last_activity_all_board' => "Activité des tableaux de %s",
+	 'workflow:sidebar:last_activity_all_board' => "Activité dans les tableaux du groupe",
 	 'workflow:sidebar:last_activity_on_this_board' => "Activité du tableau",
 
 	/**

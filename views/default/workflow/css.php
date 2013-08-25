@@ -385,20 +385,17 @@ body.fixed-workflow {
 	padding: 5px;
 }
 
-
 /*
  * Css for elgg-deck_river
  */
 .elgg-list.river-workflow {
 	height: 100%;
-	background-color: #EEE;
 }
 .elgg-list.river-workflow > li {
-	float: left;
-	border: none;
-	padding: 0;
+	padding: 5px 0;
+	background: transparent;
 }
-.elgg-list.river-workflow > li:first-child {
+.workflow-sidebar .elgg-list.river-workflow > li:first-child {
 	margin-top: -2px;
 }
 .elgg-river .elgg-module.workflow-card {

@@ -40,12 +40,9 @@ if (!$content) {
 	$content = elgg_echo('workflow:card:none');
 }
 
-$sidebar .= elgg_view('workflow/sidebar');
-
 $params = array(
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => $sidebar,
 	'filter_override' => elgg_view('workflow/nav', array('selected' => 'assigned-cards/owner')),
 );
 
