@@ -132,6 +132,9 @@ body.fixed-workflow {
 	height: 32px;
 	width: 32px;
 }
+.workflow-sidebar + .elgg-menu-extras {
+	display: none;
+}
 
 /* CSS for card in board view */
 .workflow-cards {

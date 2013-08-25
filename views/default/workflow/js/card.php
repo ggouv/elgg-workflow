@@ -118,7 +118,7 @@ elgg.workflow.card.add = function(form) {
 				if (river.find('#' + riverItem).length) {
 					river.find('#' + riverItem).html(json.output.river);
 				} else {
-					river.children('.elgg-body').prepend(json.output.river);
+					river.find('.river-workflow').prepend(json.output.river);
 				}
 				if (!form.find('.elgg-input-plaintext').is(':focus')) {
 					elgg.workflow.list.resize();

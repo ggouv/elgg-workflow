@@ -18,7 +18,9 @@ if ($entity) {
 
 	$content = '';
 
+
 	if ($entity->getSubtype() == 'workflow_board') {
+
 		elgg_set_page_owner_guid($entity->container_guid); // set page owner to not show "in group" in river items
 
 		$metastring = get_metastring_id('board_guid');
@@ -53,6 +55,9 @@ if ($entity) {
 		if ($content) echo $content;
 
 	} else {
+
+		elgg_set_page_owner_guid($entity->getGUID()); // set page owner to not show "in group" in river items
+
 
 		$options['wheres'][] = "e.container_guid = " . $entity->getGUID();
 

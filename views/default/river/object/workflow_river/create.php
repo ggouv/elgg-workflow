@@ -23,9 +23,11 @@ $subject_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
+$echo = 'river:create:object:workflow_card_list:summary';
+
 if ($short) {
 	$board_link = $group_string = '';
-	
+
 	if ($board && $short === 'group') {
 		$board_link = elgg_view('output/url', array(
 			'href' => $board->getURL(),
@@ -33,6 +35,8 @@ if ($short) {
 			'class' => 'elgg-river-object',
 			'is_trusted' => true,
 		));
+	} else {
+		$echo = '%s&nbsp;';
 	}
 } else if ($board) {
 	$board_link = elgg_view('output/url', array(
@@ -50,7 +54,8 @@ if ($short) {
 	$group_string = elgg_echo('river:ingroup', array($group_link));
 }
 
-$summary = elgg_echo('river:create:object:workflow_card_list:summary', array($subject_link, $board_link, $group_string));
+$summary = elgg_echo($echo, array($subject_link, $board_link, $group_string));
+
 elgg_load_library('workflow:utilities');
 $message = workflow_read_annotation($vars['item']->annotation_id);
 
