@@ -74,19 +74,36 @@ elgg.workflow.reload = function() {
 
 	// workflow river ?
 	if ($('.workflow-river').length) {
-		elgg.post('ajax/view/workflow/ajax_river/', {
-			dataType: 'html',
-			data: {
-				entity_guid: $('.workflow-river .column-header').data('board_guid')
-			},
-			success: function(response) {
-				$('.workflow-river .elgg-river').html(response);
-			},
-			error: function() {
+		elgg.workflow.load_river();
 
-			}
+		// load more in column
+		$('.moreItem').die().live('click', function() {
+			$('.workflow-river').addClass('loadingMore');
+			elgg.workflow.load_river();
 		});
 	}
+};
+
+
+/**
+ * Load board activity or activity in all group's boards
+ */
+elgg.workflow.load_river = function() {
+	elgg.post('ajax/view/workflow/ajax_river/', {
+		dataType: 'html',
+		data: {
+			entity_guid: $('.workflow-river .column-header').data('board_guid'),
+			time_posted: $('.workflow-river .elgg-list-item').last().attr('datetime')
+		},
+		success: function(response) {
+			$('.workflow-river').removeClass('loadingMore')
+				.find('.moreItem').remove();
+			$('.workflow-river .elgg-river').append(response);
+		},
+		error: function() {
+
+		}
+	});
 };
 
 

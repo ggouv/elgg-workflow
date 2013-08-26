@@ -75,6 +75,7 @@ $french = array(
 	'river:create:object:workflow_card:move:message' => "A déplacé la fiche %s : %s > %s",
 	'river:delete:object:workflow_card:message' => "A supprimé la fiche \"%s\" %s",
 	'river:delete:object:workflow_list:message' => "A supprimé la liste \"%s\"",
+	'river:end' => "Fin",
 
 	/**
 	 * Form fields

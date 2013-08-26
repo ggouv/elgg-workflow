@@ -74,6 +74,7 @@ $english = array(
 	'river:create:object:workflow_card:move:message' => "Moved card %s form %s to %s",
 	'river:delete:object:workflow_card:message' => "Deleted card \"%s\" %s",
 	'river:delete:object:workflow_list:message' => "Deleted list \"%s\"",
+	'river:end' => "End",
 
 	/**
 	 * Form fields

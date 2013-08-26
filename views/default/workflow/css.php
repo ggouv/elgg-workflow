@@ -118,18 +118,18 @@ body.fixed-workflow {
 .elgg-form-workflow-list-add-card .elgg-button-submit {
 	margin: 0 5px 5px 1px;
 }
-.elgg-sidebar .river > .elgg-body {
+.elgg-module-river > .elgg-body {
 	overflow: auto;
 	border-top: 1px solid #CCCCCC;
 }
-.workflow-sidebar .elgg-module.river .elgg-body > li {
+.elgg-module-river .elgg-body > li {
 	list-style: none;
 }
-.workflow-sidebar .river .elgg-avatar img {
+.elgg-module-river .elgg-avatar img {
 	height: 26px;
 	width: 26px;
 }
-.workflow-sidebar .river li:first-child .elgg-avatar img {
+.elgg-module-river li:first-child .elgg-avatar img {
 	height: 32px;
 	width: 32px;
 }

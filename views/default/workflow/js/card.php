@@ -73,12 +73,12 @@ elgg.workflow.card.move = function(event, ui) {
 		},
 		success: function(json) {
 			var riverItem = $(json.output.river).filter('.elgg-list-item').attr('id'),
-				riverItemDom = $('.elgg-module-aside.river #' + riverItem);
+				riverItemDom = $('.elgg-module-river #' + riverItem);
 
 			if (riverItemDom.length) {
-				riverItemDom.html(json.output.river);
+				riverItemDom.replaceWith(json.output.river);
 			} else {
-				$('.elgg-module-aside.river > .elgg-body').prepend(json.output.river);
+				$('.elgg-module-river > .elgg-body').prepend(json.output.river);
 			}
 			elgg.workflow.card.popup();
 			elgg.workflow.list.resize();
@@ -104,7 +104,7 @@ elgg.workflow.card.add = function(form) {
 	var workflow_list = form.find('[name=workflow_list]').val(),
 		input_add_card = form.find('.elgg-input-plaintext'),
 		card_title = input_add_card.val(),
-		river = $('.elgg-module-aside.river');
+		river = $('.elgg-module-river');
 
 	if (card_title) {
 		elgg.action(form.attr('action'), {
@@ -116,7 +116,7 @@ elgg.workflow.card.add = function(form) {
 				$('#workflow-list-content-' + workflow_list + ' .workflow-cards').append(json.output.card);
 
 				if (river.find('#' + riverItem).length) {
-					river.find('#' + riverItem).html(json.output.river);
+					river.find('#' + riverItem).replaceWith(json.output.river);
 				} else {
 					river.find('.river-workflow').prepend(json.output.river);
 				}

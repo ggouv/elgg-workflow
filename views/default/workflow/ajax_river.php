@@ -4,6 +4,7 @@
  */
 
 $entity_guid = get_input('entity_guid') ;
+$time_posted = get_input('time_posted', false);
 
 $entity = get_entity($entity_guid);
 
@@ -15,9 +16,9 @@ if ($entity) {
 
 	$options['joins'][] = "JOIN {$dbprefix}entities e ON e.guid = rv.object_guid";
 	$options['wheres'][] = "(rv.view IN ('river/object/workflow_river/create', 'river/object/workflow_river/modified'))";
+	if (!!$time_posted) $options['posted_time_upper'] = (int) $time_posted-1;
 
 	$content = '';
-
 
 	if ($entity->getSubtype() == 'workflow_board') {
 
@@ -35,7 +36,7 @@ if ($entity) {
 
 			$defaults = array(
 				//'offset' => (int) get_input('offset', 0),
-				'limit' => 10,
+				'limit' => 30,
 				'pagination' => FALSE,
 				'count' => FALSE,
 			);
@@ -52,18 +53,15 @@ if ($entity) {
 
 		}
 
-		if ($content) echo $content;
-
 	} else {
 
 		elgg_set_page_owner_guid($entity->getGUID()); // set page owner to not show "in group" in river items
-
 
 		$options['wheres'][] = "e.container_guid = " . $entity->getGUID();
 
 		$defaults = array(
 			//'offset' => (int) get_input('offset', 0),
-			'limit' => 10,
+			'limit' => 30,
 			'pagination' => FALSE,
 			'count' => FALSE,
 		);
@@ -79,6 +77,14 @@ if ($entity) {
 			}
 		}
 
-		echo $content;
 	}
+}
+
+if ($content) {
+	$content .= '<li class="moreItem">';
+	$content .= '<div class="response-loader hidden"></div>' . elgg_echo('deck_river:more');
+	$content .= '</li>';
+	echo $content;
+} else {
+	echo '<li class="end">' . elgg_echo('river:end') . '</li>';
 }

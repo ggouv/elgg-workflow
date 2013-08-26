@@ -127,16 +127,16 @@ elgg.workflow.list.add = function(form) {
 			$('.workflow-lists').append(json.output.list);
 
 			// add activity h3
-			if (!$('.elgg-sidebar .elgg-module-aside.river .elgg-head').length) {
-				$('.elgg-sidebar .elgg-module-aside.river').prepend('<div class="elgg-head mbs"><h3>' + elgg.echo('workflow:sidebar:last_activity_on_this_board') + '</h3></div>');
+			if (!$('.elgg-sidebar .elgg-module-river .elgg-head').length) {
+				$('.elgg-sidebar .elgg-module-river').prepend('<div class="elgg-head mbs"><h3>' + elgg.echo('workflow:sidebar:last_activity_on_this_board') + '</h3></div>');
 			}
 
-			var riverItemDom = $('.elgg-module-aside.river #' + $(json.output.river).filter('.elgg-list-item').attr('id'));
+			var riverItemDom = $('.elgg-module-river #' + $(json.output.river).filter('.elgg-list-item').attr('id'));
 
 			if (riverItemDom.length) {
 				riverItemDom.html(json.output.river);
 			} else {
-				$('.elgg-module-aside.river > .elgg-body').prepend(json.output.river);
+				$('.elgg-module-river > .elgg-body').prepend(json.output.river);
 			}
 			elgg.workflow.list.addCard();
 			elgg.workflow.list.resize();
@@ -230,7 +230,7 @@ elgg.workflow.list.resize = function() {
 
 		//sidebar
 		var maxHeight = 0,
-			river = $('.workflow-sidebar .river .elgg-river');
+			river = $('.workflow-sidebar .elgg-river');
 
 		river.height($(window).height()- river.offset().top);
 	}
