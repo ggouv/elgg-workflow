@@ -23,7 +23,12 @@ if ($deleted_list && $deleted_list->canWritetoContainer()) {
 	$message = elgg_echo('river:delete:object:workflow_list:message', array($deleted_list->title));
 	$annotation_id = workflow_create_annotation($board_guid, $message, $user_guid, $deleted_list->access_id);
 
-	if ($annotation_id['new'] == true) add_to_river('river/object/workflow_river/create','create', $user_guid, $deleted_list_guid, '', 0, $annotation_id['id']);
+	if ($annotation_id['new'] == true) {
+		$id = add_to_river('river/object/workflow_river/create','create', $user_guid, $board_guid, '', 0, $annotation_id['id']);
+		$item = elgg_get_river(array('id' => $id));
+	} else {
+		$item = elgg_get_river(array('annotation_id' => $annotation_id['id']));
+	}
 
 	// delete cards of this list. We doesn't delete archived card
 	$cards = elgg_get_entities_from_metadata(array(
@@ -60,8 +65,12 @@ if ($deleted_list && $deleted_list->canWritetoContainer()) {
 	}
 
 	system_message(elgg_echo('workflow:list:delete:success'));
+
+
+	//elgg_set_page_owner_guid($container_guid);
 	echo json_encode(array(
-		'sidebar' => elgg_view('workflow/sidebar', array('board_guid' => $board_guid)),
+		'river' => "<li id='item-river-{$item[0]->id}' class='elgg-list-item' datetime=\"{$item[0]->posted}\">" .
+						elgg_view('river/item', array('item' => $item[0], 'size' => 'tiny', 'short' => true)) . '</li>'
 	));
 	forward(REFERER);
 }

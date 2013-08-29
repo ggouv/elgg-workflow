@@ -48,7 +48,7 @@ if ($moved_list && $moved_list->canWritetoContainer()) {
 		$list->order = $order;
 		$order += 1;
 	}
-	
+
 	system_message(elgg_echo('workflow:list:move:success'));
 	forward(REFERER);
 }

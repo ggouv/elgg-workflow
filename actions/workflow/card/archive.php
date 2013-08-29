@@ -38,7 +38,7 @@ if ($archived_card && can_write_to_container($user_guid, $archived_card->contain
 			$annotation_id = workflow_create_annotation($archived_card->board_guid, $message, $user_guid, $archived_card->access_id);
 
 			if ($annotation_id['new'] == true) {
-				$id = add_to_river('river/object/workflow_river/create','create', $user_guid, $archived_card->getGUID(), '', 0, $annotation_id['id']);
+				$id = add_to_river('river/object/workflow_river/create','create', $user_guid, $archived_card->board_guid, '', 0, $annotation_id['id']);
 				$item = elgg_get_river(array('id' => $id));
 			} else {
 				$item = elgg_get_river(array('annotation_id' => $annotation_id['id']));

@@ -65,7 +65,7 @@ if ($list && $container && $container->canWritetoContainer()) {
 		$annotation_id = workflow_create_annotation($list->board_guid, $message, $user_guid, $list->access_id);
 
 		if ($annotation_id['new'] == true) {
-			$id = add_to_river('river/object/workflow_river/create','create', $user_guid, $card->getGUID(), '', 0, $annotation_id['id']);
+			$id = add_to_river('river/object/workflow_river/create','create', $user_guid, $list->board_guid, '', 0, $annotation_id['id']);
 			$item = elgg_get_river(array('id' => $id));
 		} else {
 			$item = elgg_get_river(array('annotation_id' => $annotation_id['id']));

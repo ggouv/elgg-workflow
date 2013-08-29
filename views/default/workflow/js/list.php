@@ -55,7 +55,7 @@ elgg.workflow.list.init = function() {
 			}
 		});
 		// delete list button
-		$('li.elgg-menu-item-delete a.workflow-list-delete-button').click(elgg.workflow.list.remove);
+		$('li.elgg-menu-item-delete a.workflow-list-delete-button').live('click', elgg.workflow.list.remove);
 		// add card from list footer
 		elgg.workflow.list.addCard();
 
@@ -134,12 +134,13 @@ elgg.workflow.list.add = function(form) {
 			var riverItemDom = $('.elgg-module-river #' + $(json.output.river).filter('.elgg-list-item').attr('id'));
 
 			if (riverItemDom.length) {
-				riverItemDom.html(json.output.river);
+				riverItemDom.replaceWith(json.output.river);
 			} else {
-				$('.elgg-module-river > .elgg-body').prepend(json.output.river);
+				$('.river-workflow').prepend(json.output.river);
 			}
 			elgg.workflow.list.addCard();
 			elgg.workflow.list.resize();
+			$('li.elgg-menu-item-delete a.workflow-list-delete-button').die().live('click', elgg.workflow.list.remove);
 			$('.workflow-lists-container').animate({ scrollLeft: $('.workflow-lists-container').width()});
 		}
 	});
@@ -166,7 +167,13 @@ elgg.workflow.list.remove = function() {
 			success: function(json) {
 				list.remove();
 				elgg.workflow.list.resize();
-				$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
+
+				var riverItemDom = $('.elgg-module-river #' + $(json.output.river).filter('.elgg-list-item').attr('id'));
+				if (riverItemDom.length) {
+					riverItemDom.replaceWith(json.output.river);
+				} else {
+					$('.river-workflow').prepend(json.output.river);
+				}
 				if (!$('.workflow-list').length) {
 					$('.workflow-lists-container').html('').append('<p>' + elgg.echo('workflow:list:none') + '</p>');
 				}

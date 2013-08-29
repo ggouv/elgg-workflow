@@ -32,7 +32,7 @@ if ($deleted_card && $deleted_card->canWritetoContainer()) {
 	$message = elgg_echo('river:delete:object:workflow_card:message', array($deleted_card->title, $in_string));
 	$annotation_id = workflow_create_annotation($board_guid, $message, $user_guid, $list->access_id);
 
-	if ($annotation_id['new'] == true) add_to_river('river/object/workflow_river/create','create', $user_guid, $deleted_card_guid, '', 0, $annotation_id['id']);
+	if ($annotation_id['new'] == true) add_to_river('river/object/workflow_river/create','create', $user_guid, $board_guid, '', 0, $annotation_id['id']);
 
 	delete_entity($deleted_card_guid);
 

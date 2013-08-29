@@ -10,13 +10,8 @@ $entity = get_entity($entity_guid);
 
 if ($entity) {
 
-	// board activity
-	global $CONFIG;
-	$dbprefix = $CONFIG->dbprefix;
-
-	$options['joins'][] = "JOIN {$dbprefix}entities e ON e.guid = rv.object_guid";
-	$options['wheres'][] = "(rv.view IN ('river/object/workflow_river/create', 'river/object/workflow_river/modified'))";
-	if (!!$time_posted) $options['posted_time_upper'] = (int) $time_posted-1;
+	$options['wheres'][] = "(rv.view IN ('river/object/workflow_river/create'))";
+	if ($time_posted) $options['posted_time_upper'] = (int) $time_posted-1;
 
 	$content = '';
 
@@ -24,15 +19,10 @@ if ($entity) {
 
 		elgg_set_page_owner_guid($entity->container_guid); // set page owner to not show "in group" in river items
 
-		$metastring = get_metastring_id('board_guid');
 		$board_string = get_metastring_id($entity_guid);
 
 		if ($board_string) { // if board_string doesn't exist that mind no card and list are created > board just created.
-			$options['joins'][] = "LEFT JOIN {$dbprefix}metadata d ON d.entity_guid = e.guid";
-			$options['joins'][] = "LEFT JOIN {$dbprefix}metastrings m ON m.id = d.value_id";
-			$options['wheres'][] = "e.container_guid = " . $entity->getContainerGUID();
-			$options['wheres'][] = "d.name_id = {$metastring} AND d.value_id = {$board_string}";
-			//$options['wheres'][] = "rv.object_guid = {$board_guid}";
+			$options['wheres'][] = "rv.object_guid = {$entity_guid}";
 
 			$defaults = array(
 				//'offset' => (int) get_input('offset', 0),
@@ -57,6 +47,10 @@ if ($entity) {
 
 		elgg_set_page_owner_guid($entity->getGUID()); // set page owner to not show "in group" in river items
 
+		global $CONFIG;
+		$dbprefix = $CONFIG->dbprefix;
+
+		$options['joins'][] = "JOIN {$dbprefix}entities e ON e.guid = rv.object_guid";
 		$options['wheres'][] = "e.container_guid = " . $entity->getGUID();
 
 		$defaults = array(

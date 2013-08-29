@@ -15,7 +15,11 @@ $short = elgg_extract('short', $vars, false);
 
 $subject = $vars['item']->getSubjectEntity();
 $entity = $vars['item']->getObjectEntity();
-$board = get_entity($entity->board_guid);
+if ($entity->getSubtype() == 'workflow_board') {
+	$board = $entity;
+} else {
+	$board = get_entity($entity->board_guid);
+}
 $container = $entity->getContainerEntity();
 
 $subject_link = elgg_view('output/url', array(

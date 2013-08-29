@@ -15,7 +15,11 @@ $archived_list_guid = (int) get_input('list_guid');
 $archived_list = get_entity($archived_list_guid);
 $board_guid = $archived_list->board_guid;
 
-if ($archived_list && $archived_list->canWritetoContainer()) {
+$user_guid = elgg_get_logged_in_user_guid();
+
+if ($archived_list && can_write_to_container($user_guid, $archived_list->container_guid)) {
+
+	elgg_load_library('workflow:utilities');
 
 	// archive cards of this list
 	$cards = elgg_get_entities_from_metadata(array(
@@ -26,11 +30,11 @@ if ($archived_list && $archived_list->canWritetoContainer()) {
 		'limit' => 0
 	));
 	foreach($cards as $card) {
-		disable_entity($card->guid);
+		workflow_archive($card);
 	}
-	
+
 	// delete list
-	disable_entity($archived_list_guid);
+	workflow_archive($archived_list);
 	$lists = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtypes' => 'workflow_list',

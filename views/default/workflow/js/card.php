@@ -78,7 +78,7 @@ elgg.workflow.card.move = function(event, ui) {
 			if (riverItemDom.length) {
 				riverItemDom.replaceWith(json.output.river);
 			} else {
-				$('.elgg-module-river > .elgg-body').prepend(json.output.river);
+				$('.river-workflow').prepend(json.output.river);
 			}
 			elgg.workflow.card.popup();
 			elgg.workflow.list.resize();
