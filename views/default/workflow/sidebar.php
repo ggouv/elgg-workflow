@@ -7,7 +7,6 @@
 $board_guid = elgg_extract('board_guid', $vars);
 
 $board = get_entity($board_guid);
-$user_guid = elgg_get_logged_in_user_guid();
 
 echo '<div class="workflow-sidebar">';
 
@@ -24,7 +23,7 @@ if ($board_guid) {
 
 	$title = elgg_echo('workflow:sidebar:assignedto_user');
 
-	if ($content) {
+	if ($content && $board->getContainerGUID() != elgg_get_logged_in_user_guid()) { // don't show participant in private board
 		 echo elgg_view_module('aside', $title, $content, array('class' => 'participants'));
 	} else {
 		 echo elgg_view_module('aside', '', '', array('class' => 'participants'));
