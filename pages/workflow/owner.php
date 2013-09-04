@@ -26,6 +26,7 @@ if ($owner->type == 'group') {
 		'type' => 'object',
 		'subtypes' => 'workflow_board',
 		'container_guid' => $owner->guid,
+		'order_by' => 'e.last_action desc',
 		'limit' => 0
 	));
 
