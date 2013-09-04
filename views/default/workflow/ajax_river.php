@@ -80,5 +80,5 @@ if ($content) {
 	$content .= '</li>';
 	echo $content;
 } else {
-	echo '<li class="end">' . elgg_echo('river:end') . '</li>';
+	echo '<li class="end" style="text-align:center;">' . elgg_echo('river:end') . '</li>';
 }

@@ -11,7 +11,7 @@ $user_guid = elgg_get_logged_in_user_guid();
 
 echo '<div class="workflow-sidebar">';
 
-if ($board_guid && $board->getContainerGUID() != $user_guid) {
+if ($board_guid) {
 
 	elgg_load_library('workflow:utilities');
 
