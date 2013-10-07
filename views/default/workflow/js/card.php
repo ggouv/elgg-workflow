@@ -222,9 +222,9 @@ elgg.workflow.card.popup = function() {
  * @param {Object} event
  * @return void
  */
-elgg.workflow.card.popupForms = function() {
-	var form = $(this).closest('form'),
-		card_guid = form[0].entity_guid.value,
+elgg.workflow.card.change = function() {
+	var form = $('.elgg-form-workflow-card-edit-card'),
+		card_guid = $(this).data('card_guid'),
 		checklist = [],
 		checklistItems = [],
 		i = 0;
@@ -236,33 +236,28 @@ elgg.workflow.card.popupForms = function() {
 		checklistItems.push($.trim($(this).text()));
 	});
 
-	if (form.attr('action').match('/comments/')) {
-		elgg.workflow.addCommentonCard(card_guid, 1);
-		return true;
-	} else {
-		elgg.action(form.attr('action'), {
-			data: form.serialize() + '&' + $.param({checklist: checklistItems}),
-			success: function(json) {
-				if (form.attr('action').match('/view_card')) {
-					$('.elgg-page-body .river-workflow').append(
-						$('<li>', {id: 'elgg-object-'+card_guid, 'class': 'elgg-item'}).append(
-							$('<div>', {id: 'workflow-card-'+card_guid, 'class': 'elgg-module workflow-card mrs'})
-					));
-					$('#card-forms').replaceWith(json.output.card_popup);
-				} else {
-					$('#card-info-popup').remove();
-				}
-				$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
-				if ($('#workflow-card-'+card_guid).closest('.river-workflow').length == 1
-						&& $(json.output.card).find('img[alt="'+elgg.get_logged_in_user_entity().name+'"]').length == 0) {
-					$('#workflow-card-'+card_guid).remove();
-				} else {
-					$('#workflow-card-'+card_guid).replaceWith(json.output.card);
-				}
-				elgg.workflow.card.popup();
+	elgg.action(form.attr('action'), {
+		data: form.serialize() + '&' + $.param({checklist: checklistItems}),
+		success: function(json) {
+			if (form.attr('action').match('/view_card')) {
+				$('.elgg-page-body .river-workflow').append(
+					$('<li>', {id: 'elgg-object-'+card_guid, 'class': 'elgg-item'}).append(
+						$('<div>', {id: 'workflow-card-'+card_guid, 'class': 'elgg-module workflow-card mrs'})
+				));
+				$('#card-forms').replaceWith(json.output.card_popup);
+			} else {
+				$('#card-info-popup').remove();
 			}
-		});
-	}
+			$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
+			if ($('#workflow-card-'+card_guid).closest('.river-workflow').length == 1
+					&& $(json.output.card).find('img[alt="'+elgg.get_logged_in_user_entity().name+'"]').length == 0) {
+				$('#workflow-card-'+card_guid).remove();
+			} else {
+				$('#workflow-card-'+card_guid).replaceWith(json.output.card);
+			}
+			elgg.workflow.card.popup();
+		}
+	});
 
 	return false;
 };

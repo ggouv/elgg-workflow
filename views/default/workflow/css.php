@@ -279,6 +279,17 @@ body.fixed-workflow {
 	height: 573px;
 	overflow: auto;
 }
+#card-info-popup > .elgg-body > .elgg-foot {
+	background: #EEE;
+	position: absolute;
+	bottom: 0;
+	width: 50%;
+	height: 42px;
+}
+#card-info-popup .elgg-foot .elgg-subtext {
+	float: right;
+	text-align: right;
+}
 #card-forms {
 	float: left;
 	width: 100%;
@@ -291,15 +302,24 @@ body.fixed-workflow {
 #card-forms .comments-part {
 	float: right;
 	width: 50%;
+	background: white;
 }
 #card-forms .elgg-comments {
 	margin: 10px;
 }
-#card-forms .elgg-form-workflow-card-edit-card {
+.edit-card-form {
 	float: left;
 	width: 50%;
-	background-color: #EEE;
 	min-height: 573px;
+	overflow: hidden;
+	background-color: #EEE;
+}
+.edit-card-form.fixed {
+	position: absolute;
+}
+.edit-card-form.fixed .elgg-form-workflow-card-edit-card {
+	position: absolute;
+	bottom: 42px;
 }
 #card-forms .elgg-form-workflow-card-edit-card fieldset {
 	padding: 10px;
@@ -370,10 +390,6 @@ body.fixed-workflow {
 }
 #card-forms .duedate .overdue {
 	color: red;
-}
-#card-forms .elgg-foot .elgg-subtext {
-	float: right;
-	text-align: right;
 }
 
 

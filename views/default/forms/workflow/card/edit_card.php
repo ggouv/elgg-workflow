@@ -29,158 +29,115 @@ $group = $card->getContainerEntity();
 $user_guid = elgg_get_logged_in_user_guid();
 
 ?>
-
-<label><?php
-	$list_link = elgg_view('output/url', array(
-		'href' => $list->getURL(),
-		'text' => $list->title ? $list->title : $list->name,
-		'is_trusted' => true,
-	));
-	$list_string = elgg_echo('river:in:workflow_list', array($list_link));
-
-	$board_link = elgg_view('output/url', array(
-		'href' => $board->getURL(),
-		'text' => $board->title ? $board->title : $board->name,
-		'is_trusted' => true,
-	));
-	$board_string = elgg_echo('river:inboard', array($board_link));
-
-	$group_link = elgg_view('output/url', array(
-		'href' => $group->getURL(),
-		'text' => $group->name,
-		'is_trusted' => true,
-	));
-	$group_string = elgg_echo('river:ingroup', array($group_link));
-
-	echo ucfirst($list_string) . '&nbsp;' . $board_string . '&nbsp;' . $group_string;
-?></label><br/><br/>
-<div>
-	<label><?php echo elgg_echo('title'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
-</div>
-
-<div>
-	<label><?php echo elgg_echo('description'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'preview' => 'toggle')); ?>
-</div>
-
-<div>
-<?php $assignedto = elgg_get_entities_from_relationship(array(
-			'relationship' => 'assignedto',
-			'relationship_guid'=> $card_guid
-		));
-		foreach ($assignedto as $user) {
-			$users[] = $user->guid;
-		}
-
-	if ($user_guid != $card->container_guid) { ?>
-		<label><?php echo elgg_echo('workflow:assignedto'); ?></label>
-		<?php echo elgg_view('input/userpicker', array(
-			'name' => 'assignedto',
-			'value' => $users
-		));
-	} else { // this card is on a private board ?>
-		<label><?php echo elgg_echo('workflow:assignedtome'); ?></label>
+<div class="elgg-body">
+	<label>
 		<?php
-		if ($users[0] == $user_guid) {
-			$checked = true;
-		} else {
-			$checked = false;
-		}
-		echo elgg_view('input/checkbox', array(
-			'name' => 'assignedtome',
-			'checked' => $checked
-			));
-		echo '<br/>' . elgg_echo('workflow:assignedtome:help');
-	} ?>
-</div>
-
-<div class="duedate">
-	<label><?php echo elgg_echo('workflow:duedate'); ?></label>
-	<?php echo elgg_view('input/date', array('name' => 'duedate', 'value' => $duedate)); ?>
-</div>
-
-<div class="card-checklist sortable clearfix">
-	<label><?php echo elgg_echo('workflow:checklist'); ?></label>
-	<?php
-		if ($checklist) {
-			$checklist = array_flip($checklist);
-			$checklist_view = elgg_view('input/checkboxes', array(
-				'options' => $checklist,
-				'value' => $checklist_checked,
-				'name' => 'checklist_checked',
-				'align' => 'vertical',
-			));
-			$checklist_icons = elgg_view_icon('delete', 'float-alt');
-			echo preg_replace('/<\/li>/',"$checklist_icons</li>", $checklist_view);
-		} else {
-			echo '<ul class="elgg-input-checkboxes elgg-vertical"></ul>';
-		}
-		echo elgg_view('input/plaintext', array(
-			'name' => 'checklist_item',
-			'value' => elgg_echo('workflow:checklist:add_item'),
-			'class' => 'mbs mts',
-		));
-		echo elgg_view('input/button', array(
-			'value' => elgg_echo('workflow:checklist:add_item'),
-			'class' => 'elgg-button-submit hidden float',
-		));
-		echo elgg_view_icon('delete', 'hidden float');
-	?>
-</div>
-
-<?php $categories = elgg_view('input/categories', $vars);
-	if ($categories) {
-		echo $categories;
-	}
-?>
-
-<div class="elgg-foot">
-	<?php
-
-	echo elgg_view('input/hidden', array('name' => 'entity_guid', 'value' => $card_guid));
-
-	echo elgg_view('input/submit', array(
-		'value' => elgg_echo("save"),
-		'id' => 'workflow-edit-card-submit',
-		'class' => 'elgg-button elgg-button-submit float mrm'
-	));
-
-	echo elgg_view('output/group', array(
-		'class' => 'output-group float mlm',
-		'group' => array(
-			elgg_view('output/url', array(
-				'text' => elgg_echo('workflow:action:archive'),
-				'class' => 'elgg-button elgg-button-action float prm',
-				'href' => elgg_add_action_tokens_to_url('action/workflow/card/archive?card_guid=' . $card->getGUID())
-			)),
-			elgg_view('output/dropdown_menu', array(
-				'class' => 'invert',
-				'menu' => array(
-					elgg_view('output/url', array(
-						'text' => '<span class="elgg-icon elgg-icon-delete"></span>' . elgg_echo("delete"),
-						'href' => '#',
-						'onclick' => "elgg.workflow.card.remove($(this).closest('.elgg-foot').find('input[name=entity_guid]').val());"
-					))
-				)
-			))
-	)));
-
-	?>
-	<div class="elgg-subtext">
-		<?php
-			echo elgg_view('output/url', array(
-				'href' => $card->getURL(),
-				'text' => elgg_echo('workflow:card:number', array($card_guid)),
+			$list_link = elgg_view('output/url', array(
+				'href' => $list->getURL(),
+				'text' => $list->title ? $list->title : $list->name,
 				'is_trusted' => true,
 			));
-			$creator = get_entity($card->owner_guid);
-			$creator_link = elgg_view('output/url', array(
-				'href' => "profile/$creator->username",
-				'text' => $creator->name,
+			$list_string = elgg_echo('river:in:workflow_list', array($list_link));
+
+			$board_link = elgg_view('output/url', array(
+				'href' => $board->getURL(),
+				'text' => $board->title ? $board->title : $board->name,
 				'is_trusted' => true,
 			));
-			echo  '<br/>' . elgg_echo('workflow:card:added', array(elgg_view_friendly_time($card->time_created), $creator_link));
+			$board_string = elgg_echo('river:inboard', array($board_link));
+
+			$group_link = elgg_view('output/url', array(
+				'href' => $group->getURL(),
+				'text' => $group->name,
+				'is_trusted' => true,
+			));
+			$group_string = elgg_echo('river:ingroup', array($group_link));
+
+			echo ucfirst($list_string) . '&nbsp;' . $board_string . '&nbsp;' . $group_string;
+		?>
+	</label><br/><br/>
+	<div>
+		<label><?php echo elgg_echo('title'); ?></label><br />
+		<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
+	</div>
+
+	<div>
+		<label><?php echo elgg_echo('description'); ?></label>
+		<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'preview' => 'toggle')); ?>
+	</div>
+
+	<div>
+	<?php $assignedto = elgg_get_entities_from_relationship(array(
+				'relationship' => 'assignedto',
+				'relationship_guid'=> $card_guid
+			));
+			foreach ($assignedto as $user) {
+				$users[] = $user->guid;
+			}
+
+		if ($user_guid != $card->container_guid) { ?>
+			<label><?php echo elgg_echo('workflow:assignedto'); ?></label>
+			<?php echo elgg_view('input/userpicker', array(
+				'name' => 'assignedto',
+				'value' => $users
+			));
+		} else { // this card is on a private board ?>
+			<label><?php echo elgg_echo('workflow:assignedtome'); ?></label>
+			<?php
+			if ($users[0] == $user_guid) {
+				$checked = true;
+			} else {
+				$checked = false;
+			}
+			echo elgg_view('input/checkbox', array(
+				'name' => 'assignedtome',
+				'checked' => $checked
+				));
+			echo '<br/>' . elgg_echo('workflow:assignedtome:help');
+		} ?>
+	</div>
+
+	<div class="duedate">
+		<label><?php echo elgg_echo('workflow:duedate'); ?></label>
+		<?php echo elgg_view('input/date', array('name' => 'duedate', 'value' => $duedate)); ?>
+	</div>
+
+	<div class="card-checklist sortable clearfix">
+		<label><?php echo elgg_echo('workflow:checklist'); ?></label>
+		<?php
+			if ($checklist) {
+				$checklist = array_flip($checklist);
+				$checklist_view = elgg_view('input/checkboxes', array(
+					'options' => $checklist,
+					'value' => $checklist_checked,
+					'name' => 'checklist_checked',
+					'align' => 'vertical',
+				));
+				$checklist_icons = elgg_view_icon('delete', 'float-alt');
+				echo preg_replace('/<\/li>/',"$checklist_icons</li>", $checklist_view);
+			} else {
+				echo '<ul class="elgg-input-checkboxes elgg-vertical"></ul>';
+			}
+			echo elgg_view('input/plaintext', array(
+				'name' => 'checklist_item',
+				'value' => elgg_echo('workflow:checklist:add_item'),
+				'class' => 'mbs mts',
+			));
+			echo elgg_view('input/button', array(
+				'value' => elgg_echo('workflow:checklist:add_item'),
+				'class' => 'elgg-button-submit hidden float',
+			));
+			echo elgg_view_icon('delete', 'hidden float');
 		?>
 	</div>
+
+	<?php $categories = elgg_view('input/categories', $vars);
+		if ($categories) {
+			echo $categories;
+		}
+	?>
+
+	<?php echo elgg_view('input/hidden', array('name' => 'entity_guid', 'value' => $card_guid)); ?>
+
 </div>
+
