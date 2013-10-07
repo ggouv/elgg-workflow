@@ -22,13 +22,10 @@ if ($entity) {
 		$board_string = get_metastring_id($entity_guid);
 
 		if ($board_string) { // if board_string doesn't exist that mind no card and list are created > board just created.
-			$options['wheres'][] = "rv.object_guid = {$entity_guid}";
 
 			$defaults = array(
-				//'offset' => (int) get_input('offset', 0),
-				'limit' => 30,
-				'pagination' => FALSE,
-				'count' => FALSE,
+				'object_guid' => $entity_guid,
+				'limit' => 30
 			);
 			$options = array_merge($defaults, $options);
 			$items = elgg_get_river($options);
@@ -54,10 +51,7 @@ if ($entity) {
 		$options['wheres'][] = "e.container_guid = " . $entity->getGUID();
 
 		$defaults = array(
-			//'offset' => (int) get_input('offset', 0),
-			'limit' => 30,
-			'pagination' => FALSE,
-			'count' => FALSE,
+			'limit' => 30
 		);
 		$options = array_merge($defaults, $options);
 		$items = elgg_get_river($options);
