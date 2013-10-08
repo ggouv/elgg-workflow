@@ -285,6 +285,10 @@ body.fixed-workflow {
 	bottom: 0;
 	width: 50%;
 	height: 42px;
+	border-top: 1px solid #DEDEDE;
+}
+#card-info-popup > .elgg-body > .elgg-foot .pam {
+	border-top: 1px solid #CCC;
 }
 #card-info-popup .elgg-foot .elgg-subtext {
 	float: right;
@@ -313,13 +317,17 @@ body.fixed-workflow {
 	min-height: 573px;
 	overflow: hidden;
 	background-color: #EEE;
+	/*padding-bottom: 42px;*/
 }
 .edit-card-form.fixed {
 	position: absolute;
 }
+.edit-card-form .elgg-form-workflow-card-edit-card {
+	padding-bottom: 42px;
+}
 .edit-card-form.fixed .elgg-form-workflow-card-edit-card {
 	position: absolute;
-	bottom: 42px;
+	bottom: 0;
 }
 #card-forms .elgg-form-workflow-card-edit-card fieldset {
 	padding: 10px;

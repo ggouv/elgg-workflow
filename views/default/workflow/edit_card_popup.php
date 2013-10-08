@@ -110,9 +110,9 @@ if ($card->canEdit() && !$archive) {
 		elgg.userpicker.init();
 
 		var $cF = $('#card-info-popup .edit-card-form'),
-			cFH = $cF.height();
+			cFH = $cF.innerHeight();
 		$('#card-info-popup > .elgg-body').bind('scroll', function() {
-			if ($(this).scrollTop() >= cFH + $('#card-info-popup > .elgg-body > .elgg-foot').height() - $('#card-info-popup > .elgg-body').height()) {
+			if ($(this).scrollTop() > cFH + $('#card-info-popup > .elgg-body > .elgg-foot').height() - $('#card-info-popup .edit-card-form').height()) {
 				$cF.addClass('fixed');
 			} else {
 				$cF.removeClass('fixed');
