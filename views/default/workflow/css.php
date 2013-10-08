@@ -339,7 +339,7 @@ body.fixed-workflow {
 	border-top: none;
 	border-bottom: 1px dotted #CCCCCC;
 	display: inline-table;
-	width: 185px;
+	width: 215px;
 	margin-bottom: 5px;
 }
 #card-forms .elgg-user-picker-list > li:nth-child(2n+1) {

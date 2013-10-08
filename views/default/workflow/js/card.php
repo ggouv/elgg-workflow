@@ -235,7 +235,7 @@ elgg.workflow.card.change = function() {
 	form.find('.card-checklist .elgg-input-checkboxes label').each(function() {
 		checklistItems.push($.trim($(this).text()));
 	});
-
+	form.find('input[name="checklist_checked"]').remove();
 	elgg.action(form.attr('action'), {
 		data: form.serialize() + '&' + $.param({checklist: checklistItems}),
 		success: function(json) {
@@ -248,7 +248,7 @@ elgg.workflow.card.change = function() {
 			} else {
 				$('#card-info-popup').remove();
 			}
-			$('.elgg-sidebar .workflow-sidebar').replaceWith(json.output.sidebar);
+			elgg.workflow.load_river();
 			if ($('#workflow-card-'+card_guid).closest('.river-workflow').length == 1
 					&& $(json.output.card).find('img[alt="'+elgg.get_logged_in_user_entity().name+'"]').length == 0) {
 				$('#workflow-card-'+card_guid).remove();

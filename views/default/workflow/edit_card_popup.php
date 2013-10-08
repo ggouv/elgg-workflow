@@ -109,10 +109,9 @@ if ($card->canEdit() && !$archive) {
 		elgg.ui.initDatePicker();
 		elgg.userpicker.init();
 
-		var $cF = $('#card-info-popup .edit-card-form'),
-			cFH = $cF.innerHeight();
 		$('#card-info-popup > .elgg-body').bind('scroll', function() {
-			if ($(this).scrollTop() > cFH + $('#card-info-popup > .elgg-body > .elgg-foot').height() - $('#card-info-popup .edit-card-form').height()) {
+			var $cF = $('#card-info-popup .edit-card-form');
+			if ($(this).scrollTop() > $cF.outerHeight() - $(this).outerHeight()) {
 				$cF.addClass('fixed');
 			} else {
 				$cF.removeClass('fixed');

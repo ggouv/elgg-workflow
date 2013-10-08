@@ -105,7 +105,9 @@ $user_guid = elgg_get_logged_in_user_guid();
 	<div class="card-checklist sortable clearfix">
 		<label><?php echo elgg_echo('workflow:checklist'); ?></label>
 		<?php
-			if ($checklist) {
+			if ($checklist != null) {
+				if (!is_array($checklist)) $checklist = array('0' => $checklist);
+				if ($checklist_checked === '0') $checklist_checked = array('0');
 				$checklist = array_flip($checklist);
 				$checklist_view = elgg_view('input/checkboxes', array(
 					'options' => $checklist,
