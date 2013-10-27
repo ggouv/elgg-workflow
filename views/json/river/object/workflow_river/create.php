@@ -68,4 +68,4 @@ $message = workflow_read_annotation($vars['item']->annotation_id);
 $vars['item']->summary = $summary;
 $vars['item']->message = $message;
 
-$jsonexport['activity'][] = $vars['item'];
+$jsonexport['results'][] = $vars['item'];
