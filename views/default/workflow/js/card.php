@@ -187,7 +187,7 @@ elgg.workflow.card.popup = function() {
 		return false;
 
 	}).closest('.workflow-card').not('.elgg-river-object').droppable({
-		accept: '.user-info-popup',
+		accept: '.elgg-user-info-popup',
 		drop: function(e, ui) {
 			var card_guid = $(this).attr('id').replace(/workflow-card-/, '');
 

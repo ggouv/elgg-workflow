@@ -422,6 +422,10 @@ body.fixed-workflow {
 }
 .column-river .river-workflow {
 	background: #EEE;
+	margin-top: -7px;
+}
+.column-river .river-workflow > li {
+	border: none;
 }
 .elgg-list.river-workflow > li {
 	padding: 5px 0;
