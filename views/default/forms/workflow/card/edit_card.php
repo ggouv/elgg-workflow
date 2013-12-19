@@ -61,7 +61,7 @@ $user_guid = elgg_get_logged_in_user_guid();
 		<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
 	</div>
 
-	<div>
+	<div class="ptm">
 		<label><?php echo elgg_echo('description'); ?></label>
 		<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'preview' => 'toggle')); ?>
 	</div>

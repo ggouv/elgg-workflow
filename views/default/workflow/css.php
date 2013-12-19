@@ -399,7 +399,9 @@ body.fixed-workflow {
 #card-forms .duedate .overdue {
 	color: red;
 }
-
+.elgg-form-workflow-card-view-card .markdown-body {
+	width: 440px;
+}
 
 /*
  * css for workflow_card and workflow_list in list view
